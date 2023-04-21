@@ -14,7 +14,7 @@
 <!-- GitHub Streak Stats -->
 <picture>
 <source 
-  srcset="https://streak-stats.demolab.com/?user=stn1slv&theme=hacker&mode=weekly&card_width=400"
+  srcset="https://streak-stats.demolab.com/?user=stn1slv&theme=github-dark&mode=weekly&card_width=400"
   media="(prefers-color-scheme: dark)" width="400"
 />
 <source
