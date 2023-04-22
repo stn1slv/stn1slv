@@ -8,9 +8,8 @@
 - 💬 You can ask me about <b>Mulesoft, Apache Camel, Integraion Architecture...</b>
  </details>
 
-<!-- ##### My Stats -->
 <details>
-  <summary>GitHub Public Stats</summary>
+  <summary>GitHub Stats</summary>
 <!-- GitHub Stats -->
 <picture>
 <source 
