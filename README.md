@@ -5,7 +5,7 @@
   
 - 💼 Solution Architect at EPAM Systems & Open Source Enthusiast
   
-- 💬 You can ask me about <b>Mulesoft, Apache Camel, Integraion Architecture...</b>
+- 💬 You can ask me about <b>Mulesoft, Apache Camel, Integration Architecture, API Management, Message Brokers...</b>
 </details>
 
 <details>
