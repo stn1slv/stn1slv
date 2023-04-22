@@ -12,7 +12,7 @@
   <summary>GitHub Stats</summary>
 <!-- GitHub Stats -->
 <picture>
-<source srcset="https://github-readme-stats.vercel.app/api?username=stn1slv&show_icons=true&hide_border=true&locale=en&count_private=true&no-bg=true&hide_title=true&bg_color=00000000&theme=gotham"
+<source srcset="https://github-readme-stats.vercel.app/api?username=stn1slv&show_icons=true&hide_border=true&locale=en&count_private=true&hide_title=true&theme=gotham"
   media="(prefers-color-scheme: dark)" width="400"
 />
 <source
