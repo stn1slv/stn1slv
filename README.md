@@ -1,9 +1,16 @@
 ### Hi there 👋 I am Stanislav Deviatov
-##### About me
+<!-- ##### About me -->
+<details>
+  <summary>About me</summary>
+  
 - 💼 Solution Architect at EPAM Systems & Open Source Enthusiast
+  
 - 💬 You can ask me about <b>Mulesoft, Apache Camel, Integraion Architecture...</b>
+ </details>
 
-##### My Stats
+<!-- ##### My Stats -->
+<details>
+  <summary>GitHub Public Stats</summary>
 <!-- GitHub Stats -->
 <picture>
 <source 
@@ -42,6 +49,7 @@
 />
 <img src="https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&hide=markdown&langs_count=8&no-bg=true" width="400" />
 </picture>
+  </details>
 
 <!-- GitHub Trophy-->
 <!--img src="https://github-profile-trophy.vercel.app/?username=stn1slv&row=2&column=3&no-bg=true&theme=darkhub&no-frame=true" alt="stn1slv"/-->
