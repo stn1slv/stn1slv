@@ -1,18 +1,3 @@
-### Hi there 👋 I am Stanislav Deviatov
-<!-- ##### About me -->
-<details>
-  <summary>About me</summary>
-  
-- 💼 Solution Architect at EPAM Systems & Open Source Enthusiast
-  
-- 💬 My talks https://wearecommunity.io/collections/Rm1yJsMC6Z
-
-- ✍️ My articles https://wearecommunity.io/collections/DLY4smPzao
-
-</details>
-
-<details>
-  <summary>GitHub Stats</summary>
 <!-- GitHub Stats -->
 <picture>
 <source srcset="https://github-readme-stats.vercel.app/api?username=stn1slv&show_icons=true&hide_border=true&locale=en&count_private=true&hide_title=true&theme=gotham"
@@ -50,7 +35,6 @@
 />
 <img src="https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&hide=markdown&langs_count=8&no-bg=true" width="400" />
 </picture>
-  </details>
 
 <!-- GitHub Trophy-->
 <!--img src="https://github-profile-trophy.vercel.app/?username=stn1slv&row=2&column=3&no-bg=true&theme=darkhub&no-frame=true" alt="stn1slv"/-->
