@@ -7,7 +7,7 @@
      <img src="https://img.icons8.com/material-outlined/30/689d6a/source-code.png"/> 
    </a> 
    <a href= "https://www.linkedin.com/in/stn1slv/"> 
-     <img src="https://img.icons8.com/material-outlined/30/689d6a/linkedin.png"/> 
+     <img src="https://img.icons8.com/ios/2x/linkedin.png"/> 
    </a> 
    <a href= "https://twitter.com/stn1slv"> 
      <img src="https://img.icons8.com/material-outlined/30/689d6a/twitter.png"/> 
