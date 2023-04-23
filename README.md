@@ -5,7 +5,10 @@
   
 - 💼 Solution Architect at EPAM Systems & Open Source Enthusiast
   
-- 💬 Talk about <b>Enterprise Integration Platforms, API Management, Message Brokers, Apache Camel...</b>
+- 💬 My talks https://wearecommunity.io/collections/Rm1yJsMC6Z
+
+- ✍️ My articles https://wearecommunity.io/collections/DLY4smPzao
+
 </details>
 
 <details>
