@@ -15,9 +15,14 @@
    <a href="mailto:devyatov@gmail.com"> 
      <img src="https://img.icons8.com/fluency/32/gmail.png"/> 
    </a> 
+   <a href="https://wearecommunity.io/collections/DLY4smPzao"> 
+     <img src="https://img.icons8.com/fluency/32/case-study.png"/> 
+   </a> 
+     <a href="https://wearecommunity.io/collections/Rm1yJsMC6Z"> 
+     <img src="https://img.icons8.com/fluency/32/consultation.png"/> 
+   </a>
  </p> 
  
-
 <!-- GitHub Stats -->
 <picture>
 <source srcset="https://github-readme-stats.vercel.app/api?username=stn1slv&show_icons=true&hide_border=true&locale=en&count_private=true&hide_title=true&theme=gotham"
