@@ -4,21 +4,16 @@
  
  <p align="center"> 
    <a href= "https://github.com/stn1slv/"> 
-     <img src="https://img.icons8.com/material-outlined/30/689d6a/source-code.png"/> 
+     <img src="https://img.icons8.com/fluency/32/github.png"/> 
    </a> 
    <a href= "https://www.linkedin.com/in/stn1slv/"> 
-     <img src="https://img.icons8.com/fluency-systems-regular/32/linkedin.png"/> 
+     <img src="https://img.icons8.com/fluency/32/linkedin.png"/> 
    </a> 
    <a href= "https://twitter.com/stn1slv"> 
-     <img src="https://img.icons8.com/material-outlined/30/689d6a/twitter.png"/> 
-   </a> 
-  
-  
+     <img src="https://img.icons8.com/fluency/32/twitter.png"/> 
+   </a>
    <a href="mailto:devyatov@gmail.com"> 
-     <img src="https://img.icons8.com/ios-glyphs/30/689d6a/physics.png"/> 
-   </a> 
-   <a href="https://medium.com/@stn1slv"> 
-     <img src="https://img.icons8.com/ios-filled/30/689d6a/medium-new.png"/> 
+     <img src="https://img.icons8.com/fluency/32/gmail.png"/> 
    </a> 
  </p> 
  
