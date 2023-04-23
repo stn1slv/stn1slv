@@ -17,7 +17,7 @@
   media="(prefers-color-scheme: dark)" width="400"
 />
 <source
-  srcset="https://streak-stats.demolab.com/?user=stn1slv&theme=github-light&mode=weekly&card_width=400&hide_border=true"
+  srcset="https://streak-stats.demolab.com/?user=stn1slv&theme=default&mode=weekly&card_width=400&hide_border=true"
   media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)" width="400"
 />
 <img src="https://streak-stats.demolab.com/?user=stn1slv&mode=weekly&card_width=400" width="400" />
@@ -30,7 +30,7 @@
   media="(prefers-color-scheme: dark)" width="400"
 />
 <source
-  srcset="https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&hide=markdown&langs_count=8&no-bg=true&theme=vue"
+  srcset="https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&hide=markdown&langs_count=8&no-bg=true&theme=default"
   media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)" width="400"
 />
 <img src="https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&hide=markdown&langs_count=8&no-bg=true" width="400" />
