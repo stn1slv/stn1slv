@@ -21,7 +21,7 @@
      <img src="https://img.icons8.com/fluency/32/case-study.png"/> 
    </a> 
      <a href="https://wearecommunity.io/collections/Rm1yJsMC6Z"> 
-     <img src="https://img.icons8.com/fluency/32/consultation.png"/> 
+     <img src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/32/external-webinars-influencer-marketing-flaticons-lineal-color-flat-icons.png"/> 
    </a>
   <a href="mailto:devyatov@gmail.com"> 
      <img src="https://img.icons8.com/color/32/apple-mail.png"/> 
