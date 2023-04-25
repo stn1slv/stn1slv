@@ -9,8 +9,12 @@
    <a href= "https://www.linkedin.com/in/stn1slv/"> 
      <img src="https://img.icons8.com/fluency/32/linkedin.png"/> 
    </a> 
-   <a href= "https://twitter.com/stn1slv"> 
+  
+  <!--a href= "https://twitter.com/stn1slv"> 
      <img src="https://img.icons8.com/fluency/32/twitter.png"/> 
+   </a-->
+   <a href= "https://telegram.me/stn1slv"> 
+     <img src="https://img.icons8.com/color/32/telegram-app--v2.png"/> 
    </a>
    <a href="https://wearecommunity.io/collections/DLY4smPzao"> 
      <img src="https://img.icons8.com/fluency/32/case-study.png"/> 
