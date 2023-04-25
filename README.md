@@ -13,6 +13,7 @@
   <!--a href= "https://twitter.com/stn1slv"> 
      <img src="https://img.icons8.com/fluency/32/twitter.png"/> 
    </a-->
+   
    <a href= "https://telegram.me/stn1slv"> 
      <img src="https://img.icons8.com/color/32/telegram-app--v2.png"/> 
    </a>
@@ -23,7 +24,7 @@
      <img src="https://img.icons8.com/fluency/32/consultation.png"/> 
    </a>
   <a href="mailto:devyatov@gmail.com"> 
-     <img src="https://img.icons8.com/fluency/32/gmail.png"/> 
+     <img src="https://img.icons8.com/color/32/apple-mail.png"/> 
    </a> 
  </p> 
  
