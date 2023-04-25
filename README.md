@@ -18,7 +18,7 @@
      <img src="https://img.icons8.com/color/32/telegram-app--v2.png"/> 
    </a>
    <a href="https://wearecommunity.io/collections/DLY4smPzao"> 
-     <img src="https://img.icons8.com/fluency/32/case-study.png"/> 
+     <img src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/32/external-blog-influencer-marketing-flaticons-lineal-color-flat-icons.png"/> 
    </a> 
      <a href="https://wearecommunity.io/collections/Rm1yJsMC6Z"> 
      <img src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/32/external-webinars-influencer-marketing-flaticons-lineal-color-flat-icons.png"/> 
