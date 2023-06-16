@@ -4,28 +4,28 @@
  
  <p align="center"> 
    <a href= "https://github.com/stn1slv/"> 
-     <img src="https://img.icons8.com/fluency/32/github.png"/> 
+     <img src="img/github.png"/> 
    </a> 
    <a href= "https://www.linkedin.com/in/stn1slv/"> 
-     <img src="https://img.icons8.com/fluency/32/linkedin.png"/> 
+     <img src="img/linkedin.png"/> 
    </a> 
   
   <!--a href= "https://twitter.com/stn1slv"> 
-     <img src="https://img.icons8.com/fluency/32/twitter.png"/> 
+     <img src="img/twitter.png"/> 
    </a-->
 
    <a href="https://wearecommunity.io/collections/DLY4smPzao"> 
-     <img src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/32/external-blog-influencer-marketing-flaticons-lineal-color-flat-icons.png"/> 
+     <img src="img/articles.png"/> 
    </a> 
      <a href="https://wearecommunity.io/collections/Rm1yJsMC6Z"> 
-     <img src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/32/external-vlogger-influencer-marketing-flaticons-lineal-color-flat-icons-2.png"/> 
+     <img src="img/talks.png"/> 
    </a>
   <a href="mailto:devyatov@gmail.com"> 
-     <img src="https://img.icons8.com/color/32/apple-mail.png"/> 
+     <img src="img/mail.png"/> 
    </a> 
    
    <a href= "https://telegram.me/stn1slv"> 
-     <img src="https://img.icons8.com/color/32/telegram-app--v2.png"/> 
+     <img src="img/telegram.png"/> 
    </a>
  </p> 
  
