@@ -1,5 +1,8 @@
 name: Refresh statistics
 on:
+  push:
+    branches:
+      - main
   schedule: ## Schedule the job to run at 12.am daily.
   - cron: '0 0 * * *'
 permissions:
