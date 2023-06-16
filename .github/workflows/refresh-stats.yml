@@ -3,8 +3,8 @@ on:
   push:
     branches:
       - main
-  schedule: ## Schedule the job to run at 12.am daily.
-  - cron: '0 0 * * *'
+  schedule: ## Schedule the job to run at 12.am on Sunday.
+  - cron: '0 0 * * SUN'
 permissions:
   contents: write
 jobs:
