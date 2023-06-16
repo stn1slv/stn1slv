@@ -1,0 +1,30 @@
+name: Refresh statistics
+on: push
+permissions:
+  contents: write
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Update GitHub Stats
+        run: |
+            wget -O github-stats-dark.svg -N https://github-readme-stats.vercel.app/api?username=stn1slv&show_icons=true&hide_border=true&locale=en&count_private=true&include_all_commits=true&hide_title=true&theme=gotham
+            wget -O github-stats-light.svg -N https://github-readme-stats.vercel.app/api?username=stn1slv&show_icons=true&hide_border=true&locale=en&count_private=true&include_all_commits=true&hide_title=true&theme=vue
+            wget -O github-stats.svg -N https://github-readme-stats.vercel.app/api?username=stn1slv&show_icons=true
+      - name: Update GitHub Streak Stats
+        run: |
+            wget -O streak-stats-dark.svg -N https://streak-stats.demolab.com/?user=stn1slv&theme=gotham&mode=weekly&card_width=400&hide_border=true
+            wget -O streak-stats-light.svg -N https://streak-stats.demolab.com/?user=stn1slv&theme=vue&mode=weekly&card_width=400&hide_border=true
+            wget -O streak-stats.svg -N https://streak-stats.demolab.com/?user=stn1slv&mode=weekly&card_width=400
+      - name: Update Most used languages
+        run: |
+                wget -O top-langs-dark.svg -N https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&hide=markdown&langs_count=8&no-bg=true&hide_border=true&theme=gotham
+                wget -O top-langs-light.svg -N https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&hide=markdown&langs_count=8&no-bg=true&theme=vue
+                wget -O top-langs.svg -N https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&hide=markdown&langs_count=8&no-bg=true
+      - name: Commit report
+        run: |
+          git config --global user.name 'stn1slv'
+          git config --global user.email 'stn1slv@users.noreply.github.com'
+          git commit -am "Stats refreshed"
+          git push
