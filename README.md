@@ -32,9 +32,9 @@
 <p align="center">
 <!-- GitHub Stats -->
 <picture>
-<source srcset="https://github-readme-stats.vercel.app/api?username=stn1slv&show_icons=true&hide_border=true&locale=en&count_private=true&include_all_commits=true&hide_title=true&theme=gotham" media="(prefers-color-scheme: dark)" width="400"/>
-<source srcset="https://github-readme-stats.vercel.app/api?username=stn1slv&show_icons=true&hide_border=true&locale=en&count_private=true&include_all_commits=true&hide_title=true&theme=vue" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)" width="400"/>
-<img src="https://github-readme-stats.vercel.app/api?username=stn1slv&show_icons=true" width="400" />
+<source src="img/github-stat-dark.svg" media="(prefers-color-scheme: dark)" width="400"/>
+<source src="img/github-stat-light.svg" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)" width="400"/>
+<img src="img/github-stats.svg" width="400" />
 </picture><br/>
 
 <!-- GitHub Streak Stats -->
