@@ -4,28 +4,28 @@
  
  <p align="center"> 
    <a href= "https://github.com/stn1slv/"> 
-     <img src="img/github.png"/> 
+     <img src="img/icons/github.png"/> 
    </a> 
    <a href= "https://www.linkedin.com/in/stn1slv/"> 
-     <img src="img/linkedin.png"/> 
+     <img src="img/icons/linkedin.png"/> 
    </a> 
   
   <!--a href= "https://twitter.com/stn1slv"> 
-     <img src="img/twitter.png"/> 
+     <img src="img/icons/twitter.png"/> 
    </a-->
 
    <a href="https://wearecommunity.io/collections/DLY4smPzao"> 
-     <img src="img/articles.png"/> 
+     <img src="img/icons/articles.png"/> 
    </a> 
      <a href="https://wearecommunity.io/collections/Rm1yJsMC6Z"> 
-     <img src="img/talks.png"/> 
+     <img src="img/icons/talks.png"/> 
    </a>
   <a href="mailto:devyatov@gmail.com"> 
-     <img src="img/mail.png"/> 
+     <img src="img/icons/mail.png"/> 
    </a> 
    
    <a href= "https://telegram.me/stn1slv"> 
-     <img src="img/telegram.png"/> 
+     <img src="img/icons/telegram.png"/> 
    </a>
  </p> 
  
