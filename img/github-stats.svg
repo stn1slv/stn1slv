@@ -9,7 +9,7 @@
         aria-labelledby="descId"
       >
         <title id="titleId">Stanislav Deviatov's GitHub Stats, Rank: B+</title>
-        <desc id="descId">Total Stars Earned: 310, Total Commits in 2023 : 310, Total PRs: 53, Total Issues: 3, Contributed to (last year): 6</desc>
+        <desc id="descId">Total Stars Earned: 309, Total Commits in 2023 : 309, Total PRs: 54, Total Issues: 3, Contributed to (last year): 6</desc>
         <style>
           .header {
             font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
@@ -67,7 +67,7 @@
         stroke-dashoffset: 251.32741228718345;
       }
       to {
-        stroke-dashoffset: 95.02245460119845;
+        stroke-dashoffset: 94.46285778851218;
       }
     }
   
@@ -156,7 +156,7 @@
         x="219.01"
         y="12.5"
         data-testid="stars"
-      >310</text>
+      >309</text>
     </g>
   </g><g transform="translate(0, 25)">
     <g class="stagger" style="animation-delay: 600ms" transform="translate(25, 0)">
@@ -171,7 +171,7 @@
         x="219.01"
         y="12.5"
         data-testid="commits"
-      >207</text>
+      >209</text>
     </g>
   </g><g transform="translate(0, 50)">
     <g class="stagger" style="animation-delay: 750ms" transform="translate(25, 0)">
@@ -186,7 +186,7 @@
         x="219.01"
         y="12.5"
         data-testid="prs"
-      >53</text>
+      >54</text>
     </g>
   </g><g transform="translate(0, 75)">
     <g class="stagger" style="animation-delay: 900ms" transform="translate(25, 0)">
