@@ -12,6 +12,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Init repo
+        run: |
+          git config --global user.name 'stn1slv'
+          git config --global user.email 'stn1slv@users.noreply.github.com'
+          git pull origin main
       - name: Update GitHub Stats
         run: |
             wget -O img/github-stats-dark.svg "https://github-readme-stats.vercel.app/api?username=stn1slv&show_icons=true&hide_border=true&locale=en&count_private=true&include_all_commits=true&hide_title=true&theme=gotham"
@@ -29,9 +34,7 @@ jobs:
                 wget -O img/top-langs.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&hide=markdown&langs_count=8&no-bg=true"
       - name: Commit report
         run: |
-          git config --global user.name 'stn1slv'
-          git config --global user.email 'stn1slv@users.noreply.github.com'
           git status
           git add *.svg
           git commit -am "Stats refreshed"
-          git push
+          git push origin main
