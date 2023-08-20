@@ -5,6 +5,7 @@ on:
       - main
   schedule: ## Schedule the job to run at 12.am on Sunday.
   - cron: '0 0 * * SUN'
+  workflow_dispatch:
 permissions:
   contents: write
 jobs:
