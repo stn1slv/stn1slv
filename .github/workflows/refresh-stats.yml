@@ -30,9 +30,9 @@ jobs:
             wget -O img/streak-stats.svg "https://streak-stats.demolab.com/?user=stn1slv&mode=weekly&card_width=400"
       - name: Update Most used languages
         run: |
-                wget -O img/top-langs-dark.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&hide=markdown&langs_count=8&no-bg=true&hide_border=true&theme=gotham"
-                wget -O img/top-langs-light.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&hide=markdown&langs_count=8&no-bg=true&theme=vue"
-                wget -O img/top-langs.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&hide=markdown&langs_count=8&no-bg=true"
+                wget -O img/top-langs-dark.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&hide=markdown,xml&langs_count=8&no-bg=true&hide_border=true&theme=gotham"
+                wget -O img/top-langs-light.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&hide=markdown,xml&langs_count=8&no-bg=true&theme=vue"
+                wget -O img/top-langs.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&hide=markdown,xml&langs_count=8&no-bg=true"
       - name: Commit report
         run: |
           git status
