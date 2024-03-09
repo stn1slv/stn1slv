@@ -37,7 +37,7 @@
 <img src="img/github-stats.svg" width="400" />
 </picture><br/>
 
-<!-- GitHub Streak Stats -->
+<!-- GitHub Streak Stats 
 <picture>
 <source  srcset="https://raw.githubusercontent.com/stn1slv/stn1slv/main/img/streak-stats-dark.svg"
   media="(prefers-color-scheme: dark)" width="400"
@@ -47,6 +47,7 @@
 />
 <img src="img/streak-stats.svg" width="400" />
 </picture><br/>
+-->
 
 <!-- Most used languages -->
 <picture>
