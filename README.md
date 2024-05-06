@@ -65,7 +65,7 @@
 />
 <source srcset="https://raw.githubusercontent.com/stn1slv/stn1slv/main/img/github-contributor-light.svg" media="(prefers-color-scheme: light), (prefers-color-scheme: no-preference)" width="500"
 />
-<img src="img/github-contributor-langs.svg" width="500" />
+<img src="img/github-contributor-light.svg" width="500" />
 </picture>
 
 <!-- GitHub Trophy-->
