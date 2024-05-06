@@ -33,6 +33,10 @@ jobs:
                 wget -O img/top-langs-dark.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&hide=markdown,xml&langs_count=8&no-bg=true&hide_border=true&theme=gotham"
                 wget -O img/top-langs-light.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&hide=markdown,xml&langs_count=8&no-bg=true&theme=vue"
                 wget -O img/top-langs.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&hide=markdown,xml&langs_count=8&no-bg=true"
+      - name: Update Contributor stat
+        run: |
+              wget -O img/github-contributor-dark.svg "https://github-contributor-stats.vercel.app/api?username=stn1slv&limit=10&theme=gotham&combine_all_yearly_contributions=true&hide_title=true&hide_border=true&locale=en"
+              wget -O img/github-contributor-light.svg "https://github-contributor-stats.vercel.app/api?username=stn1slv&limit=10&theme=vue&combine_all_yearly_contributions=true&hide_title=true&hide_border=true&locale=en"
       - name: Commit report
         run: |
           git status
