@@ -130,7 +130,7 @@
           data-testid="lang-progress"
           x="0"
           y="0"
-          width="160.86"
+          width="139.76"
           height="8"
           fill="#b07219"
         />
@@ -138,9 +138,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="160.86"
+          x="139.76"
           y="0"
-          width="39.75"
+          width="67.88"
           height="8"
           fill="#00ADD8"
         />
@@ -148,19 +148,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="200.61"
+          x="207.64"
           y="0"
-          width="29.52"
-          height="8"
-          fill="#C1F12E"
-        />
-      
-        <rect
-          mask="url(#rect-mask)"
-          data-testid="lang-progress"
-          x="230.13000000000002"
-          y="0"
-          width="10.74"
+          width="15.4"
           height="8"
           fill="#384d54"
         />
@@ -168,9 +158,19 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="240.87000000000003"
+          x="223.04"
           y="0"
-          width="17.06"
+          width="12.76"
+          height="8"
+          fill="#C1F12E"
+        />
+      
+        <rect
+          mask="url(#rect-mask)"
+          data-testid="lang-progress"
+          x="235.79999999999998"
+          y="0"
+          width="10.81"
           height="8"
           fill="#89e051"
         />
@@ -178,9 +178,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="247.93000000000004"
+          x="246.60999999999999"
           y="0"
-          width="12.06"
+          width="13.370000000000001"
           height="8"
           fill="#012456"
         />
@@ -191,42 +191,42 @@
     <g class="stagger" style="animation-delay: 450ms">
       <circle cx="5" cy="6" r="5" fill="#b07219" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        Java 64.34%
+        Java 55.91%
       </text>
     </g>
   </g><g transform="translate(0, 25)">
     <g class="stagger" style="animation-delay: 600ms">
       <circle cx="5" cy="6" r="5" fill="#00ADD8" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        Go 15.90%
+        Go 27.15%
       </text>
     </g>
   </g><g transform="translate(0, 50)">
     <g class="stagger" style="animation-delay: 750ms">
-      <circle cx="5" cy="6" r="5" fill="#C1F12E" />
+      <circle cx="5" cy="6" r="5" fill="#384d54" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        Batchfile 11.81%
+        Dockerfile 6.16%
       </text>
     </g>
   </g></g><g transform="translate(150, 0)"><g transform="translate(0, 0)">
     <g class="stagger" style="animation-delay: 450ms">
-      <circle cx="5" cy="6" r="5" fill="#384d54" />
+      <circle cx="5" cy="6" r="5" fill="#C1F12E" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        Dockerfile 4.30%
+        Batchfile 5.11%
       </text>
     </g>
   </g><g transform="translate(0, 25)">
     <g class="stagger" style="animation-delay: 600ms">
       <circle cx="5" cy="6" r="5" fill="#89e051" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        Shell 2.82%
+        Shell 4.33%
       </text>
     </g>
   </g><g transform="translate(0, 50)">
     <g class="stagger" style="animation-delay: 750ms">
       <circle cx="5" cy="6" r="5" fill="#012456" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        PowerShell 0.83%
+        PowerShell 1.35%
       </text>
     </g>
   </g></g>
