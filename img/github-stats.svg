@@ -9,7 +9,7 @@
         aria-labelledby="descId"
       >
         <title id="titleId">Stanislav Deviatov's GitHub Stats, Rank: A-</title>
-        <desc id="descId">Total Stars Earned: 458, Total Commits in 2025 : 277, Total PRs: 106, Total Issues: 4, Contributed to (last year): 4</desc>
+        <desc id="descId">Total Stars Earned: 458, Total Commits in 2025 : 279, Total PRs: 107, Total Issues: 4, Contributed to (last year): 4</desc>
         <style>
           .header {
             font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
@@ -73,7 +73,7 @@
         stroke-dashoffset: 251.32741228718345;
       }
       to {
-        stroke-dashoffset: 68.85529989101961;
+        stroke-dashoffset: 68.54884055828784;
       }
     }
   
@@ -177,7 +177,7 @@
         x="219.01"
         y="12.5"
         data-testid="commits"
-      >277</text>
+      >279</text>
     </g>
   </g><g transform="translate(0, 50)">
     <g class="stagger" style="animation-delay: 750ms" transform="translate(25, 0)">
@@ -192,7 +192,7 @@
         x="219.01"
         y="12.5"
         data-testid="prs"
-      >106</text>
+      >107</text>
     </g>
   </g><g transform="translate(0, 75)">
     <g class="stagger" style="animation-delay: 900ms" transform="translate(25, 0)">
