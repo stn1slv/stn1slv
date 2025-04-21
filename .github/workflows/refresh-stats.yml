@@ -30,9 +30,9 @@ jobs:
             wget -O img/streak-stats.svg "https://streak-stats.demolab.com/?user=stn1slv&mode=weekly&card_width=400"
       - name: Update Most used languages
         run: |
-                wget -O img/top-langs-dark.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&size_weight=0.5&count_weight=0.5&hide=markdown,xml&langs_count=8&no-bg=true&hide_border=true&theme=vue-dark"
-                wget -O img/top-langs-light.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&size_weight=0.5&count_weight=0.5&hide=markdown,xml&langs_count=8&no-bg=true&theme=vue"
-                wget -O img/top-langs.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&size_weight=0.5&count_weight=0.5&hide=markdown,xml&langs_count=8&no-bg=true"
+                wget -O img/top-langs-dark.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&size_weight=0.5&count_weight=0.5&hide=markdown,xml,asciidoc,handlebars&langs_count=8&no-bg=true&hide_border=true&theme=vue-dark"
+                wget -O img/top-langs-light.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&size_weight=0.5&count_weight=0.5&hide=markdown,xml,asciidoc,handlebars&langs_count=8&no-bg=true&theme=vue"
+                wget -O img/top-langs.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&size_weight=0.5&count_weight=0.5&hide=markdown,xml,asciidoc,handlebars&langs_count=8&no-bg=true"
       # - name: Update Contributor stat
       #   run: |
       #         wget -O img/github-contributor-dark.svg "https://github-contributor-stats.vercel.app/api?username=stn1slv&limit=10&theme=vue-dark&combine_all_yearly_contributions=true&hide_title=false&hide_border=true&locale=en&custom_title=GitHub%20Contributions"
