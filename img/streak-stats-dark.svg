@@ -33,7 +33,7 @@
                 <!-- Total Contributions big number -->
                 <g transform='translate(66.666666666667, 48)'>
                     <text x='0' y='32' stroke-width='0' text-anchor='middle' fill='#2AA889' stroke='none' font-family='"Segoe UI", Ubuntu, sans-serif' font-weight='700' font-size='28px' font-style='normal' style='opacity: 0; animation: fadein 0.5s linear forwards 0.6s'>
-                        1,776
+                        1,785
                     </text>
                 </g>
 
@@ -62,7 +62,7 @@
                 <!-- Current Streak range -->
                 <g transform='translate(200, 145)'>
                     <text x='0' y='21' stroke-width='0' text-anchor='middle' fill='#99D1CE' stroke='none' font-family='"Segoe UI", Ubuntu, sans-serif' font-weight='400' font-size='12px' font-style='normal' style='opacity: 0; animation: fadein 0.5s linear forwards 0.9s'>
-                        May 7, 2023 - Apr 13
+                        May 7, 2023 - Apr 20
                     </text>
                 </g>
 
@@ -79,7 +79,7 @@
                 <!-- Current Streak big number -->
                 <g transform='translate(200, 48)'>
                     <text x='0' y='32' stroke-width='0' text-anchor='middle' fill='#599CAB' stroke='none' font-family='"Segoe UI", Ubuntu, sans-serif' font-weight='700' font-size='28px' font-style='normal' style='animation: currstreak 0.6s linear forwards'>
-                        102
+                        103
                     </text>
                 </g>
 
@@ -88,7 +88,7 @@
                 <!-- Longest Streak big number -->
                 <g transform='translate(333.33333333333, 48)'>
                     <text x='0' y='32' stroke-width='0' text-anchor='middle' fill='#2AA889' stroke='none' font-family='"Segoe UI", Ubuntu, sans-serif' font-weight='700' font-size='28px' font-style='normal' style='opacity: 0; animation: fadein 0.5s linear forwards 1.2s'>
-                        102
+                        103
                     </text>
                 </g>
 
@@ -102,7 +102,7 @@
                 <!-- Longest Streak range -->
                 <g transform='translate(333.33333333333, 114)'>
                     <text x='0' y='32' stroke-width='0' text-anchor='middle' fill='#99D1CE' stroke='none' font-family='"Segoe UI", Ubuntu, sans-serif' font-weight='400' font-size='12px' font-style='normal' style='opacity: 0; animation: fadein 0.5s linear forwards 1.4s'>
-                        May 7, 2023 - Apr 13
+                        May 7, 2023 - Apr 20
                     </text>
                 </g>
             </g>
