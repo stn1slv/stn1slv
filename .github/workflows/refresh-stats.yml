@@ -4,7 +4,7 @@ on:
     branches:
       - main
   schedule: ## Schedule the job to run at 12.am on Sunday.
-  - cron: '0 0 * * SUN'
+  - cron: '0 0 15,L * *'
   workflow_dispatch:
 permissions:
   contents: write
