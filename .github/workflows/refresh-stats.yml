@@ -3,8 +3,11 @@ on:
   push:
     branches:
       - main
-  schedule: ## Schedule the job to run at 12.am on Sunday.
-  - cron: '0 0 15,L * *'
+  schedule:
+    # Runs at midnight on the 15th of every month
+    - cron: '0 0 15 * *'
+    # Runs daily, but guarded by a shell check for the last day
+    - cron: '0 0 * * *'
   workflow_dispatch:
 permissions:
   contents: write
