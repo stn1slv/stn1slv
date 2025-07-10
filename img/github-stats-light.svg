@@ -9,7 +9,7 @@
         aria-labelledby="descId"
       >
         <title id="titleId">Stanislav Deviatov's GitHub Stats, Rank: A</title>
-        <desc id="descId">Total Stars Earned: 539, Total Commits  : 1719, Total PRs: 156, Total Issues: 5, Contributed to (last year): 7</desc>
+        <desc id="descId">Total Stars Earned: 539, Total Commits  : 1715, Total PRs: 156, Total Issues: 5, Contributed to (last year): 7</desc>
         <style>
           .header {
             font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
@@ -73,7 +73,7 @@
         stroke-dashoffset: 251.32741228718345;
       }
       to {
-        stroke-dashoffset: 54.27141795112602;
+        stroke-dashoffset: 54.30674486489363;
       }
     }
   
