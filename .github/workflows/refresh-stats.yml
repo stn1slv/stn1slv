@@ -6,8 +6,8 @@ on:
   schedule:
     # Runs at midnight on the 15th of every month
     - cron: '0 0 15 * *'
-    # Runs daily, but guarded by a shell check for the last day
-    - cron: '0 0 * * *'
+    # Runs at midnight on the 1st of every month
+    - cron: '0 0 1 * *'
   workflow_dispatch:
 permissions:
   contents: write
