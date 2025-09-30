@@ -44,18 +44,35 @@ jobs:
               echo "github-stats.svg is too small, reverting changes..."
               git checkout HEAD -- img/github-stats.svg
             fi
-      - name: Update GitHub Streak Stats
-        continue-on-error: true
-        run: |
-            wget -O img/streak-stats-dark.svg "https://streak-stats.demolab.com/?user=stn1slv&theme=gotham&mode=weekly&card_width=400&hide_border=true"
-            wget -O img/streak-stats-light.svg "https://streak-stats.demolab.com/?user=stn1slv&theme=vue&mode=weekly&card_width=400&hide_border=true"
-            wget -O img/streak-stats.svg "https://streak-stats.demolab.com/?user=stn1slv&mode=weekly&card_width=400"
+      # - name: Update GitHub Streak Stats
+      #   continue-on-error: true
+      #   run: |
+      #       wget -O img/streak-stats-dark.svg "https://streak-stats.demolab.com/?user=stn1slv&theme=gotham&mode=weekly&card_width=400&hide_border=true"
+      #       wget -O img/streak-stats-light.svg "https://streak-stats.demolab.com/?user=stn1slv&theme=vue&mode=weekly&card_width=400&hide_border=true"
+      #       wget -O img/streak-stats.svg "https://streak-stats.demolab.com/?user=stn1slv&mode=weekly&card_width=400"
       - name: Update Most used languages
         continue-on-error: true
         run: |
                 wget -O img/top-langs-dark.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&size_weight=0.5&count_weight=0.5&hide=markdown,xml,asciidoc,handlebars&langs_count=8&no-bg=true&hide_border=true&theme=vue-dark"
+                # Check file size and revert if too small
+                if [ $(stat -c%s img/top-langs-dark.svg 2>/dev/null || stat -f%z img/top-langs-dark.svg) -lt 3000 ]; then
+                  echo "top-langs-dark.svg is too small, reverting changes..."
+                  git checkout HEAD -- img/top-langs-dark.svg
+                fi
+                
                 wget -O img/top-langs-light.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&size_weight=0.5&count_weight=0.5&hide=markdown,xml,asciidoc,handlebars&langs_count=8&no-bg=true&theme=vue"
+                # Check file size and revert if too small
+                if [ $(stat -c%s img/top-langs-light.svg 2>/dev/null || stat -f%z img/top-langs-light.svg) -lt 3000 ]; then
+                  echo "top-langs-light.svg is too small, reverting changes..."
+                  git checkout HEAD -- img/top-langs-light.svg
+                fi
+                
                 wget -O img/top-langs.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&size_weight=0.5&count_weight=0.5&hide=markdown,xml,asciidoc,handlebars&langs_count=8&no-bg=true"
+                # Check file size and revert if too small
+                if [ $(stat -c%s img/top-langs.svg 2>/dev/null || stat -f%z img/top-langs.svg) -lt 3000 ]; then
+                  echo "top-langs.svg is too small, reverting changes..."
+                  git checkout HEAD -- img/top-langs.svg
+                fi
       # - name: Update Contributor stat
       #   run: |
       #         wget -O img/github-contributor-dark.svg "https://github-contributor-stats.vercel.app/api?username=stn1slv&limit=10&theme=vue-dark&combine_all_yearly_contributions=true&hide_title=false&hide_border=true&locale=en&custom_title=GitHub%20Contributions"
