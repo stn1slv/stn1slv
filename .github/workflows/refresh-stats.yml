@@ -4,10 +4,9 @@ on:
     branches:
       - main
   schedule:
-    # Runs at midnight on the 15th of every month
-    - cron: '0 0 15 * *'
-    # Runs at midnight on the 1st of every month
-    - cron: '0 0 1 * *'
+    - cron: '0 0 5 * *'   # Run on the 5st of every month at midnight UTC
+    - cron: '0 0 15 * *'  # Run on the 15th of every month at midnight UTC
+    - cron: '0 0 25 * *'  # Run on the 25st of every month at midnight UTC
   workflow_dispatch:
 permissions:
   contents: write
@@ -26,21 +25,21 @@ jobs:
         run: |
             wget -O img/github-stats-dark.svg "https://github-readme-stats.vercel.app/api?username=stn1slv&show_icons=true&hide_border=true&locale=en&count_private=true&include_all_commits=true&hide_title=true&theme=vue-dark"
             # Check file size and revert if too small
-            if [ $(stat -c%s img/github-stats-dark.svg 2>/dev/null || stat -f%z img/github-stats-dark.svg) -lt 3000 ]; then
+            if [ $(stat -c%s img/github-stats-dark.svg 2>/dev/null || stat -f%z img/github-stats-dark.svg) -lt 2500 ]; then
               echo "github-stats-dark.svg is too small, reverting changes..."
               git checkout HEAD -- img/github-stats-dark.svg
             fi
             
             wget -O img/github-stats-light.svg "https://github-readme-stats.vercel.app/api?username=stn1slv&show_icons=true&hide_border=true&locale=en&count_private=true&include_all_commits=true&hide_title=true&theme=vue"
             # Check file size and revert if too small
-            if [ $(stat -c%s img/github-stats-light.svg 2>/dev/null || stat -f%z img/github-stats-light.svg) -lt 3000 ]; then
+            if [ $(stat -c%s img/github-stats-light.svg 2>/dev/null || stat -f%z img/github-stats-light.svg) -lt 2500 ]; then
               echo "github-stats-light.svg is too small, reverting changes..."
               git checkout HEAD -- img/github-stats-light.svg
             fi
             
             wget -O img/github-stats.svg "https://github-readme-stats.vercel.app/api?username=stn1slv&show_icons=true"
             # Check file size and revert if too small
-            if [ $(stat -c%s img/github-stats.svg 2>/dev/null || stat -f%z img/github-stats.svg) -lt 3000 ]; then
+            if [ $(stat -c%s img/github-stats.svg 2>/dev/null || stat -f%z img/github-stats.svg) -lt 2500 ]; then
               echo "github-stats.svg is too small, reverting changes..."
               git checkout HEAD -- img/github-stats.svg
             fi
@@ -55,21 +54,21 @@ jobs:
         run: |
                 wget -O img/top-langs-dark.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&size_weight=0.5&count_weight=0.5&hide=markdown,xml,asciidoc,handlebars&langs_count=8&no-bg=true&hide_border=true&theme=vue-dark"
                 # Check file size and revert if too small
-                if [ $(stat -c%s img/top-langs-dark.svg 2>/dev/null || stat -f%z img/top-langs-dark.svg) -lt 3000 ]; then
+                if [ $(stat -c%s img/top-langs-dark.svg 2>/dev/null || stat -f%z img/top-langs-dark.svg) -lt 2500 ]; then
                   echo "top-langs-dark.svg is too small, reverting changes..."
                   git checkout HEAD -- img/top-langs-dark.svg
                 fi
                 
                 wget -O img/top-langs-light.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&size_weight=0.5&count_weight=0.5&hide=markdown,xml,asciidoc,handlebars&langs_count=8&no-bg=true&theme=vue"
                 # Check file size and revert if too small
-                if [ $(stat -c%s img/top-langs-light.svg 2>/dev/null || stat -f%z img/top-langs-light.svg) -lt 3000 ]; then
+                if [ $(stat -c%s img/top-langs-light.svg 2>/dev/null || stat -f%z img/top-langs-light.svg) -lt 2500 ]; then
                   echo "top-langs-light.svg is too small, reverting changes..."
                   git checkout HEAD -- img/top-langs-light.svg
                 fi
                 
                 wget -O img/top-langs.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&size_weight=0.5&count_weight=0.5&hide=markdown,xml,asciidoc,handlebars&langs_count=8&no-bg=true"
                 # Check file size and revert if too small
-                if [ $(stat -c%s img/top-langs.svg 2>/dev/null || stat -f%z img/top-langs.svg) -lt 3000 ]; then
+                if [ $(stat -c%s img/top-langs.svg 2>/dev/null || stat -f%z img/top-langs.svg) -lt 2500 ]; then
                   echo "top-langs.svg is too small, reverting changes..."
                   git checkout HEAD -- img/top-langs.svg
                 fi
