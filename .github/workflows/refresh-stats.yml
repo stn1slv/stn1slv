@@ -23,25 +23,37 @@ jobs:
       - name: Update GitHub Stats
         continue-on-error: true
         run: |
-            wget -O img/github-stats-dark.svg "https://github-readme-stats.vercel.app/api?username=stn1slv&show_icons=true&hide_border=true&locale=en&count_private=true&include_all_commits=true&hide_title=true&theme=vue-dark"
-            # Check file size and revert if too small
-            if [ $(stat -c%s img/github-stats-dark.svg 2>/dev/null || stat -f%z img/github-stats-dark.svg) -lt 2500 ]; then
-              echo "github-stats-dark.svg is too small, reverting changes..."
-              git checkout HEAD -- img/github-stats-dark.svg
+            if wget -O img/github-stats-dark.svg "https://github-readme-stats.vercel.app/api?username=stn1slv&show_icons=true&hide_border=true&locale=en&count_private=true&include_all_commits=true&hide_title=true&theme=vue-dark"; then
+              # Check file size and revert if too small
+              if [ $(stat -c%s img/github-stats-dark.svg 2>/dev/null || stat -f%z img/github-stats-dark.svg) -lt 2500 ]; then
+                echo "github-stats-dark.svg is too small, reverting changes..."
+                git checkout HEAD -- img/github-stats-dark.svg 2>/dev/null || rm -f img/github-stats-dark.svg
+              fi
+            else
+              echo "Failed to download github-stats-dark.svg, removing file..."
+              git checkout HEAD -- img/github-stats-dark.svg 2>/dev/null || rm -f img/github-stats-dark.svg
             fi
             
-            wget -O img/github-stats-light.svg "https://github-readme-stats.vercel.app/api?username=stn1slv&show_icons=true&hide_border=true&locale=en&count_private=true&include_all_commits=true&hide_title=true&theme=vue"
-            # Check file size and revert if too small
-            if [ $(stat -c%s img/github-stats-light.svg 2>/dev/null || stat -f%z img/github-stats-light.svg) -lt 2500 ]; then
-              echo "github-stats-light.svg is too small, reverting changes..."
-              git checkout HEAD -- img/github-stats-light.svg
+            if wget -O img/github-stats-light.svg "https://github-readme-stats.vercel.app/api?username=stn1slv&show_icons=true&hide_border=true&locale=en&count_private=true&include_all_commits=true&hide_title=true&theme=vue"; then
+              # Check file size and revert if too small
+              if [ $(stat -c%s img/github-stats-light.svg 2>/dev/null || stat -f%z img/github-stats-light.svg) -lt 2500 ]; then
+                echo "github-stats-light.svg is too small, reverting changes..."
+                git checkout HEAD -- img/github-stats-light.svg 2>/dev/null || rm -f img/github-stats-light.svg
+              fi
+            else
+              echo "Failed to download github-stats-light.svg, removing file..."
+              git checkout HEAD -- img/github-stats-light.svg 2>/dev/null || rm -f img/github-stats-light.svg
             fi
             
-            wget -O img/github-stats.svg "https://github-readme-stats.vercel.app/api?username=stn1slv&show_icons=true"
-            # Check file size and revert if too small
-            if [ $(stat -c%s img/github-stats.svg 2>/dev/null || stat -f%z img/github-stats.svg) -lt 2500 ]; then
-              echo "github-stats.svg is too small, reverting changes..."
-              git checkout HEAD -- img/github-stats.svg
+            if wget -O img/github-stats.svg "https://github-readme-stats.vercel.app/api?username=stn1slv&show_icons=true"; then
+              # Check file size and revert if too small
+              if [ $(stat -c%s img/github-stats.svg 2>/dev/null || stat -f%z img/github-stats.svg) -lt 2500 ]; then
+                echo "github-stats.svg is too small, reverting changes..."
+                git checkout HEAD -- img/github-stats.svg 2>/dev/null || rm -f img/github-stats.svg
+              fi
+            else
+              echo "Failed to download github-stats.svg, removing file..."
+              git checkout HEAD -- img/github-stats.svg 2>/dev/null || rm -f img/github-stats.svg
             fi
       # - name: Update GitHub Streak Stats
       #   continue-on-error: true
@@ -52,25 +64,37 @@ jobs:
       - name: Update Most used languages
         continue-on-error: true
         run: |
-                wget -O img/top-langs-dark.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&size_weight=0.5&count_weight=0.5&hide=markdown,xml,asciidoc,handlebars&langs_count=8&no-bg=true&hide_border=true&theme=vue-dark"
-                # Check file size and revert if too small
-                if [ $(stat -c%s img/top-langs-dark.svg 2>/dev/null || stat -f%z img/top-langs-dark.svg) -lt 2500 ]; then
-                  echo "top-langs-dark.svg is too small, reverting changes..."
-                  git checkout HEAD -- img/top-langs-dark.svg
+                if wget -O img/top-langs-dark.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&size_weight=0.5&count_weight=0.5&hide=markdown,xml,asciidoc,handlebars&langs_count=8&no-bg=true&hide_border=true&theme=vue-dark"; then
+                  # Check file size and revert if too small
+                  if [ $(stat -c%s img/top-langs-dark.svg 2>/dev/null || stat -f%z img/top-langs-dark.svg) -lt 2500 ]; then
+                    echo "top-langs-dark.svg is too small, reverting changes..."
+                    git checkout HEAD -- img/top-langs-dark.svg 2>/dev/null || rm -f img/top-langs-dark.svg
+                  fi
+                else
+                  echo "Failed to download top-langs-dark.svg, removing file..."
+                  git checkout HEAD -- img/top-langs-dark.svg 2>/dev/null || rm -f img/top-langs-dark.svg
                 fi
                 
-                wget -O img/top-langs-light.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&size_weight=0.5&count_weight=0.5&hide=markdown,xml,asciidoc,handlebars&langs_count=8&no-bg=true&theme=vue"
-                # Check file size and revert if too small
-                if [ $(stat -c%s img/top-langs-light.svg 2>/dev/null || stat -f%z img/top-langs-light.svg) -lt 2500 ]; then
-                  echo "top-langs-light.svg is too small, reverting changes..."
-                  git checkout HEAD -- img/top-langs-light.svg
+                if wget -O img/top-langs-light.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&size_weight=0.5&count_weight=0.5&hide=markdown,xml,asciidoc,handlebars&langs_count=8&no-bg=true&theme=vue"; then
+                  # Check file size and revert if too small
+                  if [ $(stat -c%s img/top-langs-light.svg 2>/dev/null || stat -f%z img/top-langs-light.svg) -lt 2500 ]; then
+                    echo "top-langs-light.svg is too small, reverting changes..."
+                    git checkout HEAD -- img/top-langs-light.svg 2>/dev/null || rm -f img/top-langs-light.svg
+                  fi
+                else
+                  echo "Failed to download top-langs-light.svg, removing file..."
+                  git checkout HEAD -- img/top-langs-light.svg 2>/dev/null || rm -f img/top-langs-light.svg
                 fi
                 
-                wget -O img/top-langs.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&size_weight=0.5&count_weight=0.5&hide=markdown,xml,asciidoc,handlebars&langs_count=8&no-bg=true"
-                # Check file size and revert if too small
-                if [ $(stat -c%s img/top-langs.svg 2>/dev/null || stat -f%z img/top-langs.svg) -lt 2500 ]; then
-                  echo "top-langs.svg is too small, reverting changes..."
-                  git checkout HEAD -- img/top-langs.svg
+                if wget -O img/top-langs.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&size_weight=0.5&count_weight=0.5&hide=markdown,xml,asciidoc,handlebars&langs_count=8&no-bg=true"; then
+                  # Check file size and revert if too small
+                  if [ $(stat -c%s img/top-langs.svg 2>/dev/null || stat -f%z img/top-langs.svg) -lt 2500 ]; then
+                    echo "top-langs.svg is too small, reverting changes..."
+                    git checkout HEAD -- img/top-langs.svg 2>/dev/null || rm -f img/top-langs.svg
+                  fi
+                else
+                  echo "Failed to download top-langs.svg, removing file..."
+                  git checkout HEAD -- img/top-langs.svg 2>/dev/null || rm -f img/top-langs.svg
                 fi
       # - name: Update Contributor stat
       #   run: |
@@ -79,6 +103,6 @@ jobs:
       - name: Commit report
         run: |
           git status
-          git add *.svg
-          git commit -am "Stats refreshed"
+          git add img/*.svg || echo "No SVG files to stage"
+          git commit -m "Stats refreshed" || echo "No changes to commit"
           git push origin main
