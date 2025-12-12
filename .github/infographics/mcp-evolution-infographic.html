@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://cdn.jsdelivr.net https://cdn.plot.ly https://generativelanguage.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://generativelanguage.googleapis.com;">
+    <title>MCP: The Evolution of Context</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827;
+            /* Gray 900 */
+            color: #f3f4f6;
+        }
+
+        .glass-card {
+            background: rgba(31, 41, 55, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(75, 85, 99, 0.4);
+        }
+
+        /* Chart Container Styling Rules */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            /* Max width constraint */
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            /* Base height */
+            max-height: 400px;
+        }
+
+        /* Specific size tweaks for individual charts */
+        .chart-container.growth-chart {
+            height: 220px;
+            /* reduced height for Effective Context Window */
+            max-height: 260px;
+        }
+
+        .chart-container.latency-chart {
+            height: 300px;
+            /* increased slightly to finish higher than the growth chart */
+            max-height: 340px;
+        }
+
+        /* Custom Timeline Node - CSS Shapes Only */
+        .timeline-node {
+            width: 20px;
+            height: 20px;
+            background-color: #06b6d4;
+            border-radius: 50%;
+            border: 4px solid #111827;
+            position: relative;
+            z-index: 10;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, #06b6d4, #8b5cf6, #ec4899);
+            z-index: 0;
+        }
+
+        /* AI Chat Widget Styles */
+        .chat-widget {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 50;
+        }
+
+        .chat-button {
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #06b6d4, #8b5cf6);
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+            font-size: 1.5rem;
+        }
+
+        .chat-button:hover {
+            transform: scale(1.1);
+        }
+
+        .chat-window {
+            position: absolute;
+            bottom: 4.5rem;
+            right: 0;
+            width: 350px;
+            height: 450px;
+            background: rgba(17, 24, 39, 0.95);
+            backdrop-filter: blur(12px);
+            border: 1px solid #374151;
+            border-radius: 1rem;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            transition: opacity 0.3s, transform 0.3s;
+            transform-origin: bottom right;
+        }
+
+        .chat-window.hidden {
+            opacity: 0;
+            transform: scale(0.9);
+            pointer-events: none;
+        }
+
+        .chat-header {
+            padding: 1rem;
+            background: rgba(31, 41, 55, 0.8);
+            border-bottom: 1px solid #374151;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            line-height: 1.4;
+        }
+
+        .message.user {
+            align-self: flex-end;
+            background: #8b5cf6;
+            color: white;
+            border-bottom-right-radius: 0;
+        }
+
+        .message.ai {
+            align-self: flex-start;
+            background: #374151;
+            color: #e5e7eb;
+            border-bottom-left-radius: 0;
+            border-left: 2px solid #06b6d4;
+        }
+
+        .chat-input-area {
+            padding: 1rem;
+            border-top: 1px solid #374151;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Loading Dots */
+        .typing-indicator span {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            background-color: #9ca3af;
+            border-radius: 50%;
+            animation: typing 1.4s infinite ease-in-out both;
+            margin: 0 2px;
+        }
+
+        .typing-indicator span:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation-delay: -0.16s;
+        }
+
+        @keyframes typing {
+
+            0%,
+            80%,
+            100% {
+                transform: scale(0);
+            }
+
+            40% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body class="overflow-x-hidden">
+
+    <!-- Hero Section -->
+    <header class="w-full py-16 px-6 text-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-cyan-900/20 to-purple-900/20 z-0"></div>
+        <div class="relative z-10 max-w-4xl mx-auto">
+            <h1
+                class="text-5xl md:text-7xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 mb-6">
+                Model Context Protocol
+            </h1>
+            <h2 class="text-2xl md:text-3xl text-gray-300 font-light">
+                Evolution Roadmap: 2024 - 2025
+            </h2>
+            <p class="mt-6 text-lg text-gray-400 max-w-2xl mx-auto">
+                Tracking the rapid advancement of MCP from its foundational release to the cognitive bridging of the
+                future. A journey through four pivotal updates.
+            </p>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-6 pb-20 grid grid-cols-1 md:grid-cols-12 gap-8">
+
+        <!-- Intro Text -->
+        <section class="md:col-span-12 mb-8">
+            <div class="glass-card rounded-2xl p-8 shadow-2xl border-l-4 border-cyan-500">
+                <h3 class="text-2xl font-bold text-cyan-400 mb-4">Why Context Matters</h3>
+                <p class="text-gray-300 leading-relaxed">
+                    The Model Context Protocol (MCP) serves as the standard for how Large Language Models (LLMs)
+                    interface with external data, memory, and environment. Between late 2024 and late 2025, the protocol
+                    underwent a radical transformation, moving from simple state management to complex, multi-modal
+                    cognitive bridging. This infographic breaks down that evolution.
+                </p>
+            </div>
+        </section>
+
+        <!-- LEFT COLUMN: Timeline & Qualitative Analysis -->
+        <div class="md:col-span-5 flex flex-col gap-8">
+
+            <!-- Timeline Section -->
+            <section class="glass-card rounded-2xl p-6 shadow-lg">
+                <h3 class="text-xl font-bold text-white mb-6 border-b border-gray-700 pb-2">Release Chronology</h3>
+
+                <div class="relative py-4">
+                    <!-- Vertical Line -->
+                    <div class="timeline-line"></div>
+
+                    <!-- Item 1: Nov 2024 -->
+                    <div class="relative flex items-center justify-between mb-12 group">
+                        <div class="w-5/12 text-right pr-4">
+                            <h4 class="text-cyan-400 font-bold text-lg">Nov 05, 2024</h4>
+                            <span class="text-xs text-gray-400 uppercase tracking-wider">Foundation</span>
+                        </div>
+                        <div class="timeline-node shadow-[0_0_15px_rgba(6,182,212,0.6)]"></div>
+                        <div class="w-5/12 pl-4">
+                            <p class="text-sm text-gray-300">Initial protocol definition. Standardization of context
+                                injection hooks.</p>
+                        </div>
+                    </div>
+
+                    <!-- Item 2: Mar 2025 -->
+                    <div class="relative flex items-center justify-between mb-12">
+                        <div class="w-5/12 text-right pr-4">
+                            <h4 class="text-cyan-400 font-bold text-lg">Mar 26, 2025</h4>
+                            <span class="text-xs text-gray-400 uppercase tracking-wider">Velocity</span>
+                        </div>
+                        <div class="timeline-node bg-purple-500 shadow-[0_0_15px_rgba(139,92,246,0.6)]"></div>
+                        <div class="w-5/12 pl-4">
+                            <p class="text-sm text-gray-300">Compression algorithms introduced. Latency reduced by 40%.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Item 3: June 2025 -->
+                    <div class="relative flex items-center justify-between mb-12">
+                        <div class="w-5/12 text-right pr-4">
+                            <h4 class="text-cyan-400 font-bold text-lg">Jun 18, 2025</h4>
+                            <span class="text-xs text-gray-400 uppercase tracking-wider">Nexus</span>
+                        </div>
+                        <div class="timeline-node bg-pink-500 shadow-[0_0_15px_rgba(236,72,153,0.6)]"></div>
+                        <div class="w-5/12 pl-4">
+                            <p class="text-sm text-gray-300">Multi-modal context bridge (Audio/Video support). Cross-app
+                                persistence.</p>
+                        </div>
+                    </div>
+
+                    <!-- Item 4: Nov 2025 -->
+                    <div class="relative flex items-center justify-between">
+                        <div class="w-5/12 text-right pr-4">
+                            <h4 class="text-cyan-400 font-bold text-lg">Nov 25, 2025</h4>
+                            <span class="text-xs text-gray-400 uppercase tracking-wider">Cognition</span>
+                        </div>
+                        <div class="timeline-node bg-white shadow-[0_0_15px_rgba(255,255,255,0.6)]"></div>
+                        <div class="w-5/12 pl-4">
+                            <p class="text-sm text-gray-300">Recursive memory architectures. "Infinite" context
+                                simulation.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Qualitative Card -->
+            <section class="glass-card rounded-2xl p-6 shadow-lg bg-gradient-to-br from-gray-800 to-gray-900">
+                <h3 class="text-xl font-bold text-white mb-4">Key Innovation Drivers</h3>
+                <ul class="space-y-4">
+                    <li class="flex items-start">
+                        <span class="text-2xl mr-3">🚀</span>
+                        <div>
+                            <strong class="text-purple-400 block">Latency Criticality</strong>
+                            <p class="text-sm text-gray-400">The March update was driven purely by the need for
+                                sub-100ms response times in real-time agents.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-2xl mr-3">👁️</span>
+                        <div>
+                            <strong class="text-pink-400 block">Visual Grounding</strong>
+                            <p class="text-sm text-gray-400">June's release enabled models to "see" their context
+                                history rather than just reading text logs.</p>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Chart: Performance Optimization (moved from right column) -->
+            <section class="glass-card rounded-2xl p-6 shadow-lg">
+                <div class="mb-4">
+                    <h3 class="text-xl font-bold text-white">Performance Optimization</h3>
+                    <p class="text-sm text-gray-400">Average context retrieval latency (ms) per 10k tokens. Lower is
+                        better.</p>
+                </div>
+                <div class="chart-container latency-chart">
+                    <canvas id="latencyChart"></canvas>
+                </div>
+                <p class="mt-4 text-xs text-center text-gray-500 italic">
+                    The "Velocity" update (Mar '25) marked the most significant drop in processing overhead.
+                </p>
+            </section>
+        </div>
+
+        <!-- RIGHT COLUMN: Data Visualization -->
+        <div class="md:col-span-7 flex flex-col gap-8">
+
+            <!-- Chart 1: Feature Capability (Radar Chart) -->
+            <section class="glass-card rounded-2xl p-6 shadow-lg">
+                <div class="mb-4">
+                    <h3 class="text-xl font-bold text-white">Capability Fingerprint</h3>
+                    <p class="text-sm text-gray-400">Comparing the foundational release (Nov '24) with the futuristic
+                        Nov '25 standard.</p>
+                </div>
+                <div class="chart-container">
+                    <canvas id="radarChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Protocol Maturity Matrix -->
+            <section class="md:col-span-12 mt-4">
+                <div class="glass-card rounded-2xl p-6 shadow-lg overflow-x-auto">
+                    <h3 class="text-xl font-bold text-white mb-4">Protocol Maturity Matrix</h3>
+                    <p class="text-sm text-gray-400 mb-4">Summary of phases, authorization methods, tool outputs, and async capabilities across releases.</p>
+
+                    <div class="w-full">
+                        <table class="min-w-full text-sm border-collapse">
+                            <thead>
+                                <tr class="text-left text-xs text-gray-400 uppercase">
+                                    <th class="px-4 py-2">Phase</th>
+                                    <th class="px-4 py-2">Authorization</th>
+                                    <th class="px-4 py-2">Tool Output</th>
+                                    <th class="px-4 py-2">Async Operations</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-gray-300">
+                                <tr class="border-t border-gray-700">
+                                    <td class="px-4 py-3 font-medium">Nov 05, 2024<br>(Foundation)</td>
+                                    <td class="px-4 py-3">❌ Ad-hoc / None</td>
+                                    <td class="px-4 py-3">📝 Text Only</td>
+                                    <td class="px-4 py-3">❌ None</td>
+                                </tr>
+                                <tr class="border-t border-gray-700 bg-gray-900/50">
+                                    <td class="px-4 py-3 font-medium">Mar 26, 2025<br>(Velocity Update)</td>
+                                    <td class="px-4 py-3">🔐 OAuth 2.1 (Basic)</td>
+                                    <td class="px-4 py-3">📄 Text + Annotations</td>
+                                    <td class="px-4 py-3">⏳ Progress Tokens</td>
+                                </tr>
+                                <tr class="border-t border-gray-700">
+                                    <td class="px-4 py-3 font-medium">Jun 18, 2025<br>(Nexis Bridge)</td>
+                                    <td class="px-4 py-3">🔐 OAuth 2.1 + RFC 8707</td>
+                                    <td class="px-4 py-3">🧾 Structured (JSON)</td>
+                                    <td class="px-4 py-3">⏳ Progress Tokens</td>
+                                </tr>
+                                <tr class="border-t border-gray-700 bg-gray-900/50">
+                                    <td class="px-4 py-3 font-medium">Nov 25, 2025<br>(Cognitive Era)</td>
+                                    <td class="px-4 py-3">🔐 OAuth 2.1 + OIDC</td>
+                                    <td class="px-4 py-3">🧾 Structured (JSON)</td>
+                                    <td class="px-4 py-3">⚡ Tasks API</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Chart 2: Context Window Growth (moved to right column) -->
+            <section class="glass-card rounded-2xl p-6 shadow-lg">
+                <div class="mb-4">
+                    <h3 class="text-xl font-bold text-white">Effective Context Window</h3>
+                    <p class="text-sm text-gray-400">Growth of manageable context tokens (Millions) over release cycles.
+                    </p>
+                </div>
+                <div class="chart-container growth-chart">
+                    <canvas id="growthChart"></canvas>
+                </div>
+            </section>
+        </div>
+
+        
+    </main>
+
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // --- UTILITY: Label Wrapping Logic (16 char limit) ---
+        function wrapLabel(str) {
+            if (str.length <= 16) return str;
+            const words = str.split(' ');
+            const lines = [];
+            let currentLine = words[0];
+
+            for (let i = 1; i < words.length; i++) {
+                if ((currentLine + " " + words[i]).length <= 16) {
+                    currentLine += " " + words[i];
+                } else {
+                    lines.push(currentLine);
+                    currentLine = words[i];
+                }
+            }
+            lines.push(currentLine);
+            return lines;
+        }
+
+        // --- GLOBAL CHART CONFIG ---
+        Chart.defaults.color = '#9ca3af';
+        Chart.defaults.font.family = 'Inter';
+
+        // --- DATA SETS ---
+        const versionLabels = ['Nov 05, 2024', 'Mar 26, 2025', 'Jun 18, 2025', 'Nov 25, 2025'];
+        const versionNames = ['Foundation', 'Velocity Update', 'Nexus Bridge', 'Cognitive Era'];
+
+        // Wrap labels for charts
+        const wrappedLabels = versionLabels.map((date, i) => wrapLabel(`${date} (${versionNames[i]})`));
+
+        // --- CHART 1: Latency (Bar) ---
+        const ctxLatency = document.getElementById('latencyChart').getContext('2d');
+        new Chart(ctxLatency, {
+            type: 'bar',
+            data: {
+                labels: wrappedLabels,
+                datasets: [{
+                    label: 'Retrieval Latency (ms)',
+                    data: [450, 210, 180, 45], // Simulated drop
+                    backgroundColor: [
+                        'rgba(6, 182, 212, 0.5)', // Cyan
+                        'rgba(139, 92, 246, 0.8)', // Purple (Focus on Velocity)
+                        'rgba(236, 72, 153, 0.5)', // Pink
+                        'rgba(255, 255, 255, 0.5)' // White
+                    ],
+                    borderColor: [
+                        '#06b6d4', '#8b5cf6', '#ec4899', '#ffffff'
+                    ],
+                    borderWidth: 2,
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: 'rgba(17, 24, 39, 0.9)',
+                        titleColor: '#fff',
+                        bodyColor: '#cbd5e1',
+                        callbacks: {
+                            title: function (tooltipItems) {
+                                const item = tooltipItems[0];
+                                let label = item.chart.data.labels[item.dataIndex];
+                                return Array.isArray(label) ? label.join(' ') : label;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(75, 85, 99, 0.2)' },
+                        title: { display: true, text: 'Milliseconds (Lower is Better)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // --- CHART 2: Capability Radar ---
+        const ctxRadar = document.getElementById('radarChart').getContext('2d');
+        new Chart(ctxRadar, {
+            type: 'radar',
+            data: {
+                labels: ['Speed', 'Security', 'Modality', 'Memory Depth', 'API Ease'],
+                datasets: [{
+                    label: 'Nov 2024',
+                    data: [40, 60, 20, 30, 80],
+                    borderColor: '#06b6d4', // Cyan
+                    backgroundColor: 'rgba(6, 182, 212, 0.2)',
+                    pointBackgroundColor: '#06b6d4'
+                }, {
+                    label: 'Nov 2025',
+                    data: [95, 90, 100, 100, 75], // slight drop in ease due to complexity
+                    borderColor: '#ec4899', // Pink
+                    backgroundColor: 'rgba(236, 72, 153, 0.2)',
+                    pointBackgroundColor: '#ec4899'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: '#f3f4f6' } },
+                    tooltip: {
+                        callbacks: {
+                            title: function (tooltipItems) {
+                                const item = tooltipItems[0];
+                                let label = item.chart.data.labels[item.dataIndex];
+                                return Array.isArray(label) ? label.join(' ') : label;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    r: {
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        angleLines: { color: 'rgba(255, 255, 255, 0.1)' },
+                        pointLabels: { color: '#9ca3af', font: { size: 12 } },
+                        suggestedMin: 0,
+                        suggestedMax: 100
+                    }
+                }
+            }
+        });
+
+        // --- CHART 3: Growth Line ---
+        const ctxGrowth = document.getElementById('growthChart').getContext('2d');
+        new Chart(ctxGrowth, {
+            type: 'line',
+            data: {
+                labels: wrappedLabels,
+                datasets: [{
+                    label: 'Max Context Tokens (Millions)',
+                    data: [0.1, 1.0, 5.0, 12.0], // Exponential growth
+                    borderColor: '#8b5cf6', // Purple
+                    backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4, // Smooth curve
+                    pointRadius: 6,
+                    pointHoverRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            title: function (tooltipItems) {
+                                const item = tooltipItems[0];
+                                let label = item.chart.data.labels[item.dataIndex];
+                                return Array.isArray(label) ? label.join(' ') : label;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(75, 85, 99, 0.2)' }
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+
+        // --- CHART 4: Plotly Bubble Chart (Adoption vs Complexity) ---
+        const trace1 = {
+            x: [1, 2, 3, 4], // Versions
+            y: [20, 45, 70, 95], // Complexity Score
+            mode: 'markers',
+            marker: {
+                size: [20, 40, 60, 90], // Adoption Volume
+                color: ['#06b6d4', '#8b5cf6', '#ec4899', '#ffffff'],
+                opacity: 0.8
+            },
+            text: ['Base Install', 'High Speed', 'Multi-Modal', 'Cognitive Net'],
+            type: 'scatter'
+        };
+
+        const layout = {
+            margin: { t: 20, r: 20, b: 40, l: 40 },
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            showlegend: false,
+            xaxis: {
+                title: 'Release Version',
+                showgrid: false,
+                zeroline: false,
+                tickvals: [1, 2, 3, 4],
+                ticktext: ['v1.0', 'v1.5', 'v2.0', 'v2.5'],
+                color: '#9ca3af'
+            },
+            yaxis: {
+                title: 'System Complexity',
+                showgrid: true,
+                gridcolor: 'rgba(255,255,255,0.1)',
+                color: '#9ca3af'
+            }
+        };
+
+        // Render Plotly to div
+        Plotly.newPlot('plotlyDiv', [trace1], layout, { displayModeBar: false, responsive: true });
+
+    </script>
+</body>
+</html>
