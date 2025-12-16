@@ -64,7 +64,7 @@ jobs:
       - name: Update Most used languages
         continue-on-error: true
         run: |
-                if wget -O img/top-langs-dark.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&size_weight=0.5&count_weight=0.5&hide=markdown,xml,asciidoc,handlebars&langs_count=8&no-bg=true&hide_border=true&theme=vue-dark"; then
+                if wget -O img/top-langs-dark.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&hide=markdown,xml,asciidoc,html,handlebars&langs_count=8&no-bg=true&hide_border=true&theme=vue-dark"; then
                   # Check file size and revert if too small
                   if [ $(stat -c%s img/top-langs-dark.svg 2>/dev/null || stat -f%z img/top-langs-dark.svg) -lt 2500 ]; then
                     echo "top-langs-dark.svg is too small, reverting changes..."
@@ -75,7 +75,7 @@ jobs:
                   git checkout HEAD -- img/top-langs-dark.svg 2>/dev/null || rm -f img/top-langs-dark.svg
                 fi
                 
-                if wget -O img/top-langs-light.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&size_weight=0.5&count_weight=0.5&hide=markdown,xml,asciidoc,handlebars&langs_count=8&no-bg=true&theme=vue"; then
+                if wget -O img/top-langs-light.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&hide=markdown,xml,asciidoc,html,handlebars&langs_count=8&no-bg=true&theme=vue"; then
                   # Check file size and revert if too small
                   if [ $(stat -c%s img/top-langs-light.svg 2>/dev/null || stat -f%z img/top-langs-light.svg) -lt 2500 ]; then
                     echo "top-langs-light.svg is too small, reverting changes..."
@@ -86,7 +86,7 @@ jobs:
                   git checkout HEAD -- img/top-langs-light.svg 2>/dev/null || rm -f img/top-langs-light.svg
                 fi
                 
-                if wget -O img/top-langs.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&size_weight=0.5&count_weight=0.5&hide=markdown,xml,asciidoc,handlebars&langs_count=8&no-bg=true"; then
+                if wget -O img/top-langs.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&hide=markdown,xml,html,asciidoc,handlebars&langs_count=8&no-bg=true"; then
                   # Check file size and revert if too small
                   if [ $(stat -c%s img/top-langs.svg 2>/dev/null || stat -f%z img/top-langs.svg) -lt 2500 ]; then
                     echo "top-langs.svg is too small, reverting changes..."
