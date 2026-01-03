@@ -20,82 +20,88 @@ jobs:
           git config --global user.name 'stn1slv'
           git config --global user.email 'stn1slv@users.noreply.github.com'
           git pull origin main
-      - name: Update GitHub Stats
+      - name: Generate GitHub Stats - Dark
         continue-on-error: true
-        run: |
-            if wget -O img/github-stats-dark.svg "https://github-readme-stats.vercel.app/api?username=stn1slv&show_icons=true&hide_border=true&locale=en&count_private=true&include_all_commits=true&hide_title=true&theme=vue-dark"; then
-              # Check file size and revert if too small
-              if [ $(stat -c%s img/github-stats-dark.svg 2>/dev/null || stat -f%z img/github-stats-dark.svg) -lt 2500 ]; then
-                echo "github-stats-dark.svg is too small, reverting changes..."
-                git checkout HEAD -- img/github-stats-dark.svg 2>/dev/null || rm -f img/github-stats-dark.svg
-              fi
-            else
-              echo "Failed to download github-stats-dark.svg, removing file..."
-              git checkout HEAD -- img/github-stats-dark.svg 2>/dev/null || rm -f img/github-stats-dark.svg
-            fi
-            
-            if wget -O img/github-stats-light.svg "https://github-readme-stats.vercel.app/api?username=stn1slv&show_icons=true&hide_border=true&locale=en&count_private=true&include_all_commits=true&hide_title=true&theme=vue"; then
-              # Check file size and revert if too small
-              if [ $(stat -c%s img/github-stats-light.svg 2>/dev/null || stat -f%z img/github-stats-light.svg) -lt 2500 ]; then
-                echo "github-stats-light.svg is too small, reverting changes..."
-                git checkout HEAD -- img/github-stats-light.svg 2>/dev/null || rm -f img/github-stats-light.svg
-              fi
-            else
-              echo "Failed to download github-stats-light.svg, removing file..."
-              git checkout HEAD -- img/github-stats-light.svg 2>/dev/null || rm -f img/github-stats-light.svg
-            fi
-            
-            if wget -O img/github-stats.svg "https://github-readme-stats.vercel.app/api?username=stn1slv&show_icons=true"; then
-              # Check file size and revert if too small
-              if [ $(stat -c%s img/github-stats.svg 2>/dev/null || stat -f%z img/github-stats.svg) -lt 2500 ]; then
-                echo "github-stats.svg is too small, reverting changes..."
-                git checkout HEAD -- img/github-stats.svg 2>/dev/null || rm -f img/github-stats.svg
-              fi
-            else
-              echo "Failed to download github-stats.svg, removing file..."
-              git checkout HEAD -- img/github-stats.svg 2>/dev/null || rm -f img/github-stats.svg
-            fi
+        uses: stn1slv/github-stats-card@v1.0.0
+        with:
+          card-type: stats
+          username: stn1slv
+          token: ${{ secrets.GITHUB_TOKEN }}
+          output: img/github-stats-dark.svg
+          theme: vue-dark
+          show-icons: true
+          hide-border: true
+          hide-title: true
+          include-all-commits: true
+      
+      - name: Generate GitHub Stats - Light
+        continue-on-error: true
+        uses: stn1slv/github-stats-card@v1.0.0
+        with:
+          card-type: stats
+          username: stn1slv
+          token: ${{ secrets.GITHUB_TOKEN }}
+          output: img/github-stats-light.svg
+          theme: vue
+          show-icons: true
+          hide-border: true
+          hide-title: true
+          include-all-commits: true
+      
+      - name: Generate GitHub Stats - Default
+        continue-on-error: true
+        uses: stn1slv/github-stats-card@v1.0.0
+        with:
+          card-type: stats
+          username: stn1slv
+          token: ${{ secrets.GITHUB_TOKEN }}
+          output: img/github-stats.svg
+          show-icons: true
       # - name: Update GitHub Streak Stats
       #   continue-on-error: true
       #   run: |
       #       wget -O img/streak-stats-dark.svg "https://streak-stats.demolab.com/?user=stn1slv&theme=gotham&mode=weekly&card_width=400&hide_border=true"
       #       wget -O img/streak-stats-light.svg "https://streak-stats.demolab.com/?user=stn1slv&theme=vue&mode=weekly&card_width=400&hide_border=true"
       #       wget -O img/streak-stats.svg "https://streak-stats.demolab.com/?user=stn1slv&mode=weekly&card_width=400"
-      - name: Update Most used languages
+      - name: Generate Top Languages - Dark
         continue-on-error: true
-        run: |
-                if wget -O img/top-langs-dark.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&hide=markdown,xml,asciidoc,html,handlebars&langs_count=8&no-bg=true&hide_border=true&theme=vue-dark"; then
-                  # Check file size and revert if too small
-                  if [ $(stat -c%s img/top-langs-dark.svg 2>/dev/null || stat -f%z img/top-langs-dark.svg) -lt 2500 ]; then
-                    echo "top-langs-dark.svg is too small, reverting changes..."
-                    git checkout HEAD -- img/top-langs-dark.svg 2>/dev/null || rm -f img/top-langs-dark.svg
-                  fi
-                else
-                  echo "Failed to download top-langs-dark.svg, removing file..."
-                  git checkout HEAD -- img/top-langs-dark.svg 2>/dev/null || rm -f img/top-langs-dark.svg
-                fi
-                
-                if wget -O img/top-langs-light.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&hide=markdown,xml,asciidoc,html,handlebars&langs_count=8&no-bg=true&theme=vue"; then
-                  # Check file size and revert if too small
-                  if [ $(stat -c%s img/top-langs-light.svg 2>/dev/null || stat -f%z img/top-langs-light.svg) -lt 2500 ]; then
-                    echo "top-langs-light.svg is too small, reverting changes..."
-                    git checkout HEAD -- img/top-langs-light.svg 2>/dev/null || rm -f img/top-langs-light.svg
-                  fi
-                else
-                  echo "Failed to download top-langs-light.svg, removing file..."
-                  git checkout HEAD -- img/top-langs-light.svg 2>/dev/null || rm -f img/top-langs-light.svg
-                fi
-                
-                if wget -O img/top-langs.svg "https://github-readme-stats.vercel.app/api/top-langs?username=stn1slv&show_icons=true&locale=en&layout=compact&hide=markdown,xml,html,asciidoc,handlebars&langs_count=8&no-bg=true"; then
-                  # Check file size and revert if too small
-                  if [ $(stat -c%s img/top-langs.svg 2>/dev/null || stat -f%z img/top-langs.svg) -lt 2500 ]; then
-                    echo "top-langs.svg is too small, reverting changes..."
-                    git checkout HEAD -- img/top-langs.svg 2>/dev/null || rm -f img/top-langs.svg
-                  fi
-                else
-                  echo "Failed to download top-langs.svg, removing file..."
-                  git checkout HEAD -- img/top-langs.svg 2>/dev/null || rm -f img/top-langs.svg
-                fi
+        uses: stn1slv/github-stats-card@v1.0.0
+        with:
+          card-type: top-langs
+          username: stn1slv
+          token: ${{ secrets.GITHUB_TOKEN }}
+          output: img/top-langs-dark.svg
+          theme: vue-dark
+          layout: compact
+          hide-border: true
+          hide: markdown,xml,asciidoc,html,handlebars
+          langs-count: 8
+      
+      - name: Generate Top Languages - Light
+        continue-on-error: true
+        uses: stn1slv/github-stats-card@v1.0.0
+        with:
+          card-type: top-langs
+          username: stn1slv
+          token: ${{ secrets.GITHUB_TOKEN }}
+          output: img/top-langs-light.svg
+          theme: vue
+          layout: compact
+          hide-border: true
+          hide: markdown,xml,asciidoc,html,handlebars
+          langs-count: 8
+      
+      - name: Generate Top Languages - Default
+        continue-on-error: true
+        uses: stn1slv/github-stats-card@v1.0.0
+        with:
+          card-type: top-langs
+          username: stn1slv
+          token: ${{ secrets.GITHUB_TOKEN }}
+          output: img/top-langs.svg
+          layout: compact
+          hide: markdown,xml,html,asciidoc,handlebars
+          langs-count: 8
       # - name: Update Contributor stat
       #   run: |
       #         wget -O img/github-contributor-dark.svg "https://github-contributor-stats.vercel.app/api?username=stn1slv&limit=10&theme=vue-dark&combine_all_yearly_contributions=true&hide_title=false&hide_border=true&locale=en&custom_title=GitHub%20Contributions"
