@@ -76,6 +76,7 @@ jobs:
           hide-border: true
           hide: markdown,xml,asciidoc,html,handlebars
           langs-count: 8
+          weighting: balanced
       
       - name: Generate Top Languages - Light
         continue-on-error: true
@@ -90,6 +91,7 @@ jobs:
           hide-border: true
           hide: markdown,xml,asciidoc,html,handlebars
           langs-count: 8
+          weighting: balanced
       
       - name: Generate Top Languages - Default
         continue-on-error: true
@@ -102,6 +104,7 @@ jobs:
           layout: compact
           hide: markdown,xml,html,asciidoc,handlebars
           langs-count: 8
+          weighting: balanced
       # - name: Update Contributor stat
       #   run: |
       #         wget -O img/github-contributor-dark.svg "https://github-contributor-stats.vercel.app/api?username=stn1slv&limit=10&theme=vue-dark&combine_all_yearly_contributions=true&hide_title=false&hide_border=true&locale=en&custom_title=GitHub%20Contributions"
