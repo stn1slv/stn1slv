@@ -1,4 +1,4 @@
-<svg width="467" height="190" viewBox="0 0 467 190"
+<svg width="467" height="210" viewBox="0 0 467 210"
      fill="none" xmlns="http://www.w3.org/2000/svg"
      role="img" aria-labelledby="titleId descId">
   <title id="titleId">Most Used Languages</title>
@@ -86,7 +86,7 @@
     x="0.5"
     y="0.5"
     rx="4.5"
-    height="189"
+    height="209"
     stroke="#e4e2e2"
     width="466"
     fill="#273849"
@@ -121,21 +121,12 @@
       from { opacity: 0; }
       to { opacity: 1; }
     }
-    @media (prefers-reduced-motion: reduce) {
-      .stagger {
-        animation: none;
-        opacity: 1;
-      }
-      .lang-progress {
-        animation: none;
-      }
-    }
     </style>
 <svg data-testid="lang-items" x="25">
     
   
       <mask id="rect-mask">
-          <rect x="0" y="0" width="417" height="10" fill="white" rx="5"/>
+          <rect x="0" y="0" width="417" height="8" fill="white" rx="5"/>
         </mask>
         
         <rect
@@ -143,90 +134,90 @@
           data-testid="lang-progress"
           x="0"
           y="0"
-          width="180.90827361563518"
-          height="10"
+          width="180.94756733275412"
+          height="8"
           fill="#b07219"
         />
       
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="180.90827361563518"
+          x="180.94756733275412"
           y="0"
-          width="90.46319218241042"
-          height="10"
+          width="90.48284100781929"
+          height="8"
           fill="#00ADD8"
         />
       
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="271.3714657980456"
+          x="271.4304083405734"
           y="0"
-          width="70.36026058631921"
-          height="10"
+          width="70.28496959165943"
+          height="8"
           fill="#3572A5"
         />
       
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="341.73172638436483"
+          x="341.71537793223285"
           y="0"
-          width="26.115700325732895"
-          height="10"
+          width="26.121372719374456"
+          height="8"
           fill="#384d54"
         />
       
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="367.84742671009775"
+          x="367.8367506516073"
           y="0"
-          width="24.159739413680782"
-          height="10"
+          width="24.16498696785404"
+          height="8"
           fill="#C1F12E"
         />
       
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="392.0071661237785"
+          x="392.0017376194613"
           y="0"
-          width="14.887035830618894"
-          height="10"
+          width="14.890269331016507"
+          height="8"
           fill="#89e051"
         />
       
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="406.89420195439743"
+          x="406.8920069504778"
           y="0"
-          width="16.882084690553746"
-          height="10"
+          width="16.883579496090356"
+          height="8"
           fill="#012456"
         />
       
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="423.7762866449512"
+          x="413.7755864465682"
           y="0"
-          width="13.22371335504886"
-          height="10"
+          width="13.224413553431798"
+          height="8"
           fill="#f1e05a"
         />
       
       
-    <g transform="translate(8, 25)">
+    <g transform="translate(0, 25)">
       <g transform="translate(0, 0)"><g transform="translate(0, 0)">
     <g class="stagger" style="animation-delay: 450ms">
       <circle cx="5" cy="6" r="5" fill="#b07219" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
         Java
       </text>
-      <text x="115" y="10" class='lang-name' text-anchor="end">
+      <text x="180" y="10" class='lang-name' text-anchor="end">
         43.4%
       </text>
     </g>
@@ -237,7 +228,7 @@
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
         Go
       </text>
-      <text x="115" y="10" class='lang-name' text-anchor="end">
+      <text x="180" y="10" class='lang-name' text-anchor="end">
         21.7%
       </text>
     </g>
@@ -248,7 +239,7 @@
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
         Python
       </text>
-      <text x="115" y="10" class='lang-name' text-anchor="end">
+      <text x="180" y="10" class='lang-name' text-anchor="end">
         16.9%
       </text>
     </g>
@@ -259,17 +250,17 @@
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
         Dockerfile
       </text>
-      <text x="115" y="10" class='lang-name' text-anchor="end">
+      <text x="180" y="10" class='lang-name' text-anchor="end">
         6.3%
       </text>
     </g>
-  </g></g><g transform="translate(200, 0)"><g transform="translate(0, 0)">
+  </g></g><g transform="translate(225, 0)"><g transform="translate(0, 0)">
     <g class="stagger" style="animation-delay: 450ms">
       <circle cx="5" cy="6" r="5" fill="#C1F12E" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
         Batchfile
       </text>
-      <text x="115" y="10" class='lang-name' text-anchor="end">
+      <text x="180" y="10" class='lang-name' text-anchor="end">
         5.8%
       </text>
     </g>
@@ -280,7 +271,7 @@
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
         Shell
       </text>
-      <text x="115" y="10" class='lang-name' text-anchor="end">
+      <text x="180" y="10" class='lang-name' text-anchor="end">
         3.6%
       </text>
     </g>
@@ -291,7 +282,7 @@
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
         PowerShell
       </text>
-      <text x="115" y="10" class='lang-name' text-anchor="end">
+      <text x="180" y="10" class='lang-name' text-anchor="end">
         1.7%
       </text>
     </g>
@@ -302,7 +293,7 @@
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
         JavaScript
       </text>
-      <text x="115" y="10" class='lang-name' text-anchor="end">
+      <text x="180" y="10" class='lang-name' text-anchor="end">
         0.8%
       </text>
     </g>
