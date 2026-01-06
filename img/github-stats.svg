@@ -65,6 +65,15 @@
             opacity: 1;
           }
         }
+        @media (prefers-reduced-motion: reduce) {
+          .stagger {
+            animation: none;
+            opacity: 1;
+          }
+          .rank-text {
+            animation: none;
+          }
+        }
         
     </style>
     
@@ -111,7 +120,7 @@
     </svg>
   
       <text class="stat bold" x="25" y="12.5">Total Stars Earned:</text>
-      <text class="stat bold" x="219.01" y="12.5">594</text>
+      <text class="stat bold" x="219.01" y="12.5">597</text>
     </g>
   </g>
 <g transform="translate(0, 25)">
@@ -122,7 +131,7 @@
     </svg>
   
       <text class="stat bold" x="25" y="12.5">Total Commits:</text>
-      <text class="stat bold" x="219.01" y="12.5">510</text>
+      <text class="stat bold" x="219.01" y="12.5">512</text>
     </g>
   </g>
 <g transform="translate(0, 50)">
