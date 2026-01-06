@@ -57,6 +57,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           output: img/github-stats.svg
           show-icons: true
+          hide-title: true
       # - name: Update GitHub Streak Stats
       #   continue-on-error: true
       #   run: |
