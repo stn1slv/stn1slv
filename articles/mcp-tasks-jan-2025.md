@@ -1,7 +1,7 @@
 ---
 title: Architecting the Asynchronous Agent - A Guide to MCP Tasks
 description: A technical guide to MCP Tasks — async task primitives, lifecycle, JSON‑RPC methods, and architecture for durable long‑running operations.
-published-at: TBD
+published-at: https://www.linkedin.com/pulse/architecting-asynchronous-agent-guide-mcp-tasks-stanislav-deviatov-tkbsf
 author: Stanislav Deviatov
 date: Jan-2026
 language: en
