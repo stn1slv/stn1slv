@@ -237,6 +237,50 @@ This method allows a requestor to cancel a task that is currently in a non-termi
 }
 ```
 
+**3.3.5 tasks/result (Result Retrieval)**
+
+The final step in the lifecycle is retrieving the actual payload. It is important to distinguish between the `CreateTaskResult` (which returns metadata about the task itself) and `tasks/result` (which returns what the tool actually produced).
+
+Crucially, the result structure matches the original request type. For example, if the task augmented a `tools/call` request, the result will match the standard `CallToolResult` structure.
+
+While `tasks/result` can block until completion if called on a running task, the standard pattern is to poll via `tasks/get` until completion, then call `tasks/result` once to fetch the data.
+
+*Request Structure:*
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 4,
+  "method": "tasks/result",
+  "params": {
+    "taskId": "786512e2-9e0d-44bd-8f29-789f320fe840"
+  }
+}
+```
+
+*Response Structure:*
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 4,
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Analysis complete. Found 4 critical vulnerabilities."
+      }
+    ],
+    "isError": false,
+    "_meta": {
+      "io.modelcontextprotocol/related-task": {
+        "taskId": "786512e2-9e0d-44bd-8f29-789f320fe840"
+      }
+    }
+  }
+}
+```
+
 ## 4. Strategic Architecture & Use Cases
 
 We analyze three concrete scenarios where standard Tools fail and Tasks are required.
@@ -295,7 +339,8 @@ This demo harness is essential for developers. Before implementing complex logic
 
 The MCP Tasks protocol relies heavily on client-side polling (`tasks/get`) rather than webhooks.
 
-**Why Polling?** It ensures statelessness on the server regarding client connectivity. The server does not need to manage a registry of callback URLs. This makes the architecture highly scalable and resilient to firewalls. In enterprise environments, incoming webhooks are often blocked by corporate firewalls, but polling is outbound-only and universally firewall-friendly. While polling introduces some network overhead, the `pollInterval` hint allows the server to mitigate this effectively.
+**Why Polling?** 
+It ensures statelessness on the server regarding client connectivity. The server does not need to manage a registry of callback URLs. This makes the architecture highly scalable and resilient to firewalls. In enterprise environments, incoming webhooks are often blocked by corporate firewalls, but polling is outbound-only and universally firewall-friendly. While polling introduces some network overhead, the `pollInterval` hint allows the server to mitigate this effectively.
 
 **Verdict:** For the standardized agent protocol, polling is the robust choice that guarantees interoperability across diverse network topologies.
 
