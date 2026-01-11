@@ -103,7 +103,7 @@ The logic of MCP Tasks is governed by a finite state machine (FSM). Understandin
 
 -   `working`: The initial, non-terminal state. It indicates that the receiver has accepted the request and is actively processing it. The MCP protocol abstracts queue positions into this single state to simplify the client side. Whether the task is running or waiting in a Redis queue, to the client, it is simply `working`.
 
--   `input_required`: A non-terminal state indicating the task is paused because it needs additional information from the requestor. This is often associated with elicitation requests. For example, a "Deploy to Production" task might transition to `input_required` and wait for a human to click "Approve" in a dashboard.
+-   `input_required`: A non-terminal state indicating the task is paused because it needs additional information from the requestor. This is often associated with elicitation requests. For example, a "Deploy to Production" task might transition to `input_required` and wait for a human to click "Approve" in a dashboard. Once the required input is provided, the task typically transitions back to `working` to continue processing, though it may also move directly to a terminal state.
 
 **3.2.2 The Terminal States**
 
