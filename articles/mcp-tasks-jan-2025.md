@@ -91,13 +91,9 @@ The central entity in this architecture is the **Task Object**. It is not merely
 
 -   `lastUpdatedAt` (string, Required): ISO 8601 timestamp. Clients use this to detect "stalled" tasks where the worker may have crashed silently. If a task is `working` but hasn't updated in 10 minutes, the client might infer a crash.
 
--   `ttl` (number, Optional): Time-To-Live in milliseconds. Defines the retention period of the result after completion. A critical field for managing storage costs in high-throughput systems, ensuring that completed task data doesn't accumulate indefinitely.
+-   `ttl` (number, Optional): Time-To-Live in milliseconds from task creation. Defines the duration from when the task is created until it may be deleted by the receiver. A critical field for managing storage costs in high-throughput systems, ensuring that task data doesn't accumulate indefinitely.
 
 -   `pollInterval` (number, Optional): A "back-off" hint (ms) from server to client. Allows the server to regulate load by instructing clients to poll less frequently (e.g., "Check back in 5 seconds"). This provides basic backpressure management.
-
--   `result` (any, Optional): The final output of the task. Only present when `status` is `completed`.
-
--   `error` (object, Optional): The error details if the task failed. Only present when `status` is `failed`.
 
 ### 3.2 The Task Lifecycle: State Transitions
 
