@@ -138,44 +138,104 @@ This method allows a requestor to retrieve a paginated list of all tasks associa
     "cursor": "optional-base64-cursor-value"
   }
 }
-
 ```
 
-**3.3.2 Execution Triggers: Tool Augmentation vs. tasks/run**
+**3.3.2 Execution Trigger: Request Augmentation**
 
-There are two ways to initiate tasks.
+The specification defines a single, unified mechanism for initiating tasks: **Request Augmentation**.
 
--   Mechanism A: Tool Augmentation (The Primary Pattern)
+Rather than using a dedicated endpoint, requestors create tasks by augmenting a standard request (such as `tools/call`, `sampling/createMessage`, or `elicitation/create`) with a `task` field in its parameters. This allows synchronous operations to be "promoted" to asynchronous tasks without changing their fundamental definition.
 
-    The specification emphasizes creating tasks by augmenting a standard request (like tools/call) with a task field in its parameters. This allows any synchronous tool to be "promoted" to an asynchronous task without changing the tool's fundamental definition.
+*Request Structure (Tool Augmentation):*
 
-    *Request Structure (Tool Augmentation):*
-
-    ```json
-    {
-      "jsonrpc": "2.0",
-      "method": "tools/call",
-      "params": {
-        "name": "long_running_process",
-        "arguments": { "complexity": "high" },
-        "_meta": {
-          "task": {
-            "ttl": 3600000
-          }
-        }
-      },
-      "id": 1
+```json
+{
+  "jsonrpc": "2.0",
+  "method": "tools/call",
+  "params": {
+    "name": "long_running_process",
+    "arguments": { "complexity": "high" },
+    "task": {
+      "ttl": 3600000
     }
+  },
+  "id": 1
+}
+```
 
-    ```
+**3.3.3 tasks/get (Polling for Status)**
 
--   Mechanism B: tasks/run (The Explicit Method)
+Once a task is created, the requestor is responsible for monitoring its progress. This is achieved via the `tasks/get` method.
 
-    Some implementations use an explicit tasks/run method. This treats the Task as a first-class entity rather than a meta-modifier of a tool.
+-   **Polling Logic:** Requestors **SHOULD** continue polling until the task reaches a terminal state (`completed`, `failed`, or `cancelled`) or encounters the interactive `input_required` state.
 
-**3.3.3 tasks/cancel (Interruption Logic)**
+-   **Back-off:** The response includes a `pollInterval` (in milliseconds) which the client **SHOULD** respect to avoid overloading the server.
 
-This method allows a requestor to cancel a task that is currently in a non-terminal state (working or input_required). This is critical for resource management. If a user changes their mind or the agent realizes the task is no longer necessary, it must be able to stop the server from wasting compute cycles.
+*Request Structure:*
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 3,
+  "method": "tasks/get",
+  "params": {
+    "taskId": "786512e2-9e0d-44bd-8f29-789f320fe840"
+  }
+}
+```
+
+*Response Structure:*
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 3,
+  "result": {
+    "taskId": "786512e2-9e0d-44bd-8f29-789f320fe840",
+    "status": "working",
+    "statusMessage": "The operation is now in progress.",
+    "createdAt": "2025-11-25T10:30:00Z",
+    "lastUpdatedAt": "2025-11-25T10:40:00Z",
+    "ttl": 30000,
+    "pollInterval": 5000
+  }
+}
+```
+
+**3.3.4 tasks/cancel (Interruption Logic)**
+
+This method allows a requestor to cancel a task that is currently in a non-terminal state (`working` or `input_required`). This is critical for resource management. If a user changes their mind or the agent realizes the task is no longer necessary, it must be able to stop the server from wasting compute cycles.
+
+*Request Structure:*
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 6,
+  "method": "tasks/cancel",
+  "params": {
+    "taskId": "786512e2-9e0d-44bd-8f29-789f320fe840"
+  }
+}
+```
+
+*Response Structure:*
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 6,
+  "result": {
+    "taskId": "786512e2-9e0d-44bd-8f29-789f320fe840",
+    "status": "cancelled",
+    "statusMessage": "The task was cancelled by request.",
+    "createdAt": "2025-11-25T10:30:00Z",
+    "lastUpdatedAt": "2025-11-25T10:40:00Z",
+    "ttl": 30000,
+    "pollInterval": 5000
+  }
+}
+```
 
 ## 4. Strategic Architecture & Use Cases
 
