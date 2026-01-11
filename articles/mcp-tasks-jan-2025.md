@@ -323,7 +323,7 @@ The client implementation illustrates specific flows, effectively stress-testing
 
 -   **The Happy Path (WORKING → COMPLETED):** This flow validates the polling loop and data retrieval. It proves that the system can maintain a persistent identity (`taskId`) over time, provide intermediate feedback via `statusMessage` updates (e.g., ticking up a percentage complete), and eventually deliver a complex result payload. It confirms the "Monitor-and-Wait" pattern is functioning correctly and that the client can re-hydrate state from just an ID.
 
--   **The Handled Failure (WORKING → FAILED):** This demonstrates the difference between a system crash and a logic failure. In a synchronous model, a failure often results in a generic exception. Here, we see structured error propagation. The task transitions to `failed`, and the `error` object populates with specific debug data (e.g., "Database lock timeout"). This allows the agent to read the error, understand it, and potentially retry with different parameters---a key capability for autonomous recovery.
+-   **The Handled Failure (WORKING → FAILED):** This demonstrates the difference between a system crash and a logic failure. In a synchronous model, a failure often results in a generic exception. Here, we see structured error propagation. The task transitions to `failed`, and the `error` object populates with specific debug data (e.g., "Database lock timeout"). This allows the agent to read the error, understand it, and potentially retry with different parameters, which is a key capability for autonomous recovery.
 
 -   **The Abort Sequence (CANCELLED):** This tests the "Interruption Logic" and resource governance. It is not enough to simply stop polling; the server must receive a cancellation signal, terminate the underlying worker thread, and clean up temporary files. This flow verifies that the `tasks/cancel` method effectively stops resource consumption, which is vital when paying for compute by the second or managing strictly limited concurrency slots.
 
@@ -354,7 +354,7 @@ Agents can now "fire and forget." This changes how we prompt and design agent lo
 
 -   **New Model:** Tool call -> Receive ID -> Store ID in Memory -> Think -> (Later) Check ID.
 
-**Implication:** Agentic Frameworks (like LangGraph or AutoGen) must be updated to handle this "deferred future" pattern. The agent needs a "memory bank" of active `taskId`s that it checks periodically. This requires a more sophisticated **Executive Function** in the agent's cognitive architecture. The agent must understand the concept of time---that some answers come later---and be able to context-switch between initiating new work and monitoring old work.
+**Implication:** Agentic Frameworks (like LangGraph or AutoGen) must be updated to handle this "deferred future" pattern. The agent needs a "memory bank" of active `taskId`s that it checks periodically. This requires a more sophisticated **Executive Function** in the agent's cognitive architecture. The agent must understand the concept of time, that some answers come later, and be able to context-switch between initiating new work and monitoring old work.
 
 ## 7. Conclusion
 
