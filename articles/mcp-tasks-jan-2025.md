@@ -63,7 +63,7 @@ With MCP Tasks, the agent can issue 100 task-augmented requests in rapid success
 
 A subtle but critical advantage of the Task model is the mitigation of "Tool Token Bloat." In synchronous workflows, intermediate steps often require passing massive payloads (e.g., the full text of a PDF, a large JSON dataset, or a base64 encoded image) back and forth through the LLM's context window to maintain state.
 
-Tasks introduce **Server-Side State**. The `TaskExecution` (the server's internal representation of the task) lives on the server. The agent only needs to hold the lightweight `taskId`. Large intermediate artifacts can be stored on the server side---perhaps in S3 or a temporary file store---and associated with the task. Only the final, synthesized result (or a reference URI) needs to be transmitted to the agent. This dramatically reduces token consumption, lowering inference costs and reducing the likelihood of the model "forgetting" instructions due to context window overflow.
+Tasks introduce **Server-Side State**. The `TaskExecution` (the server's internal representation of the task) lives on the server. The agent only needs to hold the lightweight `taskId`. Large intermediate artifacts can be stored on the server side (for example, in S3 or a temporary file store) and associated with the task. Only the final, synthesized result (or a reference URI) needs to be transmitted to the agent. This dramatically reduces token consumption, lowering inference costs and reducing the likelihood of the model "forgetting" instructions due to context window overflow.
 
 ### 2.4 The Impact on System Design
 
