@@ -116,7 +116,7 @@
     </svg>
   
       <text class="stat bold" x="25" y="12.5">Total Stars Earned:</text>
-      <text class="stat bold" x="219.01" y="12.5">598</text>
+      <text class="stat bold" x="219.01" y="12.5">600</text>
     </g>
   </g>
 <g transform="translate(0, 25)">
@@ -127,7 +127,7 @@
     </svg>
   
       <text class="stat bold" x="25" y="12.5">Total Commits:</text>
-      <text class="stat bold" x="219.01" y="12.5">538</text>
+      <text class="stat bold" x="219.01" y="12.5">540</text>
     </g>
   </g>
 <g transform="translate(0, 50)">
@@ -160,7 +160,7 @@
     </svg>
   
       <text class="stat bold" x="25" y="12.5">Total Repositories:</text>
-      <text class="stat bold" x="219.01" y="12.5">32</text>
+      <text class="stat bold" x="219.01" y="12.5">31</text>
     </g>
   </g>
     </svg>
