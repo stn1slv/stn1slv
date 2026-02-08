@@ -7,11 +7,11 @@
     <style>
       .header {
         font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;
-        fill: #41b883;
+        fill: #2f80ed;
       }
       .stat {
         font: 600 14px 'Segoe UI', Ubuntu, 'Helvetica Neue', Sans-Serif;
-        fill: #273849;
+        fill: #434d58;
       }
       .stat.bold {
         font-weight: 700;
@@ -20,22 +20,22 @@
         font-weight: 400;
       }
       .icon {
-        fill: #41b883;
+        fill: #4c71f2;
         display: block;
       }
       .rank-text {
         font: 800 24px 'Segoe UI', Ubuntu, Sans-Serif;
-        fill: #273849;
+        fill: #434d58;
         animation: scaleInAnimation 0.3s ease-in-out forwards;
       }
       .rank-circle-rim {
-        stroke: #41b883;
+        stroke: #2f80ed;
         fill: none;
         stroke-width: 6;
         opacity: 0.2;
       }
       .rank-circle {
-        stroke: #41b883;
+        stroke: #2f80ed;
         stroke-dasharray: 250;
         fill: none;
         stroke-width: 6;
@@ -90,7 +90,7 @@
     stroke="#e4e2e2"
     width="466"
     fill="#fffefe"
-    stroke-opacity="0"
+    stroke-opacity="1"
   />
   
   
@@ -117,7 +117,7 @@
             
 
             <g transform="translate(392, 7.5)">
-                <circle cx="10" cy="10" r="12" stroke="#41b883" stroke-width="2" fill="none" opacity="0.2" />
+                <circle cx="10" cy="10" r="12" stroke="#2f80ed" stroke-width="2" fill="none" opacity="0.2" />
                 <text x="10" y="10" alignment-baseline="central" dominant-baseline="central" 
                       text-anchor="middle" class="stat bold" style="font-size: 10px;">A</text>
             </g>
@@ -133,7 +133,7 @@
             
 
             <g transform="translate(392, 7.5)">
-                <circle cx="10" cy="10" r="12" stroke="#41b883" stroke-width="2" fill="none" opacity="0.2" />
+                <circle cx="10" cy="10" r="12" stroke="#2f80ed" stroke-width="2" fill="none" opacity="0.2" />
                 <text x="10" y="10" alignment-baseline="central" dominant-baseline="central" 
                       text-anchor="middle" class="stat bold" style="font-size: 10px;">A</text>
             </g>
@@ -149,7 +149,7 @@
             
 
             <g transform="translate(392, 7.5)">
-                <circle cx="10" cy="10" r="12" stroke="#41b883" stroke-width="2" fill="none" opacity="0.2" />
+                <circle cx="10" cy="10" r="12" stroke="#2f80ed" stroke-width="2" fill="none" opacity="0.2" />
                 <text x="10" y="10" alignment-baseline="central" dominant-baseline="central" 
                       text-anchor="middle" class="stat bold" style="font-size: 10px;">A</text>
             </g>
@@ -165,7 +165,7 @@
             
 
             <g transform="translate(392, 7.5)">
-                <circle cx="10" cy="10" r="12" stroke="#41b883" stroke-width="2" fill="none" opacity="0.2" />
+                <circle cx="10" cy="10" r="12" stroke="#2f80ed" stroke-width="2" fill="none" opacity="0.2" />
                 <text x="10" y="10" alignment-baseline="central" dominant-baseline="central" 
                       text-anchor="middle" class="stat bold" style="font-size: 10px;">A</text>
             </g>
@@ -181,7 +181,7 @@
             
 
             <g transform="translate(392, 7.5)">
-                <circle cx="10" cy="10" r="12" stroke="#41b883" stroke-width="2" fill="none" opacity="0.2" />
+                <circle cx="10" cy="10" r="12" stroke="#2f80ed" stroke-width="2" fill="none" opacity="0.2" />
                 <text x="10" y="10" alignment-baseline="central" dominant-baseline="central" 
                       text-anchor="middle" class="stat bold" style="font-size: 10px;">A</text>
             </g>
@@ -197,7 +197,7 @@
             
 
             <g transform="translate(392, 7.5)">
-                <circle cx="10" cy="10" r="12" stroke="#41b883" stroke-width="2" fill="none" opacity="0.2" />
+                <circle cx="10" cy="10" r="12" stroke="#2f80ed" stroke-width="2" fill="none" opacity="0.2" />
                 <text x="10" y="10" alignment-baseline="central" dominant-baseline="central" 
                       text-anchor="middle" class="stat bold" style="font-size: 10px;">A</text>
             </g>
@@ -213,7 +213,7 @@
             
 
             <g transform="translate(392, 7.5)">
-                <circle cx="10" cy="10" r="12" stroke="#41b883" stroke-width="2" fill="none" opacity="0.2" />
+                <circle cx="10" cy="10" r="12" stroke="#2f80ed" stroke-width="2" fill="none" opacity="0.2" />
                 <text x="10" y="10" alignment-baseline="central" dominant-baseline="central" 
                       text-anchor="middle" class="stat bold" style="font-size: 10px;">A</text>
             </g>
@@ -229,7 +229,7 @@
             
 
             <g transform="translate(392, 7.5)">
-                <circle cx="10" cy="10" r="12" stroke="#41b883" stroke-width="2" fill="none" opacity="0.2" />
+                <circle cx="10" cy="10" r="12" stroke="#2f80ed" stroke-width="2" fill="none" opacity="0.2" />
                 <text x="10" y="10" alignment-baseline="central" dominant-baseline="central" 
                       text-anchor="middle" class="stat bold" style="font-size: 10px;">A</text>
             </g>
@@ -245,7 +245,7 @@
             
 
             <g transform="translate(392, 7.5)">
-                <circle cx="10" cy="10" r="12" stroke="#41b883" stroke-width="2" fill="none" opacity="0.2" />
+                <circle cx="10" cy="10" r="12" stroke="#2f80ed" stroke-width="2" fill="none" opacity="0.2" />
                 <text x="10" y="10" alignment-baseline="central" dominant-baseline="central" 
                       text-anchor="middle" class="stat bold" style="font-size: 10px;">A</text>
             </g>
@@ -261,7 +261,7 @@
             
 
             <g transform="translate(392, 7.5)">
-                <circle cx="10" cy="10" r="12" stroke="#41b883" stroke-width="2" fill="none" opacity="0.2" />
+                <circle cx="10" cy="10" r="12" stroke="#2f80ed" stroke-width="2" fill="none" opacity="0.2" />
                 <text x="10" y="10" alignment-baseline="central" dominant-baseline="central" 
                       text-anchor="middle" class="stat bold" style="font-size: 10px;">A</text>
             </g>
