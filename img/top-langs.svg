@@ -134,7 +134,7 @@
           data-testid="lang-progress"
           x="0"
           y="0"
-          width="171.8404702970297"
+          width="153.63724550014754"
           height="8"
           fill="#b07219"
         />
@@ -142,19 +142,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="171.8404702970297"
+          x="153.63724550014754"
           y="0"
-          width="86.15247524752476"
-          height="8"
-          fill="#3572A5"
-        />
-      
-        <rect
-          mask="url(#rect-mask)"
-          data-testid="lang-progress"
-          x="257.99294554455446"
-          y="0"
-          width="85.92883663366337"
+          width="82.11725435231632"
           height="8"
           fill="#00ADD8"
         />
@@ -162,29 +152,19 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="343.9217821782178"
+          x="235.75449985246388"
           y="0"
-          width="24.80668316831683"
+          width="77.02626143405134"
           height="8"
-          fill="#384d54"
+          fill="#3572A5"
         />
       
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="368.7284653465347"
+          x="312.7807612865152"
           y="0"
-          width="22.948762376237624"
-          height="8"
-          fill="#C1F12E"
-        />
-      
-        <rect
-          mask="url(#rect-mask)"
-          data-testid="lang-progress"
-          x="391.6772277227723"
-          y="0"
-          width="15.723514851485149"
+          width="52.9401740926527"
           height="8"
           fill="#89e051"
         />
@@ -192,9 +172,29 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="407.40074257425744"
+          x="365.7209353791679"
           y="0"
-          width="16.537128712871286"
+          width="22.17888757745648"
+          height="8"
+          fill="#384d54"
+        />
+      
+        <rect
+          mask="url(#rect-mask)"
+          data-testid="lang-progress"
+          x="387.89982295662435"
+          y="0"
+          width="20.51777810563588"
+          height="8"
+          fill="#C1F12E"
+        />
+      
+        <rect
+          mask="url(#rect-mask)"
+          data-testid="lang-progress"
+          x="408.41760106226025"
+          y="0"
+          width="15.844644437887283"
           height="8"
           fill="#012456"
         />
@@ -202,9 +202,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="413.9378712871287"
+          x="414.2622455001475"
           y="0"
-          width="13.062128712871287"
+          width="12.737754499852464"
           height="8"
           fill="#f1e05a"
         />
@@ -218,61 +218,61 @@
         Java
       </text>
       <text x="180" y="10" class='lang-name' text-anchor="end">
-        41.2%
+        36.8%
       </text>
     </g>
   </g>
 <g transform="translate(0, 25)">
     <g class="stagger" style="animation-delay: 600ms">
-      <circle cx="5" cy="6" r="5" fill="#3572A5" />
-      <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        Python
-      </text>
-      <text x="180" y="10" class='lang-name' text-anchor="end">
-        20.7%
-      </text>
-    </g>
-  </g>
-<g transform="translate(0, 50)">
-    <g class="stagger" style="animation-delay: 750ms">
       <circle cx="5" cy="6" r="5" fill="#00ADD8" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
         Go
       </text>
       <text x="180" y="10" class='lang-name' text-anchor="end">
-        20.6%
+        19.7%
+      </text>
+    </g>
+  </g>
+<g transform="translate(0, 50)">
+    <g class="stagger" style="animation-delay: 750ms">
+      <circle cx="5" cy="6" r="5" fill="#3572A5" />
+      <text data-testid="lang-name" x="15" y="10" class='lang-name'>
+        Python
+      </text>
+      <text x="180" y="10" class='lang-name' text-anchor="end">
+        18.5%
       </text>
     </g>
   </g>
 <g transform="translate(0, 75)">
     <g class="stagger" style="animation-delay: 900ms">
-      <circle cx="5" cy="6" r="5" fill="#384d54" />
-      <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        Dockerfile
-      </text>
-      <text x="180" y="10" class='lang-name' text-anchor="end">
-        5.9%
-      </text>
-    </g>
-  </g></g><g transform="translate(225, 0)"><g transform="translate(0, 0)">
-    <g class="stagger" style="animation-delay: 450ms">
-      <circle cx="5" cy="6" r="5" fill="#C1F12E" />
-      <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        Batchfile
-      </text>
-      <text x="180" y="10" class='lang-name' text-anchor="end">
-        5.5%
-      </text>
-    </g>
-  </g>
-<g transform="translate(0, 25)">
-    <g class="stagger" style="animation-delay: 600ms">
       <circle cx="5" cy="6" r="5" fill="#89e051" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
         Shell
       </text>
       <text x="180" y="10" class='lang-name' text-anchor="end">
-        3.8%
+        12.7%
+      </text>
+    </g>
+  </g></g><g transform="translate(225, 0)"><g transform="translate(0, 0)">
+    <g class="stagger" style="animation-delay: 450ms">
+      <circle cx="5" cy="6" r="5" fill="#384d54" />
+      <text data-testid="lang-name" x="15" y="10" class='lang-name'>
+        Dockerfile
+      </text>
+      <text x="180" y="10" class='lang-name' text-anchor="end">
+        5.3%
+      </text>
+    </g>
+  </g>
+<g transform="translate(0, 25)">
+    <g class="stagger" style="animation-delay: 600ms">
+      <circle cx="5" cy="6" r="5" fill="#C1F12E" />
+      <text data-testid="lang-name" x="15" y="10" class='lang-name'>
+        Batchfile
+      </text>
+      <text x="180" y="10" class='lang-name' text-anchor="end">
+        4.9%
       </text>
     </g>
   </g>
@@ -283,7 +283,7 @@
         PowerShell
       </text>
       <text x="180" y="10" class='lang-name' text-anchor="end">
-        1.6%
+        1.4%
       </text>
     </g>
   </g>
