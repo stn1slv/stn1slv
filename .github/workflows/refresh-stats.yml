@@ -70,6 +70,7 @@ jobs:
           theme: vue-dark
           limit: 10
           hide-border: true
+          exclude-repo: "awesome-*,Free-*"
           
       - name: Generate Top Contributions - Light
         continue-on-error: true
@@ -82,6 +83,7 @@ jobs:
           theme: vue
           limit: 10
           hide-border: true
+          exclude-repo: "awesome-*,Free-*"
           
       - name: Generate Top Contributions - Default
         continue-on-error: true
@@ -92,6 +94,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           output: img/github-contributor.svg
           limit: 10
+          exclude-repo: "awesome-*,Free-*"
 
       - name: Generate Top Languages - Dark
         continue-on-error: true
