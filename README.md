@@ -4,9 +4,11 @@
  </p>
 
  <p align="center"> 
-   <a href="https://github.com/stn1slv/"> 
+  <!-- 
+  <a href="https://github.com/stn1slv/"> 
      <img src="https://img.shields.io/badge/GitHub-41b883?style=flat&logo=github&logoColor=white" alt="GitHub"/> 
-   </a> 
+   </a>
+  -->
    <a href="https://www.linkedin.com/in/stn1slv/"> 
      <img src="https://img.shields.io/badge/LinkedIn-41b883?style=flat&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0id2hpdGUiIGQ9Ik0xOSAwaC0xNGE1IDUgMCAwIDAgLTUgNXYxNGE1IDUgMCAwIDAgNSA1aDE0YTUgNSAwIDAgMCA1IC01di0xNGE1IDUgMCAwIDAgLTUgLTV6TTggMTloLTN2LTloM3Y5ek02LjUgNy43NWExLjc1IDEuNzUgMCAxIDEgMCAtMy41IDEuNzUgMS43NSAwIDAgMSAwIDMuNXpNMjAgMTloLTN2LTQuNzVjMCAtMS4yNSAwIC0yLjUgLTEuNSAtMi41cy0xLjc1IDEuMjUgLTEuNzUgMi41djQuNzVoLTN2LTloM3YxLjE1YTMuOTI2IDMuOTI2IDAgMCAxIDMuMTY0IC0xLjU1YzMuMzc1IDAgMy43NSAyLjE2NyAzLjc1IDV2NC40eiIvPjwvc3ZnPg==&logoColor=white" alt="LinkedIn"/> 
    </a> 
