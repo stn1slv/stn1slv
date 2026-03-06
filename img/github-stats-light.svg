@@ -138,7 +138,7 @@
     </svg>
   
       <text class="stat bold" x="25" y="12.5">Total PRs:</text>
-      <text class="stat bold" x="219.01" y="12.5">190</text>
+      <text class="stat bold" x="219.01" y="12.5">191</text>
     </g>
   </g>
 <g transform="translate(0, 75)">
@@ -160,7 +160,7 @@
     </svg>
   
       <text class="stat bold" x="25" y="12.5">Total Repositories:</text>
-      <text class="stat bold" x="219.01" y="12.5">29</text>
+      <text class="stat bold" x="219.01" y="12.5">30</text>
     </g>
   </g>
     </svg>
