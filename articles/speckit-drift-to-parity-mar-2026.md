@@ -1,7 +1,7 @@
 ---
 title: "From Drift to Parity: Building a Feedback Loop for Spec-Driven Development"
 description: Spec-driven development pipelines generate code from specifications, but have no mechanism to reconcile specs when reality diverges. This article examines the artifact drift problem, introduces the Double-Loop Parity pattern, and presents two community extensions for GitHub Spec-Kit that close the feedback loop.
-published-at:
+published-at: https://www.linkedin.com/pulse/from-drift-parity-building-feedback-loop-spec-driven-deviatov-o7zcf
 author: Stanislav Deviatov
 date: Mar-2026
 language: en
