@@ -73,19 +73,11 @@ The command executes a five-step workflow:
 
 1. **Discovery and Setup:** Resolves the active feature directory and validates that the required artifacts (`spec.md`, `plan.md`, `tasks.md`) exist. Optionally loads the project's `constitution.md` for architectural constraint checking.
 
-2. **Gap Normalization:** Parses the natural-language input and categorizes the discrepancies into five structured types:
-   - **Wiring and Navigation:** Missing routes, menu items, sidebar links.
-   - **Contracts:** API field mismatches, missing headers, changed response shapes.
-   - **Acceptance Criteria:** Behavior differences from the original plan.
-   - **Test Coverage:** New components without corresponding verification.
-   - **Logic/UX:** Missing error handling, toast notifications, edge cases.
+2. **Gap Normalization:** Parses the natural-language input and categorizes the discrepancies into five structured types. **Wiring and Navigation** covers missing routes, menu items, and sidebar links. **Contracts** covers API field mismatches, missing headers, and changed response shapes. **Acceptance Criteria** covers behavior differences from the original plan. **Test Coverage** flags new components without corresponding verification. **Logic/UX** covers missing error handling, toast notifications, and edge cases.
 
 3. **Constitution Compliance:** Cross-checks each proposed change against the project's MUST-level architectural constraints. If a gap fix would violate a constitutional principle, it is flagged as CRITICAL before any edits are made.
 
-4. **Surgical Reconciliation:** Updates only the parts that actually drifted:
-   - `spec.md`: Amends acceptance criteria and user scenarios. Adds a revision note.
-   - `plan.md`: Updates routing, integration contracts, and testing strategy. Adds a revision note.
-   - `tasks.md`: Appends remediation tasks with auto-incremented IDs (continuing from the highest existing `T###`) and exact file paths.
+4. **Surgical Reconciliation:** Updates only the parts that actually drifted. In `spec.md`, it amends acceptance criteria and user scenarios. In `plan.md`, it updates routing, integration contracts, and testing strategy. In `tasks.md`, it appends remediation tasks with auto-incremented IDs (continuing from the highest existing `T###`) and exact file paths. Each modified file gets a revision note.
 
 5. **Sync Impact Report:** Outputs a structured summary of all changes and recommends the next Spec-Kit command to run (e.g., `/speckit.implement` to execute the new tasks).
 
@@ -107,19 +99,11 @@ The command executes a seven-step workflow:
 
 2. **Feature Analysis:** Extracts everything of lasting value: user stories, functional requirements (detecting the project's ID convention, whether it is FR-XXX, REQ-XXX, or unnumbered), entities, dependencies, architecture changes, known issues from research notes, and task completion counts.
 
-3. **Conflict Detection:** Systematically checks for issues before merging:
-   - **Constitution Compliance:** Flags any feature content that conflicts with architectural MUST principles.
-   - **Requirement ID Collisions:** Detects when a feature ID already exists in the main spec.
-   - **Entity Redefinitions:** Highlights differences when an entity is modified, not just added.
-   - **Dependency Conflicts:** Notes version mismatches with existing dependencies.
+3. **Conflict Detection:** Systematically checks for issues before merging. **Constitution Compliance** flags any feature content that conflicts with architectural MUST principles. **Requirement ID Collisions** are detected when a feature ID already exists in the main spec. **Entity Redefinitions** highlight differences when an entity is modified, not just added. **Dependency Conflicts** note version mismatches with existing dependencies.
 
 4. **Clarification:** If conflicts require human judgment, asks targeted questions (maximum five) with structured options. Constitution conflicts are always escalated.
 
-5. **Archival Merge:** Applies edits to the canonical project memory:
-   - `.specify/memory/spec.md`: Merges requirements with continued ID numbering, adds user stories, updates entities.
-   - `.specify/memory/plan.md`: Adds new dependencies, modules, configuration, and routing. Removes implemented items from "Future Work."
-   - `.specify/memory/changelog.md`: Appends a structured entry with branch name, summary, new components, and task completion ratio.
-   - **Agent knowledge file** (GEMINI.md / CLAUDE.md / AGENTS.md): Updates active technologies, project structure, recent changes, and merges known issues from research notes.
+5. **Archival Merge:** Applies edits to the canonical project memory. In `.specify/memory/spec.md`, it merges requirements with continued ID numbering, adds user stories, and updates entities. In `.specify/memory/plan.md`, it adds new dependencies, modules, configuration, and routing, and removes implemented items from "Future Work." In `.specify/memory/changelog.md`, it appends a structured entry with branch name, summary, new components, and task completion ratio. In the **agent knowledge file** (GEMINI.md / CLAUDE.md / AGENTS.md), it updates active technologies, project structure, recent changes, and merges known issues from research notes.
 
 6. **Traceability:** Every merged element is tagged with `[Source: specs/006-invoice-settings]`, creating an audit trail from any requirement in the project memory back to the feature that introduced it.
 
