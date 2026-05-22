@@ -22,7 +22,7 @@ jobs:
           git pull origin main
       - name: Generate GitHub Stats - Dark
         continue-on-error: true
-        uses: stn1slv/github-stats-card@v1.1.5
+        uses: stn1slv/github-stats-card@v1.1.6
         with:
           card-type: stats
           username: stn1slv
@@ -33,10 +33,11 @@ jobs:
           hide-border: true
           hide-title: true
           include-all-commits: true
+          show: repos
       
       - name: Generate GitHub Stats - Light
         continue-on-error: true
-        uses: stn1slv/github-stats-card@v1.1.5
+        uses: stn1slv/github-stats-card@v1.1.6
         with:
           card-type: stats
           username: stn1slv
@@ -47,10 +48,11 @@ jobs:
           hide-border: true
           hide-title: true
           include-all-commits: true
+          show: repos
       
       - name: Generate GitHub Stats - Default
         continue-on-error: true
-        uses: stn1slv/github-stats-card@v1.1.5
+        uses: stn1slv/github-stats-card@v1.1.6
         with:
           card-type: stats
           username: stn1slv
@@ -58,10 +60,11 @@ jobs:
           output: img/github-stats.svg
           show-icons: true
           hide-title: true
+          show: repos
 
       - name: Generate Top Contributions - Dark
         continue-on-error: true
-        uses: stn1slv/github-stats-card@v1.1.5
+        uses: stn1slv/github-stats-card@v1.1.6
         with:
           card-type: contrib
           username: stn1slv
@@ -74,7 +77,7 @@ jobs:
           
       - name: Generate Top Contributions - Light
         continue-on-error: true
-        uses: stn1slv/github-stats-card@v1.1.5
+        uses: stn1slv/github-stats-card@v1.1.6
         with:
           card-type: contrib
           username: stn1slv
@@ -87,7 +90,7 @@ jobs:
           
       - name: Generate Top Contributions - Default
         continue-on-error: true
-        uses: stn1slv/github-stats-card@v1.1.5
+        uses: stn1slv/github-stats-card@v1.1.6
         with:
           card-type: contrib
           username: stn1slv
@@ -98,7 +101,7 @@ jobs:
 
       - name: Generate Top Languages - Dark
         continue-on-error: true
-        uses: stn1slv/github-stats-card@v1.1.5
+        uses: stn1slv/github-stats-card@v1.1.6
         with:
           card-type: top-langs
           username: stn1slv
@@ -113,7 +116,7 @@ jobs:
       
       - name: Generate Top Languages - Light
         continue-on-error: true
-        uses: stn1slv/github-stats-card@v1.1.5
+        uses: stn1slv/github-stats-card@v1.1.6
         with:
           card-type: top-langs
           username: stn1slv
@@ -128,7 +131,7 @@ jobs:
       
       - name: Generate Top Languages - Default
         continue-on-error: true
-        uses: stn1slv/github-stats-card@v1.1.5
+        uses: stn1slv/github-stats-card@v1.1.6
         with:
           card-type: top-langs
           username: stn1slv
