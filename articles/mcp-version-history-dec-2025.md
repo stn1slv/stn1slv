@@ -176,7 +176,7 @@ To streamline deployment, the protocol added support for **OIDC Discovery 1.0**.
 
 #### The Era of Serverless and Unidirectional Flow
 
-The draft release of mid-2026 represents the protocol's transition into a highly scalable, serverless-native standard. Having solved transport-level reliability in 2025, the community turned its attention to deployment scalability, firewall navigation, and API contract hygiene.
+The release of mid-2026 represents the protocol's transition into a highly scalable, serverless-native standard. Having solved transport-level reliability in 2025, the community turned its attention to deployment scalability, firewall navigation, and API contract hygiene.
 
 **New Feature: Absolute Statelessness**
 
