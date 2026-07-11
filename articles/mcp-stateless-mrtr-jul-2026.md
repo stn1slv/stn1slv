@@ -11,11 +11,11 @@ language: "en"
 
 ## 1. Introduction: The Production Pivot
 
-When the Model Context Protocol (MCP) emerged across 2024 and 2025, its primary achievement was standardization. Early specification milestones—most notably version `2024-11-05` and the subsequent `2025-11-25` Tasks release—succeeded in establishing a universal language for Large Language Model (LLM) agents, tools, and resources. However, early specifications still reflected the architectural patterns of local desktop integrations and stateful standard input/output (`stdio`) pipelines.
+When the Model Context Protocol (MCP) emerged across 2024 and 2025, its primary achievement was standardization. Early specification milestones, most notably version `2024-11-05` and the subsequent `2025-11-25` Tasks release, succeeded in establishing a universal language for Large Language Model (LLM) agents, tools, and resources. However, early specifications still reflected the architectural patterns of local desktop integrations and stateful standard input/output (`stdio`) pipelines.
 
 As organizations migrated MCP workloads from desktop IDEs to enterprise cloud infrastructure, a systemic bottleneck emerged: **session coupling**. In traditional MCP deployments, a client and server had to negotiate a stateful lifecycle initiated by an explicit `initialize` / `initialized` handshake. The server assigned a persistent session identity (`Mcp-Session-Id`), and all subsequent tool invocations assumed an unbroken, stateful connection.
 
-In distributed production environments—characterized by ephemeral container scaling (e.g., AWS Lambda, Google Cloud Run), reverse proxies, load balancers, and aggressive HTTP/2 multiplexing—stateful session coupling proved fragile. Load balancers routinely severed idle connections, round-robin routers dropped requests lacking sticky session affinity, and horizontal scale-out forced servers to maintain expensive distributed session caches.
+In distributed production environments (characterized by ephemeral container scaling such as AWS Lambda and Google Cloud Run, reverse proxies, load balancers, and aggressive HTTP/2 multiplexing), stateful session coupling proved fragile. Load balancers routinely severed idle connections, round-robin routers dropped requests lacking sticky session affinity, and horizontal scale-out forced servers to maintain expensive distributed session caches.
 
 The Model Context Protocol specification `2026-07-28` addresses this fundamental architectural friction. It represents a paradigm shift from **stateful session connections** to **stateless, self-contained message processing**. Furthermore, it re-engineers human-in-the-loop and dynamic execution workflows via **Multi-Round-Trip Requests (MRTR)**, eliminating the networking hazards of bidirectional server-to-client callbacks.
 
@@ -97,7 +97,7 @@ By embedding execution context directly within each message envelope, the protoc
 
 ## 3. Multi-Round-Trip Requests (MRTR): Unidirectional Orchestration
 
-A critical architectural friction point in previous MCP specifications was the reliance on **bidirectional communication**. Under earlier standards, if a tool execution required additional context from the client—such as user confirmation, sampling an LLM, or eliciting dynamic parameters—the server initiated a reverse JSON-RPC request upstream over the active connection.
+A critical architectural friction point in previous MCP specifications was the reliance on **bidirectional communication**. Under earlier standards, if a tool execution required additional context from the client (such as user confirmation, sampling an LLM, or eliciting dynamic parameters), the server initiated a reverse JSON-RPC request upstream over the active connection.
 
 ### 3.1 The Security and Networking Cost of Bidirectionality
 

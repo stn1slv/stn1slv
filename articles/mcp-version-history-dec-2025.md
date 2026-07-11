@@ -186,7 +186,7 @@ In the 2026-07-28 specification, the handshake is completely removed. Every requ
 
 **New Feature: Multi Round-Trip Requests (MRTR)**
 
-One of the most complex aspects of early MCP was the "reverse transport" — when a server needed to invoke client-side capabilities, such as LLM Sampling or Elicitation, it sent a server-initiated request back to the client. This required bi-directional streams and complex connection-mapping logic.
+One of the most complex aspects of early MCP was the "reverse transport" mechanism: when a server needed to invoke client-side capabilities, such as LLM Sampling or Elicitation, it sent a server-initiated request back to the client. This required bi-directional streams and complex connection-mapping logic.
 
 MRTR (SEP-2322) resolves this by making all interactions strictly unidirectional (client-to-server).
 -   **The Flow:** When a server needs more information, it returns an interim `InputRequiredResult` (`resultType: "input_required"`) containing the specific query (`inputRequests`) and a chunk of opaque, server-controlled `requestState`.
