@@ -29,7 +29,7 @@ In this "non-semantic" approach, the version identifier acts as a **snapshot in 
 
 -   **The Trade-off:** Unlike SemVer, the version number does not inherently communicate the magnitude of a change. Developers must consult the changelog to understand that the jump from `2025-03-26` to `2025-06-18` involved a breaking removal of batching, whereas other updates might be additive.
 
-With this context established, let us explore the four pivotal versions that defined the protocol's first year.
+With this context established, let us explore the five pivotal versions that defined the protocol's first two years.
 
 ### 1\. The Foundation (Version 2024-11-05)
 ---------------------------------------
@@ -171,9 +171,45 @@ For high-security actions, the protocol introduced **URL Mode**.
 
 To streamline deployment, the protocol added support for **OIDC Discovery 1.0**. Clients can now automatically configure authentication by querying the standard `/.well-known/openid-configuration` endpoint. This allows MCP servers to integrate seamlessly with enterprise identity providers like Okta, Auth0, or Microsoft Entra without manual configuration of token endpoints.
 
+### 5\. The Stateless Architecture (Version 2026-07-28)
+--------------------------------------------------
+
+#### The Era of Serverless and Unidirectional Flow
+
+The draft release of mid-2026 represents the protocol's transition into a highly scalable, serverless-native standard. Having solved transport-level reliability in 2025, the community turned its attention to deployment scalability, firewall navigation, and API contract hygiene.
+
+**New Feature: Absolute Statelessness**
+
+Previous versions required a stateful handshake protocol (`initialize` and `notifications/initialized`) and session-level tracking via `Mcp-Session-Id` headers. This statefulness made it difficult to run MCP servers behind load balancers or on serverless infrastructure. 
+
+In the 2026-07-28 specification, the handshake is completely removed. Every request is self-contained, carrying the client's protocol version, identity, and capabilities in the request's metadata (`_meta`). If there is a version mismatch, the server returns an `UnsupportedProtocolVersion` error immediately. List endpoints (e.g., `tools/list`) are now static and no longer vary per connection, reducing the memory footprint on the server.
+
+**New Feature: Multi Round-Trip Requests (MRTR)**
+
+One of the most complex aspects of early MCP was the "reverse transport" — when a server needed to invoke client-side capabilities, such as LLM Sampling or Elicitation, it sent a server-initiated request back to the client. This required bi-directional streams and complex connection-mapping logic.
+
+MRTR (SEP-2322) resolves this by making all interactions strictly unidirectional (client-to-server).
+-   **The Flow:** When a server needs more information, it returns an interim `InputRequiredResult` (`resultType: "input_required"`) containing the specific query (`inputRequests`) and a chunk of opaque, server-controlled `requestState`.
+-   **The Client Action:** The client collects the input (e.g., prompts the user or requests sampling) and retries the original request, passing the inputs in `inputResponses` along with the `requestState`.
+-   **The Goal:** Servers no longer need to initiate connections or maintain long-lived state tables, allowing them to run as simple, secure serverless functions.
+
+**New Feature: Feature Lifecycle & Deprecations**
+
+As the protocol matured, early features that introduced architectural debt or security risks were formally deprecated. A formal **Feature Lifecycle and Deprecation Policy** was established, defining a minimum 12-month deprecation window before removal:
+-   **Roots and Sampling Deprecation:** Moving files/directories via Roots is replaced by explicit tool parameters, while server-initiated Sampling is deprecated in favor of direct LLM API integrations.
+-   **Logging Deprecation:** Standard logging via the MCP protocol is replaced by logging to `stderr` or using OpenTelemetry (supporting trace propagation in `_meta`).
+-   **Dynamic Client Registration Deprecation:** Dynamic registration is deprecated in favor of client-side Client ID Metadata Documents.
+
+**New Feature: Cacheability and Subscription Consolidation**
+
+To improve performance and minimize server polling:
+-   **CacheableResult:** Results from resources, prompts, and tools can now return `ttlMs` (time-to-live) and `cacheScope` (`public`/`private`) properties, enabling client-side caching.
+-   **Deterministic Ordering:** Servers are now required to return tools in a deterministic order, which improves LLM prompt cache hit rates.
+-   **subscriptions/listen:** The old HTTP GET-based subscription endpoints and `resources/subscribe`/`unsubscribe` methods are consolidated into a single long-lived POST-response stream (`subscriptions/listen`).
+
 ### Conclusion
 ----------
 
 The trajectory of the Model Context Protocol reveals a clear maturity curve. What began as a local developer utility, a simple pipe between a chatbot and a database, has transformed into a stateless, secure, and asynchronous **Agent Operating System**.
 
-By adhering to existing web standards (OAuth 2.1, OIDC), adopting rigorous security practices (RFC 8707), and embracing a date-based versioning strategy that prioritizes stability, MCP has cemented itself as the critical infrastructure layer for the next decade of AI development. It is no longer just about connecting tools; it is about orchestrating a decentralized mesh of autonomous agents, capable of working together securely to solve problems scale.
+By adhering to existing web standards (OAuth 2.1, OIDC), adopting rigorous security practices (RFC 8707), and embracing a date-based versioning strategy that prioritizes stability, MCP has cemented itself as the critical infrastructure layer for the next decade of AI development. It is no longer just about connecting tools; it is about orchestrating a decentralized mesh of autonomous agents, capable of working together securely to solve problems at scale.
