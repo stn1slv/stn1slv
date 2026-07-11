@@ -210,14 +210,23 @@ To prevent ecosystem fragmentation across tool developers and LLM providers, ver
 
 ### 4.2 Deconstructing the Deprecated APIs
 
-The table below summarizes the core subsystems formally deprecated in the `2026-07-28` specification and outlines their modern architectural replacements:
+The core subsystems formally deprecated in the `2026-07-28` specification and their modern architectural replacements are detailed below:
 
-| Deprecated Capability | Architectural Rationale | Modern Replacement (2026-07-28+) |
-| :--- | :--- | :--- |
-| **Roots API** (`roots/list`) | Managing virtual filesystem boundaries via bidirectional synchronization created high latency and coupling. | Explicit file content/path parameters passed directly into tool arguments. |
-| **Sampling API** (`sampling/createMessage`) | Server-initiated LLM sampling loops violated statelessness and complicated billing/token governance. | Client-managed LLM orchestration or dedicated tool returns prompting client action. |
-| **Logging API** (`logging/setLevel`) | Custom protocol-level log transport duplicated mature enterprise observability infrastructure. | Standard `stderr` output streams or OpenTelemetry (OTel) log exporters. |
-| **Dynamic Client Registration** (RFC 7591) | On-the-fly OAuth 2.0 dynamic registration added significant attack surface and edge complexity. | Static or dynamic **Client ID Metadata Documents** served via secure HTTPS URLs. |
+*   **Roots API (`roots/list`)**
+    *   **Architectural Rationale:** Managing virtual filesystem boundaries via bidirectional synchronization created high latency and tight coupling between client and server storage layers.
+    *   **Modern Replacement (2026-07-28+):** Explicit file content or path parameters passed directly into tool arguments.
+
+*   **Sampling API (`sampling/createMessage`)**
+    *   **Architectural Rationale:** Server-initiated LLM sampling loops violated statelessness, caused network ingress friction, and complicated billing and token governance.
+    *   **Modern Replacement (2026-07-28+):** Client-managed LLM orchestration or structured tool responses that prompt the client agent to perform further reasoning.
+
+*   **Logging API (`logging/setLevel`)**
+    *   **Architectural Rationale:** Maintaining a custom protocol-level log transport duplicated mature enterprise observability infrastructure and added unnecessary protocol overhead.
+    *   **Modern Replacement (2026-07-28+):** Standard `stderr` output streams or structured OpenTelemetry (OTel) log exporters.
+
+*   **Dynamic Client Registration (RFC 7591)**
+    *   **Architectural Rationale:** On-the-fly OAuth 2.0 dynamic registration introduced a significant attack surface and complicated edge authentication workflows.
+    *   **Modern Replacement (2026-07-28+):** Static or dynamic **Client ID Metadata Documents** served via secure HTTPS URLs.
 
 ---
 
