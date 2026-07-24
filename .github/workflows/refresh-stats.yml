@@ -68,7 +68,7 @@ jobs:
         with:
           card-type: contrib
           username: stn1slv
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PAT_TOKEN }}
           output: img/github-contributor-dark.svg
           theme: vue-dark
           limit: 10
@@ -81,7 +81,7 @@ jobs:
         with:
           card-type: contrib
           username: stn1slv
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PAT_TOKEN }}
           output: img/github-contributor-light.svg
           theme: vue
           limit: 10
@@ -94,7 +94,7 @@ jobs:
         with:
           card-type: contrib
           username: stn1slv
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PAT_TOKEN }}
           output: img/github-contributor.svg
           limit: 10
           exclude-repo: "awesome-*,Free-*"
