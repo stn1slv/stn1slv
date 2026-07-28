@@ -1,13 +1,13 @@
 ---
-title: "The Death of the Handshake: Inside MCP's Stateless Evolution and MRTR"
-description: "An architectural deep-dive into the Model Context Protocol (MCP) 2026-07-28 specification. Discover how stateless execution and Multi-Round-Trip Requests (MRTR) solve cloud scaling, load balancing, and firewall challenges."
-published-at: "https://www.linkedin.com/pulse/death-handshake-inside-mcps-stateless-evolution-mrtr-stanislav-deviatov/"
+title: "Inside MCP 2026-07-28: Stateless Requests, MRTR, and the End of Sessions"
+description: An architectural deep-dive into the Model Context Protocol (MCP) 2026-07-28 specification. Discover how stateless execution and Multi-Round-Trip Requests (MRTR) solve cloud scaling, load balancing, and firewall challenges.
+published-at: https://www.linkedin.com/pulse/death-handshake-inside-mcps-stateless-evolution-mrtr-deviatov-jab0e/
 author: "Stanislav Deviatov"
-date: "Jul-2026"
-language: "en"
+date: Jul-2026
+language: en
 ---
 
-# The Death of the Handshake: Inside MCP's Stateless Evolution and MRTR
+# Inside MCP 2026-07-28: Stateless Requests, MRTR, and the End of Sessions
 
 ## 1. Introduction: The Production Pivot
 
