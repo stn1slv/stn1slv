@@ -134,7 +134,7 @@
           data-testid="lang-progress"
           x="0.0"
           y="0"
-          width="157.80580442241708"
+          width="154.0435419719489"
           height="8"
           fill="#3572A5"
         />
@@ -142,9 +142,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="157.80580442241708"
+          x="154.0435419719489"
           y="0"
-          width="108.9696673656119"
+          width="106.37171167399345"
           height="8"
           fill="#b07219"
         />
@@ -152,9 +152,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="266.775471788029"
+          x="260.41525364594236"
           y="0"
-          width="97.47355127716355"
+          width="95.14967552857442"
           height="8"
           fill="#00ADD8"
         />
@@ -162,9 +162,19 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="364.24902306519255"
+          x="355.5649291745168"
           y="0"
-          width="14.397469500571864"
+          width="17.487753820389365"
+          height="8"
+          fill="#F05138"
+        />
+      
+        <rect
+          mask="url(#rect-mask)"
+          data-testid="lang-progress"
+          x="373.05268299490615"
+          y="0"
+          width="14.054218128532552"
           height="8"
           fill="#384d54"
         />
@@ -172,9 +182,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="378.6464925657644"
+          x="387.1069011234387"
           y="0"
-          width="13.254813191002668"
+          width="12.938803991347429"
           height="8"
           fill="#C1F12E"
         />
@@ -182,9 +192,9 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="391.90130575676704"
+          x="400.04570511478613"
           y="0"
-          width="19.081633625619517"
+          width="18.865117577280024"
           height="8"
           fill="#89e051"
         />
@@ -192,21 +202,11 @@
         <rect
           mask="url(#rect-mask)"
           data-testid="lang-progress"
-          x="400.9829393823866"
+          x="408.9108226920662"
           y="0"
-          width="18.078083301563098"
+          width="18.089177307933852"
           height="8"
           fill="#701516"
-        />
-      
-        <rect
-          mask="url(#rect-mask)"
-          data-testid="lang-progress"
-          x="409.06102268394966"
-          y="0"
-          width="17.938977316050323"
-          height="8"
-          fill="#427819"
         />
       
       
@@ -218,7 +218,7 @@
         Python
       </text>
       <text x="180" y="10" class='lang-name' text-anchor="end">
-        37.8%
+        36.9%
       </text>
     </g>
   </g>
@@ -229,7 +229,7 @@
         Java
       </text>
       <text x="180" y="10" class='lang-name' text-anchor="end">
-        26.1%
+        25.5%
       </text>
     </g>
   </g>
@@ -240,58 +240,58 @@
         Go
       </text>
       <text x="180" y="10" class='lang-name' text-anchor="end">
-        23.4%
+        22.8%
       </text>
     </g>
   </g>
 <g transform="translate(0, 75)">
     <g class="stagger" style="animation-delay: 900ms">
+      <circle cx="5" cy="6" r="5" fill="#F05138" />
+      <text data-testid="lang-name" x="15" y="10" class='lang-name'>
+        Swift
+      </text>
+      <text x="180" y="10" class='lang-name' text-anchor="end">
+        4.2%
+      </text>
+    </g>
+  </g></g><g transform="translate(225, 0)"><g transform="translate(0, 0)">
+    <g class="stagger" style="animation-delay: 450ms">
       <circle cx="5" cy="6" r="5" fill="#384d54" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
         Dockerfile
       </text>
       <text x="180" y="10" class='lang-name' text-anchor="end">
-        3.5%
-      </text>
-    </g>
-  </g></g><g transform="translate(225, 0)"><g transform="translate(0, 0)">
-    <g class="stagger" style="animation-delay: 450ms">
-      <circle cx="5" cy="6" r="5" fill="#C1F12E" />
-      <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        Batchfile
-      </text>
-      <text x="180" y="10" class='lang-name' text-anchor="end">
-        3.2%
+        3.4%
       </text>
     </g>
   </g>
 <g transform="translate(0, 25)">
     <g class="stagger" style="animation-delay: 600ms">
-      <circle cx="5" cy="6" r="5" fill="#89e051" />
+      <circle cx="5" cy="6" r="5" fill="#C1F12E" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        Shell
+        Batchfile
       </text>
       <text x="180" y="10" class='lang-name' text-anchor="end">
-        2.2%
+        3.1%
       </text>
     </g>
   </g>
 <g transform="translate(0, 50)">
     <g class="stagger" style="animation-delay: 750ms">
-      <circle cx="5" cy="6" r="5" fill="#701516" />
+      <circle cx="5" cy="6" r="5" fill="#89e051" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        Ruby
+        Shell
       </text>
       <text x="180" y="10" class='lang-name' text-anchor="end">
-        1.9%
+        2.1%
       </text>
     </g>
   </g>
 <g transform="translate(0, 75)">
     <g class="stagger" style="animation-delay: 900ms">
-      <circle cx="5" cy="6" r="5" fill="#427819" />
+      <circle cx="5" cy="6" r="5" fill="#701516" />
       <text data-testid="lang-name" x="15" y="10" class='lang-name'>
-        Makefile
+        Ruby
       </text>
       <text x="180" y="10" class='lang-name' text-anchor="end">
         1.9%
