@@ -105,7 +105,7 @@
           <text x="-5" y="3" alignment-baseline="central"
                 dominant-baseline="central" text-anchor="middle"
                 data-testid="level-rank-icon">
-          A
+          A+
         </text>
         </g>
       </g>
@@ -118,7 +118,7 @@
     </svg>
   
       <text class="stat bold" x="25" y="12.5">Total Stars Earned:</text>
-      <text class="stat bold" x="219.01" y="12.5">690</text>
+      <text class="stat bold" x="219.01" y="12.5">703</text>
     </g>
   </g>
 <g transform="translate(0, 25)">
@@ -129,7 +129,7 @@
     </svg>
   
       <text class="stat bold" x="25" y="12.5">Total Commits:</text>
-      <text class="stat bold" x="219.01" y="12.5">534</text>
+      <text class="stat bold" x="219.01" y="12.5">2k</text>
     </g>
   </g>
 <g transform="translate(0, 50)">
@@ -140,7 +140,7 @@
     </svg>
   
       <text class="stat bold" x="25" y="12.5">Total PRs:</text>
-      <text class="stat bold" x="219.01" y="12.5">244</text>
+      <text class="stat bold" x="219.01" y="12.5">273</text>
     </g>
   </g>
 <g transform="translate(0, 75)">
@@ -151,7 +151,7 @@
     </svg>
   
       <text class="stat bold" x="25" y="12.5">Total Issues:</text>
-      <text class="stat bold" x="219.01" y="12.5">9</text>
+      <text class="stat bold" x="219.01" y="12.5">12</text>
     </g>
   </g>
 <g transform="translate(0, 100)">
@@ -162,7 +162,7 @@
     </svg>
   
       <text class="stat bold" x="25" y="12.5">Contributed To:</text>
-      <text class="stat bold" x="219.01" y="12.5">32</text>
+      <text class="stat bold" x="219.01" y="12.5">37</text>
     </g>
   </g>
 <g transform="translate(0, 125)">
@@ -173,7 +173,7 @@
     </svg>
   
       <text class="stat bold" x="25" y="12.5">Total Repositories:</text>
-      <text class="stat bold" x="219.01" y="12.5">63</text>
+      <text class="stat bold" x="219.01" y="12.5">66</text>
     </g>
   </g>
     </svg>
