@@ -26,7 +26,7 @@ jobs:
         with:
           card-type: stats
           username: stn1slv
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PAT_TOKEN }}
           output: img/github-stats-dark.svg
           theme: vue-dark
           show-icons: true
@@ -41,7 +41,7 @@ jobs:
         with:
           card-type: stats
           username: stn1slv
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PAT_TOKEN }}
           output: img/github-stats-light.svg
           theme: vue
           show-icons: true
@@ -56,7 +56,7 @@ jobs:
         with:
           card-type: stats
           username: stn1slv
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PAT_TOKEN }}
           output: img/github-stats.svg
           show-icons: true
           hide-title: true
