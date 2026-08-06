@@ -113,7 +113,8 @@ jobs:
           hide: markdown,xml,asciidoc,html,handlebars
           langs-count: 8
           weighting: balanced
-      
+          exclude-repo: "overtype"
+
       - name: Generate Top Languages - Light
         continue-on-error: true
         uses: stn1slv/github-stats-card@v1.1.9
@@ -128,7 +129,8 @@ jobs:
           hide: markdown,xml,asciidoc,html,handlebars
           langs-count: 8
           weighting: balanced
-      
+          exclude-repo: "overtype"
+
       - name: Generate Top Languages - Default
         continue-on-error: true
         uses: stn1slv/github-stats-card@v1.1.9
@@ -141,6 +143,7 @@ jobs:
           hide: markdown,xml,html,asciidoc,handlebars
           langs-count: 8
           weighting: balanced
+          exclude-repo: "overtype"
 
       - name: Commit report
         run: |
