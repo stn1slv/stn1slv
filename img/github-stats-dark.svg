@@ -118,7 +118,7 @@
     </svg>
   
       <text class="stat bold" x="25" y="12.5">Total Stars Earned:</text>
-      <text class="stat bold" x="219.01" y="12.5">703</text>
+      <text class="stat bold" x="219.01" y="12.5">706</text>
     </g>
   </g>
 <g transform="translate(0, 25)">
@@ -129,7 +129,7 @@
     </svg>
   
       <text class="stat bold" x="25" y="12.5">Total Commits:</text>
-      <text class="stat bold" x="219.01" y="12.5">2.4k</text>
+      <text class="stat bold" x="219.01" y="12.5">2.5k</text>
     </g>
   </g>
 <g transform="translate(0, 50)">
@@ -140,7 +140,7 @@
     </svg>
   
       <text class="stat bold" x="25" y="12.5">Total PRs:</text>
-      <text class="stat bold" x="219.01" y="12.5">281</text>
+      <text class="stat bold" x="219.01" y="12.5">287</text>
     </g>
   </g>
 <g transform="translate(0, 75)">
