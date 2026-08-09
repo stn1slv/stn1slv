@@ -34,7 +34,7 @@ jobs:
           hide-title: true
           include-all-commits: true
           show: repos
-      
+
       - name: Generate GitHub Stats - Light
         continue-on-error: true
         uses: stn1slv/github-stats-card@v1.1.9
@@ -49,7 +49,7 @@ jobs:
           hide-title: true
           include-all-commits: true
           show: repos
-      
+
       - name: Generate GitHub Stats - Default
         continue-on-error: true
         uses: stn1slv/github-stats-card@v1.1.9
@@ -74,7 +74,7 @@ jobs:
           limit: 10
           hide-border: true
           exclude-repo: "awesome-*,Free-*"
-          
+
       - name: Generate Top Contributions - Light
         continue-on-error: true
         uses: stn1slv/github-stats-card@v1.1.9
@@ -87,7 +87,7 @@ jobs:
           limit: 10
           hide-border: true
           exclude-repo: "awesome-*,Free-*"
-          
+
       - name: Generate Top Contributions - Default
         continue-on-error: true
         uses: stn1slv/github-stats-card@v1.1.9
@@ -105,7 +105,7 @@ jobs:
         with:
           card-type: top-langs
           username: stn1slv
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PAT_TOKEN }}
           output: img/top-langs-dark.svg
           theme: vue-dark
           layout: compact
@@ -113,7 +113,7 @@ jobs:
           hide: markdown,xml,asciidoc,html,handlebars
           langs-count: 8
           weighting: balanced
-          exclude-repo: "overtype"
+          exclude-repo: "overtype,homebrew-tap"
 
       - name: Generate Top Languages - Light
         continue-on-error: true
@@ -121,7 +121,7 @@ jobs:
         with:
           card-type: top-langs
           username: stn1slv
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PAT_TOKEN }}
           output: img/top-langs-light.svg
           theme: vue
           layout: compact
@@ -129,7 +129,7 @@ jobs:
           hide: markdown,xml,asciidoc,html,handlebars
           langs-count: 8
           weighting: balanced
-          exclude-repo: "overtype"
+          exclude-repo: "overtype,homebrew-tap"
 
       - name: Generate Top Languages - Default
         continue-on-error: true
@@ -137,13 +137,13 @@ jobs:
         with:
           card-type: top-langs
           username: stn1slv
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PAT_TOKEN }}
           output: img/top-langs.svg
           layout: compact
           hide: markdown,xml,html,asciidoc,handlebars
           langs-count: 8
           weighting: balanced
-          exclude-repo: "overtype"
+          exclude-repo: "overtype,homebrew-tap"
 
       - name: Commit report
         run: |
