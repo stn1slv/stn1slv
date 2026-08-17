@@ -21,7 +21,6 @@ jobs:
           git config --global user.email 'stn1slv@users.noreply.github.com'
           git pull origin main
       - name: Generate GitHub Stats - Dark
-        continue-on-error: true
         uses: stn1slv/github-stats-cards@v1.2.1
         with:
           card-type: stats
@@ -36,7 +35,6 @@ jobs:
           show: repos
 
       - name: Generate GitHub Stats - Light
-        continue-on-error: true
         uses: stn1slv/github-stats-cards@v1.2.1
         with:
           card-type: stats
@@ -51,7 +49,6 @@ jobs:
           show: repos
 
       - name: Generate GitHub Stats - Default
-        continue-on-error: true
         uses: stn1slv/github-stats-cards@v1.2.1
         with:
           card-type: stats
@@ -63,7 +60,6 @@ jobs:
           show: repos
 
       - name: Generate Top Contributions - Dark
-        continue-on-error: true
         uses: stn1slv/github-stats-cards@v1.2.1
         with:
           card-type: contrib
@@ -76,7 +72,6 @@ jobs:
           exclude-repo: "awesome-*,Free-*"
 
       - name: Generate Top Contributions - Light
-        continue-on-error: true
         uses: stn1slv/github-stats-cards@v1.2.1
         with:
           card-type: contrib
@@ -89,7 +84,6 @@ jobs:
           exclude-repo: "awesome-*,Free-*"
 
       - name: Generate Top Contributions - Default
-        continue-on-error: true
         uses: stn1slv/github-stats-cards@v1.2.1
         with:
           card-type: contrib
@@ -100,7 +94,6 @@ jobs:
           exclude-repo: "awesome-*,Free-*"
 
       - name: Generate Top Languages - Dark
-        continue-on-error: true
         uses: stn1slv/github-stats-cards@v1.2.1
         with:
           card-type: top-langs
@@ -116,7 +109,6 @@ jobs:
           exclude-repo: "overtype,homebrew-tap"
 
       - name: Generate Top Languages - Light
-        continue-on-error: true
         uses: stn1slv/github-stats-cards@v1.2.1
         with:
           card-type: top-langs
@@ -132,7 +124,6 @@ jobs:
           exclude-repo: "overtype,homebrew-tap"
 
       - name: Generate Top Languages - Default
-        continue-on-error: true
         uses: stn1slv/github-stats-cards@v1.2.1
         with:
           card-type: top-langs
