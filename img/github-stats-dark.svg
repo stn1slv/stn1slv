@@ -138,7 +138,7 @@
     </svg>
   
       <text class="stat bold" x="25" y="12.5">Total PRs:</text>
-      <text class="stat bold" x="219.01" y="12.5">302</text>
+      <text class="stat bold" x="219.01" y="12.5">303</text>
     </g>
   </g>
 <g transform="translate(0, 75)">
@@ -149,7 +149,7 @@
     </svg>
   
       <text class="stat bold" x="25" y="12.5">Total Issues:</text>
-      <text class="stat bold" x="219.01" y="12.5">17</text>
+      <text class="stat bold" x="219.01" y="12.5">19</text>
     </g>
   </g>
 <g transform="translate(0, 100)">
@@ -160,7 +160,7 @@
     </svg>
   
       <text class="stat bold" x="25" y="12.5">Contributed To:</text>
-      <text class="stat bold" x="219.01" y="12.5">39</text>
+      <text class="stat bold" x="219.01" y="12.5">40</text>
     </g>
   </g>
 <g transform="translate(0, 125)">
