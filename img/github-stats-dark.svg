@@ -104,9 +104,7 @@
         <g class="rank-text">
           <text x="-5" y="3" alignment-baseline="central"
                 dominant-baseline="central" text-anchor="middle"
-                data-testid="level-rank-icon">
-          A+
-        </text>
+                data-testid="level-rank-icon">A+</text>
         </g>
       </g>
     <svg x="0" y="0">
@@ -140,7 +138,7 @@
     </svg>
   
       <text class="stat bold" x="25" y="12.5">Total PRs:</text>
-      <text class="stat bold" x="219.01" y="12.5">301</text>
+      <text class="stat bold" x="219.01" y="12.5">302</text>
     </g>
   </g>
 <g transform="translate(0, 75)">
