@@ -21,7 +21,7 @@ jobs:
           git config --global user.email 'stn1slv@users.noreply.github.com'
           git pull origin main
       - name: Generate GitHub Stats - Dark
-        uses: stn1slv/github-stats-cards@v1.3.1
+        uses: stn1slv/github-stats-cards@v1.4.0
         with:
           card-type: stats
           username: stn1slv
@@ -35,7 +35,7 @@ jobs:
           show: repos
 
       - name: Generate GitHub Stats - Light
-        uses: stn1slv/github-stats-cards@v1.3.1
+        uses: stn1slv/github-stats-cards@v1.4.0
         with:
           card-type: stats
           username: stn1slv
@@ -49,7 +49,7 @@ jobs:
           show: repos
 
       - name: Generate GitHub Stats - Default
-        uses: stn1slv/github-stats-cards@v1.3.1
+        uses: stn1slv/github-stats-cards@v1.4.0
         with:
           card-type: stats
           username: stn1slv
@@ -60,7 +60,7 @@ jobs:
           show: repos
 
       - name: Generate Top Contributions - Dark
-        uses: stn1slv/github-stats-cards@v1.3.1
+        uses: stn1slv/github-stats-cards@v1.4.0
         with:
           card-type: contrib
           username: stn1slv
@@ -72,7 +72,7 @@ jobs:
           exclude-repo: "awesome-*,Free-*"
 
       - name: Generate Top Contributions - Light
-        uses: stn1slv/github-stats-cards@v1.3.1
+        uses: stn1slv/github-stats-cards@v1.4.0
         with:
           card-type: contrib
           username: stn1slv
@@ -84,7 +84,7 @@ jobs:
           exclude-repo: "awesome-*,Free-*"
 
       - name: Generate Top Contributions - Default
-        uses: stn1slv/github-stats-cards@v1.3.1
+        uses: stn1slv/github-stats-cards@v1.4.0
         with:
           card-type: contrib
           username: stn1slv
@@ -94,7 +94,7 @@ jobs:
           exclude-repo: "awesome-*,Free-*"
 
       - name: Generate Top Languages - Dark
-        uses: stn1slv/github-stats-cards@v1.3.1
+        uses: stn1slv/github-stats-cards@v1.4.0
         with:
           card-type: top-langs
           username: stn1slv
@@ -109,7 +109,7 @@ jobs:
           exclude-repo: "overtype,homebrew-tap"
 
       - name: Generate Top Languages - Light
-        uses: stn1slv/github-stats-cards@v1.3.1
+        uses: stn1slv/github-stats-cards@v1.4.0
         with:
           card-type: top-langs
           username: stn1slv
@@ -124,7 +124,7 @@ jobs:
           exclude-repo: "overtype,homebrew-tap"
 
       - name: Generate Top Languages - Default
-        uses: stn1slv/github-stats-cards@v1.3.1
+        uses: stn1slv/github-stats-cards@v1.4.0
         with:
           card-type: top-langs
           username: stn1slv
