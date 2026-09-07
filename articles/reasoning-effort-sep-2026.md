@@ -17,7 +17,7 @@ The short verdict: gpt-5.6-luna is a very good model for this class of work, and
 
 ## The setup
 
-The pipeline takes in around 2,600 articles a month and cuts them to roughly 120 candidates that a person then reviews by hand. That cut is not one model call. It runs on a private agent of mine built on LangGraph, about a dozen steps in the graph, ten of them separate model calls, each with its own prompt: a relevance gate at the front, then a content-type filter, a topic filter, a novelty check, scoring and summarisation.
+The pipeline takes in around 2,600 articles a month and cuts them to roughly 120 candidates that a person then reviews by hand. That cut is not one model call. It runs on a private agent of mine built on LangGraph, about a dozen steps in the graph, ten of them separate model calls, most with a prompt of their own: a relevance gate at the front, then a content-type filter, a topic filter, a novelty check, scoring and summarisation.
 
 One structural detail drives everything below. The first stage is a noise filter, not a quality judge, and its two kinds of mistake cost completely different amounts. Something wrongly kept gets caught later, by a stronger model or by the person doing the final review. Something wrongly dropped is gone for good, because the article is recorded as seen and never comes back.
 
@@ -25,7 +25,7 @@ One structural detail drives everything below. The first stage is a noise filter
 
 Nine of the ten model calls now run gpt-5.6-luna. The relevance gate at the very front stays on gpt-5.4-nano, for reasons that took most of the weekend to establish. Every call also has its reasoning effort set explicitly rather than left to the model's default, which turned out to matter more than the model names did.
 
-On cost, the rate card was the wrong thing to read first. Almost all of my requests bill under OpenAI's data-sharing programme, which grants two separate daily token allowances, and every model belongs to exactly one of them. Luna shares the larger allowance with gpt-5.4-nano and gpt-5.4-mini, while the stronger models in its own generation sit in an allowance I would exhaust in a few hours. That decided which models were candidates before quality entered the conversation. What I actually pay is a few cents a month, because the traffic fits inside the allowance. Details are in the appendix.
+On cost, the rate card was the wrong thing to read first. Almost all of my requests bill under OpenAI's data-sharing programme, which grants two separate daily token allowances, and every model belongs to exactly one of them. Luna shares the larger allowance with gpt-5.4-nano and gpt-5.4-mini, while the strongest model in its own generation sits in an allowance I would exhaust in about five hours. That decided which models were candidates before quality entered the conversation. What I actually pay is a few cents a month, because the traffic fits inside the allowance. Details are in the appendix.
 
 Four things surprised me. They are in the order I learned them, which is also the order I would check them.
 
@@ -39,11 +39,11 @@ Better ground truth was sitting in version control the whole time. The final hum
 
 The real loss was 15 good articles, half the size of the regression I had been chasing. More usefully, the same labels say which step lost each one.
 
-![Good articles lost at each step, retired models against the candidate. The topic filter goes from 2 to 16 while every other step is unchanged.](../img/article/reasoning-effort-sep-2026/losses-by-step.svg)
+![Good articles lost at each step, retired models against the candidate. The topic filter goes from 2 to 16 while the other steps stay where they were.](../img/article/reasoning-effort-sep-2026/losses-by-step.svg)
 
-One step moved and the rest did not. That is a much better thing to own than a 31-article mystery.
+One step moved and nothing else shifted by more than a single article. That is a much better thing to own than a 31-article mystery.
 
-The same comparison also found a problem that had nothing to do with the migration. The novelty check lost the same 12 good articles under both the old and the new models, and it invents topic names that do not appear in the list it is given, a different invented name for each of its 24 rejections. That is roughly a sixth of the good articles, it has nothing to do with which model runs it, and it is still open. A model swap is a good moment to find this kind of thing, because it is the only time anyone measures the steps separately.
+The same comparison also found a problem that had nothing to do with the migration. The novelty check lost 12 good articles under the old models and 12 under the new ones, and it invents topic names that do not appear in the list it is given, a different invented name for each of its 24 rejections. That is roughly a sixth of the good articles, it has nothing to do with which model runs it, and it is still open. A model swap is a good moment to find this kind of thing, because it is the only time anyone measures the steps separately.
 
 If any part of your system ends in a human decision, that decision is your ground truth, and it is usually already recorded somewhere: approval queues, moderation overrides, ticket reclassifications, edits to generated drafts.
 
@@ -51,7 +51,7 @@ If any part of your system ends in a human decision, that decision is your groun
 
 With the loss traced to the topic filter, the reflex was to retune that prompt for the new model. That would have been actively harmful, because a later and stronger stage reads the same prompt files. Loosening a rule to suit a first-stage model degrades the stage doing the real judging, and no first-stage test would show it.
 
-So instead of editing, I asked the model to explain itself. I captured its stated reason for every article the topic filter dropped, about twenty calls.
+So instead of editing, I asked the model to explain itself. I captured gpt-5.4-mini's stated reason for every article the topic filter dropped, about twenty calls.
 
 The reasons were coherent. They cited rules by name and quoted the prompt accurately. One reproduced almost word for word a rule excluding AI cost optimisation "even when implemented at an API gateway", while rejecting an article a human had kept.
 
@@ -83,11 +83,11 @@ So "luna needs high effort" was not something I could learn once and reuse. It w
 
 Reaching for a stronger model is no substitute for that. On a separate 80-article probe at the relevance gate, all at medium effort, gpt-5.4-mini and luna rejected 31 and 34 articles against 30 for gpt-5.4-nano. Moving up a tier changed nothing. Dropping gpt-5.4-nano to no reasoning at all did.
 
-There is a cost side too, though not the one I assumed. Deliberation is spent on output tokens, but output is not what fills the allowance: it was 13 percent of my usage on the old configuration and under 3 percent on the new one, because the prompts are long and input dominates. What effort does control is the part that grows without a ceiling. Moving the topic filter one step up bought 10 fewer rejections for roughly three times its reasoning tokens. I did not take that trade.
+There is a cost side too, though not the one I assumed. Deliberation is spent on output tokens, but output is not what fills the allowance: it was 13 percent of my usage on the old configuration and under 3 percent on the new one, because the prompts are long and input dominates. What effort does control is the part that grows without a ceiling. Moving the topic filter one step up bought 10 fewer rejections for roughly three times the tokens. I did not take that trade.
 
 ## What I did not measure
 
-The configuration I shipped was never measured against the human labels. I stopped that run early, so the numbers in the appendix describe the gpt-5.4-mini candidate rather than luna. It has since run in production without a single model or API failure, which is not the same as without quality loss. What production does tell me is in the appendix.
+The configuration I shipped was never measured against the human labels. I stopped that run early, so the numbers in the appendix describe the gpt-5.4-mini candidate rather than luna. It has since run in production without a single model call failing, which is not the same as without quality loss. What production does tell me is in the appendix.
 
 One measurement suggests luna is worse than gpt-5.4-mini at the content-type filter, 9 good articles lost against 5, at an effort setting I failed to record. If the output thins out, that is the first place to look.
 
@@ -110,20 +110,20 @@ Against those human labels:
 | configuration | good articles kept | deleted articles let through |
 |---|---|---|
 | retired: gpt-5-mini and gpt-5-nano | 48 of 72 | 27 of 49 |
-| candidate: gpt-5.4-mini on the judgement steps | 33 of 72 | 18 of 49 |
+| candidate: gpt-5.4-mini on the judgement steps, after the prompt fixes | 33 of 72 | 18 of 49 |
 | shipped: luna on nine of ten calls | not measured | not measured |
 
-That last row stays empty until the month's human review happens, because the labels come from the prune commit and September has not been pruned yet. Production does say something in the meantime. Luna went live on 30 August, and over its first eight days the pipeline included 26 of 646 articles, against 32 of 658 in the eight days immediately before the swap:
+That last row stays empty until the month's human review happens, because the labels come from the prune commit and September has not been pruned yet. Production does say something in the meantime. Luna went live during 30 August, and over its first eight days the pipeline included 26 of 638 articles, against 32 of 658 in the eight days immediately before the swap:
 
 | period | articles | included | rate |
 |---|---|---|---|
 | old configuration, 1 to 29 August | 2,658 | 121 | 4.55 percent |
 | old configuration, last 8 days before the swap | 658 | 32 | 4.86 percent |
-| luna, 30 August to 6 September | 646 | 26 | 4.02 percent |
+| luna, 30 August to 6 September | 638 | 26 | 4.08 percent |
 
-Comparing the two matched windows gives a two-proportion z of 0.73, so that gap is not distinguishable from noise. For scale, the old configuration's own first eight days of August ran at 3.98 percent, further from its last eight days than luna is. Eight days is not a month and an include rate is not a quality measure, but the thing I was most afraid of, luna quietly starving the pipeline, has not happened.
+Comparing the two matched windows gives a two-proportion z of 0.69, so that gap is not distinguishable from noise. For scale, the old configuration's own first eight days of August ran at 3.98 percent, further from its last eight days than luna is. Eight days is not a month and an include rate is not a quality measure, but the thing I was most afraid of, luna quietly starving the pipeline, has not happened.
 
-The luna period is also the first one with a per-step breakdown at all. Of its 611 exclusions, 41 percent came from the relevance gate, 37 percent from the content-type filter, 16 percent from the topic filter and 3 percent from the novelty check. Under the old configuration, every one of its 2,527 exclusions recorded no reason whatsoever, which is why the August comparison had to be reconstructed by replaying articles rather than read off the production rows.
+The luna period is also the first one with a per-step breakdown at all. Of its 603 exclusions, 42 percent came from the relevance gate, 38 percent from the content-type filter, 16 percent from the topic filter and 3 percent from the novelty check. Under the old configuration, every one of its 2,526 exclusions between 1 and 29 August recorded no reason whatsoever, which is why the August comparison had to be reconstructed by replaying articles rather than read off the production rows.
 
 Two limits on that ground truth. It only contains articles the old pipeline passed, so a new configuration can never be credited for recovering something the old one dropped, and roughly 79 of the 200 rows carry no human label at all.
 
@@ -133,14 +133,14 @@ What worked instead: test a specific change against the exact articles it target
 
 ## Appendix B: cost
 
-The data-sharing programme grants 2.5M tokens a day in the larger allowance, which covers gpt-5.4-nano, gpt-5.4-mini and gpt-5.6-luna, and 250k a day in the smaller one, which covers the mid-size and larger models. A weekday runs about 1.95M tokens on the old configuration and 1.15M on the new one. A month of production traffic priced at flex rates, as if the allowance did not exist, comes to about $4.
+The data-sharing programme grants 2.5M tokens a day in the larger allowance, which covers gpt-5.4-nano, gpt-5.4-mini and gpt-5.6-luna, and 250k a day in the smaller one, which covers the mid-size and larger models. A weekday runs about 1.95M tokens on the old configuration and 1.15M on the new one. The month I exported, which is mostly the old configuration and eight days of the new one, comes to about $4 at flex rates if the allowance did not exist.
 
 Per thousand requests the models land far apart: $0.32 for gpt-5-nano, $0.52 for gpt-5.4-nano, $0.65 for luna, $1.49 for gpt-5-mini, and $3.29 for gpt-5.4-mini on a small sample. Luna is not the cheapest option on that list and does not need to be. It sits well below both mini models while sharing the same allowance as the nano ones.
 
-One line in the rate card deserves a close read. Luna is the only model in my lineup that charges for writing to the prompt cache, at 25 percent above its own uncached input rate. Because my traffic is spread thinly across the day rather than bunched into bursts, 57 percent of its input billed as cache writes against 41 percent as cache reads. Caching still pays, by 19 percent against not caching at all, rather than the 90 percent the read discount suggests.
+One line in the rate card deserves a close read. Luna is the only model in my lineup that charges for writing to the prompt cache, at 25 percent above its own uncached input rate. Because my traffic is spread thinly across the day rather than bunched into bursts, 57 percent of its input billed as cache writes against 41 percent as cache reads. Caching still pays, cutting the input bill by 23 percent against not caching at all, rather than the 90 percent the read discount suggests.
 
 ## Appendix C: API traps
 
 Default reasoning effort is not stable across generations. gpt-5 defaulted to medium, the 5.4 family defaults to none, and 5.6 defaults to medium again, so a bare rename changes how much every call reasons. The highest effort level exists only on 5.6 models and fails on every request if you pair it with a 5.4 one. And any effort above none, on a call that binds function tools, is rejected on the chat completions endpoint and has to move to the responses endpoint; since luna defaults to medium, luna cannot use tools on chat completions at all.
 
-None of these is recoverable at runtime. Retry logic correctly skips client errors, so an invalid pair fails on every row of the run instead of failing once, loudly. Validate the settings at process start, against the specific model. These specifics will age, so check them against current documentation before relying on any of them.
+None of these is recoverable at runtime. Retry logic covers server errors, timeouts and rate limits, but not invalid requests, so a bad pair fails on every row of the run instead of failing once, loudly. Validate the settings at process start, against the specific model. These specifics will age, so check them against current documentation before relying on any of them.

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" role="img" aria-labelledby="t d">
   <title id="t">Good articles lost at each step, retired models against the candidate</title>
-  <desc id="d">Of 72 articles a human later kept, the topic filter lost 2 under the retired models and 16 under the candidate. Every other step is unchanged: novelty check 12 and 12, content-type filter 5 and 5, relevance gate 4 and 4, elsewhere 1 and 2.</desc>
+  <desc id="d">Of 72 articles a human later kept, the topic filter lost 2 under the retired models and 16 under the candidate. The other steps stay where they were: novelty check 12 and 12, content-type filter 5 and 5, relevance gate 4 and 4, elsewhere 1 and 2.</desc>
   <style>
     .surface { fill: #fcfcfb; }
     .ink     { fill: #0b0b0b; }
