@@ -39,7 +39,7 @@ Better ground truth was sitting in version control the whole time. The final hum
 
 The real loss was 15 good articles, half the size of the regression I had been chasing. More usefully, the same labels say which step lost each one.
 
-![Good articles lost at each step, retired models against the candidate. The topic filter goes from 2 to 16 while every other step is unchanged.](../img/reasoning-effort-sep-2026/losses-by-step.svg)
+![Good articles lost at each step, retired models against the candidate. The topic filter goes from 2 to 16 while every other step is unchanged.](../img/article/reasoning-effort-sep-2026/losses-by-step.svg)
 
 One step moved and the rest did not. That is a much better thing to own than a 31-article mystery.
 
@@ -75,7 +75,7 @@ That is a different problem with a different fix. A broken check is worth repair
 
 Having decided to keep gpt-5.4-nano at that gate, the remaining question was how hard to make it think. Reasoning models expose an effort setting, roughly how much internal deliberation to spend before answering. I assumed it was a quality dial with a consistent direction, and that each model had its own response to it.
 
-![Rejections by reasoning effort, out of 198 articles. gpt-5.4-nano climbs from 30 to 55 at the relevance gate, gpt-5.6-luna stays flat at 66, 61 and 68 on the same step, and gpt-5.6-luna at the topic filter falls from 168 to 119.](../img/reasoning-effort-sep-2026/effort-ladders.svg)
+![Rejections by reasoning effort, out of 198 articles. gpt-5.4-nano climbs from 30 to 55 at the relevance gate, gpt-5.6-luna stays flat at 66, 61 and 68 on the same step, and gpt-5.6-luna at the topic filter falls from 168 to 119.](../img/article/reasoning-effort-sep-2026/effort-ladders.svg)
 
 There are two shapes in that picture. At the relevance gate, more thinking makes gpt-5.4-nano reject nearly twice as much, while luna does not respond to the setting at all. On the topic filter, the same luna slides 49 articles and is still falling at the top of the range.
 
