@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 430" role="img" aria-labelledby="t d">
+  <title id="t">Good articles lost at each step, retired models against the candidate</title>
+  <desc id="d">Of 72 articles a human later kept, the topic filter lost 2 under the retired models and 16 under the candidate. Every other step is unchanged: novelty check 12 and 12, content-type filter 5 and 5, relevance gate 4 and 4, elsewhere 1 and 2.</desc>
+  <style>
+    .surface { fill: #fcfcfb; }
+    .ink     { fill: #0b0b0b; }
+    .sub     { fill: #52514e; }
+    .muted   { fill: #898781; }
+    .axis    { stroke: #c3c2b7; }
+    .s1      { fill: #2a78d6; }
+    .s2      { fill: #eb6834; }
+    text     { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    @media (prefers-color-scheme: dark) {
+      .surface { fill: #1a1a19; }
+      .ink     { fill: #ffffff; }
+      .sub     { fill: #c3c2b7; }
+      .muted   { fill: #898781; }
+      .axis    { stroke: #383835; }
+      .s1      { fill: #3987e5; }
+      .s2      { fill: #d95926; }
+    }
+  </style>
+
+  <rect class="surface" x="0" y="0" width="760" height="430"/>
+
+  <text class="ink" x="24" y="30" font-size="17" font-weight="600">One step moved. The rest did not.</text>
+  <text class="sub" x="24" y="50" font-size="13">Articles a human later kept, lost at each step, out of 72</text>
+
+  <g font-size="12">
+    <rect class="s1" x="24" y="68" width="12" height="8" rx="2"/>
+    <text class="sub" x="44" y="76">retired: gpt-5-mini and gpt-5-nano</text>
+    <rect class="s2" x="288" y="68" width="12" height="8" rx="2"/>
+    <text class="sub" x="308" y="76">candidate: gpt-5.4-mini on the judgement steps</text>
+  </g>
+
+  <line class="axis" stroke-width="1" x1="212" y1="92" x2="212" y2="378"/>
+
+  <g class="sub" font-size="13" text-anchor="end">
+    <text x="200" y="116">topic filter</text>
+    <text x="200" y="178">novelty check</text>
+    <text x="200" y="240">content-type filter</text>
+    <text x="200" y="302">relevance gate</text>
+    <text x="200" y="364">elsewhere</text>
+  </g>
+
+  <g>
+    <path class="s1" d="M212 92 H266.5 a4 4 0 0 1 4 4 V106 a4 4 0 0 1 -4 4 H212 Z"/>
+    <path class="s2" d="M212 112 H676 a4 4 0 0 1 4 4 V126 a4 4 0 0 1 -4 4 H212 Z"/>
+
+    <path class="s1" d="M212 154 H559 a4 4 0 0 1 4 4 V168 a4 4 0 0 1 -4 4 H212 Z"/>
+    <path class="s2" d="M212 174 H559 a4 4 0 0 1 4 4 V188 a4 4 0 0 1 -4 4 H212 Z"/>
+
+    <path class="s1" d="M212 216 H354.3 a4 4 0 0 1 4 4 V230 a4 4 0 0 1 -4 4 H212 Z"/>
+    <path class="s2" d="M212 236 H354.3 a4 4 0 0 1 4 4 V250 a4 4 0 0 1 -4 4 H212 Z"/>
+
+    <path class="s1" d="M212 278 H325 a4 4 0 0 1 4 4 V292 a4 4 0 0 1 -4 4 H212 Z"/>
+    <path class="s2" d="M212 298 H325 a4 4 0 0 1 4 4 V312 a4 4 0 0 1 -4 4 H212 Z"/>
+
+    <path class="s1" d="M212 340 H237.3 a4 4 0 0 1 4 4 V354 a4 4 0 0 1 -4 4 H212 Z"/>
+    <path class="s2" d="M212 360 H266.5 a4 4 0 0 1 4 4 V374 a4 4 0 0 1 -4 4 H212 Z"/>
+  </g>
+
+  <g class="sub" font-size="12">
+    <text x="280" y="105">2</text>
+    <text x="690" y="125" font-weight="600">16</text>
+    <text x="573" y="167">12</text>
+    <text x="573" y="187">12</text>
+    <text x="368" y="229">5</text>
+    <text x="368" y="249">5</text>
+    <text x="339" y="291">4</text>
+    <text x="339" y="311">4</text>
+    <text x="251" y="353">1</text>
+    <text x="280" y="373">2</text>
+  </g>
+
+  <text class="muted" x="24" y="410" font-size="11">Measured on a 200-row sample containing 72 articles a human kept and 49 a human deleted.</text>
+</svg>
