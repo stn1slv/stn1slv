@@ -1,7 +1,9 @@
 ---
 title: "Migrating off gpt-5: the models were fine, my measurements were not"
 description: "A weekend spent moving a pipeline off gpt-5 taught me more about how I measure model changes than about the models themselves."
-published-at: TBD
+seo-title: "gpt-5 migration: the models were fine, my metrics were not"
+seo-description: "OpenAI retires gpt-5 in December. Moving a ten-call pipeline to gpt-5.6-luna took a weekend, and the real problems were in how I measured the change."
+published-at: https://www.linkedin.com/pulse/migrating-off-gpt-5-models-were-fine-my-measurements-deviatov-kfmbe
 author: Stanislav Deviatov
 date: Sep-2026
 language: en
