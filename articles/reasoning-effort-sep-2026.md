@@ -17,7 +17,7 @@ The short verdict: gpt-5.6-luna is a very good model for this class of work, and
 
 ## The setup
 
-The pipeline takes in around 2,600 articles a month and cuts them to roughly 120 candidates that a person then reviews by hand. That cut is not one model call. It is about a dozen steps in a private engine of mine, ten of them separate model calls, each with its own prompt: a relevance gate at the front, then a content-type filter, a topic filter, a novelty check, scoring and summarisation.
+The pipeline takes in around 2,600 articles a month and cuts them to roughly 120 candidates that a person then reviews by hand. That cut is not one model call. It runs on a private agent of mine built on LangGraph, about a dozen steps in the graph, ten of them separate model calls, each with its own prompt: a relevance gate at the front, then a content-type filter, a topic filter, a novelty check, scoring and summarisation.
 
 One structural detail drives everything below. The first stage is a noise filter, not a quality judge, and its two kinds of mistake cost completely different amounts. Something wrongly kept gets caught later, by a stronger model or by the person doing the final review. Something wrongly dropped is gone for good, because the article is recorded as seen and never comes back.
 
