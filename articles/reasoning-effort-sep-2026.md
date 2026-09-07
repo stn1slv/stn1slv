@@ -23,38 +23,23 @@ That cut is not one model call. It runs on a private engine of mine built on Lan
 
 One structural detail drives everything below. The first stage is a noise filter, not a quality judge, and its two error types cost completely different amounts. Something wrongly kept gets caught later. Something wrongly dropped is gone for good, because the URL is recorded as seen and never comes back.
 
-Two sample sets appear in this article and they are not the same. The per-step measurements use a cache of 198 articles fed straight into one step in isolation, so nothing upstream can vary. The end-to-end numbers use a 200-row sample run through the whole graph.
-
 ## Where I landed
 
-Nine of the ten model calls now run gpt-5.6-luna. One, the relevance gate at the very front, stays on gpt-5.4-nano at effort none, because luna rejects roughly twice as much there as gpt-5.4-nano does at effort none, and more at every other level.
-
-Effort is set explicitly on every call: medium for the content-type filter, the three fast-track gates, the topic filter and scoring; low for the novelty check; none for summarisation; high for the borderline-score escalation, so that escalation is still a real step up now that model tier is no longer an axis I vary there.
-
-One caveat that belongs here rather than in a footnote. The end-to-end numbers in section 2 below describe an earlier candidate configuration that ran gpt-5.4-mini on the judgement steps, not the configuration I shipped. The luna evidence is narrower: the two effort ladders in section 1, the decomposition in section 3, and the reasons luna gave for its rejections. The shipped layout has run in production without errors, which is not the same as without quality loss.
+Nine of the ten model calls now run gpt-5.6-luna. One, the relevance gate at the very front, stays on gpt-5.4-nano at effort none, for reasons that took most of the weekend to establish. Effort is set explicitly on every call rather than left to the model default, mostly medium, none for summarisation, high for the borderline-score escalation.
 
 On price, the rate card was the wrong thing to read first. About 99.6 percent of my requests bill under OpenAI's data-sharing programme, which grants two separate daily token allowances, and every model belongs to exactly one. Luna shares the 2.5M-a-day allowance with the nano and mini tier, while the stronger 5.6 models sit in a 250k allowance I would exhaust in a few hours. That decided the model list before quality did.
 
-The day-to-day numbers are small. A weekday runs about 1.95M tokens on the old configuration and 1.15M on the new one, and a month of production traffic priced at flex rates, ignoring the allowance entirely, comes to about $4. What I actually pay is a few cents, because it fits inside the allowance. Per thousand requests the models land far apart: $0.32 for gpt-5-nano, $0.52 for gpt-5.4-nano, $0.65 for luna, $1.49 for gpt-5-mini, and $3.29 for gpt-5.4-mini on a small sample.
+The day-to-day numbers are small. A weekday runs about 1.95M tokens on the old configuration and 1.15M on the new one, which is roughly $4 a month at flex rates and a few cents in practice, because it fits inside the allowance. Per thousand requests the models land far apart: $0.32 for gpt-5-nano, $0.52 for gpt-5.4-nano, $0.65 for luna, $1.49 for gpt-5-mini, and $3.29 for gpt-5.4-mini on a small sample.
 
 One line in the card deserves a close read. Luna is the only model in my lineup that bills cache writes, at 25 percent above its own uncached input rate, and 57 percent of its input billed as writes against 41 percent as reads, because my traffic is spread thinly across the day rather than bunched into cache-friendly bursts. Caching still pays, by 19 percent against not caching, rather than the 90 percent the read discount suggests.
 
-## How the models actually performed
+## My baseline was the thing I was trying to replace
 
-Every figure below is measured. Blank cells are measurements I did not run, and I have marked them rather than filled them in.
+I scored each candidate configuration by how closely it reproduced the previous model's output. That produced an alarming 31-article regression and sent me hunting a model defect that did not exist. The flaw is that my first stage produces candidates, and 40 to 60 percent of them get deleted later by a human, so scoring a new configuration against the old one's output measures agreement with a filter I already knew was mediocre. It rewards reproducing its mistakes.
 
-Rejections when one step is fed all 198 cached articles in isolation, by reasoning effort:
+Better ground truth was sitting in version control the whole time. That final human review deletes items from the candidate list, and the deletion lands as a commit. For the test month it took 122 candidates down to 72. Diffing that commit against its parent gives two labelled sets: what a human kept, and what a human threw away. Re-scored against those, 43 percent of the 31 turned out to be articles the human had deleted anyway.
 
-| step | model | none | low | medium | high |
-|---|---|---|---|---|---|
-| relevance gate | gpt-5-nano (default effort) | | | 20 | |
-| relevance gate | gpt-5.4-nano | 30 | | 55 | |
-| relevance gate | gpt-5.6-luna | 66 | 61 | 68 | |
-| topic filter | gpt-5.6-luna | 168 | 141 | 129 | 119 |
-
-Two shapes in one table. gpt-5.4-nano nearly doubles across the effort range at the relevance gate and luna is flat there, while the same luna slides 49 articles at the topic filter and is still descending at high.
-
-End to end against the human labels, over a 200-row sample containing 72 human-kept and 49 human-pruned articles:
+Over a 200-row sample containing 72 human-kept and 49 human-pruned articles:
 
 | configuration | human-kept recalled | human-pruned passed through |
 |---|---|---|
@@ -62,7 +47,7 @@ End to end against the human labels, over a 200-row sample containing 72 human-k
 | candidate: gpt-5.4-mini on the judgement steps | 33 of 72 | 18 of 49 |
 | shipped: luna on nine of ten calls | not measured | not measured |
 
-Which step killed each human-kept article, retired against candidate:
+A real loss of 15 human-kept articles, half the size of the regression I had been chasing. And localisable, because the same labels say which step killed each one:
 
 | step | retired | candidate |
 |---|---|---|
@@ -72,47 +57,15 @@ Which step killed each human-kept article, retired against candidate:
 | relevance gate | 4 | 4 |
 | elsewhere | 1 | 2 |
 
-Every step flat except one, which is what ended the investigation and pointed at the prompt rules in section 3.
+One column moved. That is a much better thing to own than a 31-article mystery.
 
-The newer generations are also far less talkative for the same work, measured as output share of total tokens across the month:
+The ground truth has two limits I should have written down earlier. It only contains articles the old pipeline passed, so a new configuration can never be credited for recovering something the old one dropped, and roughly 79 of the 200 rows carry no human label at all.
 
-| model | output share |
-|---|---|
-| gpt-5-nano | 15.9 percent |
-| gpt-5-mini | 11.1 percent |
-| gpt-5.4-mini | 3.9 percent |
-| gpt-5.6-luna | 3.0 percent |
-| gpt-5.4-nano | 2.4 percent |
-
-## 1. Effort is a property of a model and a task, not of a model alone
-
-Reasoning models expose a `reasoning_effort` control. I assumed it was a quality dial with a consistent direction, and that each model had its own response to it.
-
-The first table above holds the whole argument. At the relevance gate gpt-5.4-nano moves from 30 rejections to 55 across the effort range while luna sits at 66, 61 and 68, which is noise rather than a trend. On the topic filter the same luna slides 49 articles across the same control.
-
-So "luna needs high effort" was not something I could learn once and reuse. It was true for luna on one task and meaningless for luna on another. Effort response belongs to a model and task pair, and each pair needs its own ladder.
-
-Reaching for a stronger model is not a substitute for measuring that ladder. On a separate 80-article probe at the relevance gate, gpt-5.4-mini rejected 31 and luna 34, against 30 for gpt-5.4-nano at medium. Moving up a tier changed nothing; dropping gpt-5.4-nano to effort none did.
-
-There is a cost side too, though not the one I assumed. Output is where reasoning spends, but output is not what fills the allowance: it was 13 percent of my token usage on the old configuration and 2.6 percent on the new one, because the prompts are long and input dominates. What effort does control is the part that scales without bound. The topic filter alone runs about 309k tokens a day, and moving it from medium to high bought 10 fewer rejections for roughly three times its reasoning tokens, with the ladder steps already shrinking, 27 then 12 then 10. I did not take that trade.
-
-## 2. My baseline was the thing I was trying to replace
-
-This invalidated most of the first day's conclusions, and it is the mistake I would most expect other teams to make during a deprecation migration.
-
-I scored each candidate configuration by how closely it reproduced the previous model's output. That produced an alarming 31-article regression and sent me hunting a model defect that did not exist. The flaw is that my first stage produces candidates, and 40 to 60 percent of them get deleted later by a human, so scoring a new configuration against the old one's output measures agreement with a filter I already knew was mediocre. It rewards reproducing its mistakes.
-
-Better ground truth was sitting in version control the whole time. That final human review deletes items from the candidate list, and the deletion lands as a commit. For the test month it took 122 candidates down to 72. Diffing that commit against its parent gives two labelled sets: what a human kept, and what a human threw away. Re-scored against those, 43 percent of the 31 turned out to be articles the human had deleted anyway.
-
-Re-scored that way, the loss is the 15 human-kept articles in the second table above, half the size of the regression I had been chasing, and localisable to a single step by the third.
-
-Two limits on this ground truth, both of which I should have written down earlier. The labelled set only contains articles the old pipeline passed, so a new configuration can never be credited for recovering something the old one dropped; roughly 79 of the 200 rows carry no human label at all. And replaying the old configuration against its own production output recovered only 75 of the 121 labelled articles, about 62 percent agreement with itself. That bounds how much the 48 against 33 gap can carry, and it is the same variance problem as section 4.
-
-The run also surfaced a problem that has nothing to do with the migration. The novelty check lost the same 12 of 72 human-kept articles under both the old and the candidate models, and it invents topic identifiers absent from the list it is given, a different fabricated identifier for each of its 24 rejections. That is roughly 17 percent of the good articles, it is model-independent, and it is still open. It is now the next thing I am investigating. A model swap is a good moment to find this kind of thing, because it is the only time anyone measures the steps individually.
+The run also surfaced a problem that has nothing to do with the migration. The novelty check lost the same 12 of 72 human-kept articles under both models, and it invents topic identifiers absent from the list it is given, a different fabricated identifier for each of its 24 rejections. Roughly 17 percent of the good articles, model-independent, and still open. A model swap is a good moment to find this kind of thing, because it is the only time anyone measures the steps individually.
 
 If any part of your system ends in a human decision, that decision is your ground truth, and it is often already recorded somewhere: approval queues, moderation overrides, ticket reclassifications, edits to generated drafts.
 
-## 3. The new model was enforcing rules the old one ignored
+## The new model was enforcing rules the old one ignored
 
 With the loss localised to the topic filter, the reflex was to retune that prompt for the new model. That would have been actively harmful, because a later and stronger stage reads the same prompt files. Loosening a rule to suit a first-stage model degrades the stage doing the real judging, and no first-stage test would show it.
 
@@ -124,45 +77,50 @@ gpt-5-mini had simply been ignoring that rule. Two of the rules it ignored were 
 
 Of everything in this migration, that is the part I would most want another team to check first. A newer model rejecting more at a judgement step is often better instruction-following running into a prompt that has been drifting for a year. The test is cheap: if the model's stated reasons cite your real rules accurately, your prompt is stale and fixing it helps everywhere. If it misapplies rules that plainly do not fit, the prompt is fine and the model is the problem. Those are opposite conclusions, and a rejection count cannot tell them apart.
 
-## 4. Luna is stricter, and stricter is not the same as worse
+## Luna is stricter, and stricter is not the same as worse
 
-When luna rejected twice as many articles as gpt-5.4-nano at the relevance gate, "this model is worse at this task" was the obvious read, and I nearly shipped a decision based on it.
+The topic filter was one step. The relevance gate at the front of the graph was the other, and there luna rejected twice as many articles as gpt-5.4-nano. "This model is worse at this task" was the obvious read, and I nearly shipped a decision based on it.
 
 That gate returns three separate judgements: is the article recent, is it in English, is its subject in scope. I had been reading only the combined result.
 
-Split apart, at effort none, out of 198: gpt-5.4-nano passed 166 and failed 32 on subject scope, 4 of which also failed the language check. Luna passed 134 and failed 64 on subject scope, with the same 4 language failures. The language check is identical, down to the same four articles, so the entire difference is the subject judgement.
-
-That split was a separate run from the ladder above, where the same two configurations rejected 30 and 66. A two-article drift on a 198-article set is the noise floor, which is the subject of the next section.
+Split apart, at effort none, out of 198 cached articles: gpt-5.4-nano passed 166 and failed 32 on subject scope, 4 of which also failed the language check. Luna passed 134 and failed 64 on subject scope, with the same 4 language failures. The language check is identical, down to the same four articles, so the entire difference is the subject judgement.
 
 Reading luna's stated reasons, they were coherent and mostly defensible. It was rejecting a Go worker-pool library, a voice-agent platform, a cloud database-migration post. It was not broken; it reads "primary focus" more strictly than my prompt intends.
 
 That is a different problem with a different fix. A broken check is worth repairing, but a stricter and defensible reading of an under-specified prompt, sitting at the gate that feeds everything else, is worth routing around, which is why that one call did not migrate. An aggregate score tells you something changed and never tells you what, so if a step returns several sub-judgements, log them separately before forming a theory about the model.
 
-## 5. Find out what your test set can actually resolve
+## Effort is a property of a model and a task, not of a model alone
+
+Having decided to keep gpt-5.4-nano at that gate, the remaining question was how hard to make it think. Reasoning models expose a `reasoning_effort` control, and I assumed it was a quality dial with a consistent direction, with each model having its own response to it.
+
+Rejections when one step is fed all 198 cached articles in isolation, so that nothing upstream can vary:
+
+| step | model | none | low | medium | high |
+|---|---|---|---|---|---|
+| relevance gate | gpt-5-nano (default effort) | | | 20 | |
+| relevance gate | gpt-5.4-nano | 30 | | 55 | |
+| relevance gate | gpt-5.6-luna | 66 | 61 | 68 | |
+| topic filter | gpt-5.6-luna | 168 | 141 | 129 | 119 |
+
+Two shapes in one table. gpt-5.4-nano nearly doubles across the range at the relevance gate while luna sits at 66, 61 and 68, which is noise rather than a trend. The same luna slides 49 articles at the topic filter and is still descending at the top of the range.
+
+So "luna needs high effort" was not something I could learn once and reuse. It was true for luna on one task and meaningless for luna on another. Effort response belongs to a model and task pair, and each pair needs its own ladder. Reaching for a stronger model is no substitute for climbing it: on a separate 80-article probe at that gate, gpt-5.4-mini rejected 31 and luna 34, against 30 for gpt-5.4-nano at medium. Moving up a tier changed nothing. Dropping gpt-5.4-nano to effort none did.
+
+There is a cost side too, though not the one I assumed. Output is where reasoning spends, but output is not what fills the allowance: it was 13 percent of my token usage on the old configuration and 2.6 percent on the new one, because the prompts are long and input dominates. What effort does control is the part that scales without bound. Moving the topic filter from medium to high bought 10 fewer rejections for roughly three times its reasoning tokens. I did not take that trade.
+
+## Find out what your test set can actually resolve
 
 Twice I drew conclusions from differences my measurement could not support.
 
-The same configuration, run three times on the same 200 rows, rejected 37, 48 and 55 percent at the topic filter. That is an 18-point spread at fixed configuration and fixed input, far too wide to be sampling noise, so it is model nondeterminism. End to end, two full runs of one configuration differed by four items gained and four lost.
+The same configuration, run three times on the same 200 rows, rejected 37, 48 and 55 percent at the topic filter. That is an 18-point spread at fixed configuration and fixed input, far too wide to be sampling noise, so it is model nondeterminism. End to end, two full runs of one configuration differed by four items gained and four lost. Even the old configuration replayed against its own production output recovered only 75 of the 121 labelled articles, about 62 percent agreement with itself.
 
-So a single run resolves something like 20 points at one step, and about 8 items end to end. I had called one model "genuinely better" on a 10-point single-step difference and had to retract it when the third run landed on the other side. The 15-article loss in section 2 survives that floor, and it is concentrated in one step, which is why I trusted it.
+So a single run resolves something like 20 points at one step, and about 8 items end to end. I had called one model "genuinely better" on a 10-point single-step difference and had to retract it when the third run landed on the other side. The 15-article loss survives that floor and is concentrated in one step, which is why I trusted it.
 
-What worked instead: attribute a specific change with a small deterministic probe of the exact items it targets, plus negative controls it must not move. Use the wide run only to catch large unintended damage elsewhere.
-
-A related surprise. One prompt correction flipped four target items past the step it fixed and moved end-to-end recall by almost nothing, because three of the four then died at later steps for unrelated reasons. When several steps reject the same category on different grounds, fixing one buys very little you can measure downstream.
-
-## 6. Traps in the API surface
-
-Default reasoning effort is not stable across generations: gpt-5 defaulted to medium, the 5.4 family defaults to none, and 5.6 defaults to medium again. A bare model rename therefore changes how much every call reasons, in a direction that depends on which two generations you are moving between. I now set effort explicitly everywhere. Effort values are also per-family, so the max level, which exists only on 5.6 models, passes a naive startup whitelist on a 5.4 model and then fails on every request.
-
-Function tools plus reasoning effort require the responses endpoint. Any effort other than none, on a call that binds function tools, returns a 400 on chat completions telling you to use the responses endpoint instead. I saw it on gpt-5.4-mini and gpt-5.6-luna alike, so it is not one generation's quirk. For luna the consequence is sharper: luna's own default effort is medium, so luna cannot use function tools on chat completions at all, even if you never pass the parameter.
-
-None of the three is recoverable at runtime, which is what makes them expensive. Retry middleware correctly skips 4xx, so an invalid model and effort pair does not fail once and loudly; it fails on every row of the run. The fix is validation at process start, against the specific model, not a generic whitelist. The same gap caught me on a service tier value that the old endpoint accepts and the new one rejects, so a config value that had been fine for months became a per-request failure the moment I switched endpoints.
-
-These specifics will age. Check them against the current documentation before you rely on any of them.
+What worked instead: attribute a specific change with a small deterministic probe of the exact items it targets, plus negative controls it must not move. Use the wide run only to catch large unintended damage elsewhere. One prompt correction taught me the other half of that lesson, flipping four target items past the step it fixed and moving end-to-end recall by almost nothing, because three of them died later for unrelated reasons.
 
 ## What I did not measure
 
-Beyond the shipped configuration never being measured end to end, three things.
+The configuration I shipped was never measured end to end. I stopped that run early, so the complete numbers above describe the gpt-5.4-mini candidate. It has since run in production without errors, which is not the same as without quality loss.
 
 There is one datapoint suggesting luna is worse than gpt-5.4-mini at the content-type filter, 9 human-kept articles lost against 5, at an effort level I failed to record. If the output thins out, that is the first place to look.
 
@@ -170,12 +128,14 @@ The topic filter ladder has no control run. Those rates come from a harness that
 
 One month, one corpus, one domain. The specific numbers will not transfer.
 
+## Appendix: traps in the API surface
+
+Default reasoning effort is not stable across generations. gpt-5 defaulted to medium, the 5.4 family defaults to none, and 5.6 defaults to medium again, so a bare rename changes how much every call reasons. The max level exists only on 5.6 models and fails on every request if you pair it with a 5.4 one. And any effort other than none, on a call that binds function tools, returns a 400 on chat completions and has to move to the responses endpoint; since luna defaults to medium, luna cannot use tools on chat completions at all.
+
+None of these is recoverable at runtime. Retry middleware correctly skips 4xx, so an invalid pair does not fail once and loudly, it fails on every row of the run. Validate at process start, against the specific model. These specifics will age, so check them against current documentation before relying on any of them.
+
 ## The short version
 
-gpt-5.6-luna is worth migrating to, as long as you are honest about what it is cheaper than. It is not a cheap model. It is a mini-tier model at roughly a quarter of the mini-tier price per request, sharing the nano tier's complimentary allowance, and that combination is what makes it close to free at volume. It is also markedly less talkative: reasoning output fell from 13 percent of my tokens to 2.6, and tokens per request from 6,874 to 5,953.
-
-"More closely" is the part that turns a rename into a weekend. A newer model enforcing a rule your old model ignored looks exactly like a regression until you read what it said.
-
-The rest is measurement discipline: do not assume an effort setting survives a model change, log a step's sub-judgements separately, score against the human decision your system already records rather than against your previous model's output, and find out what your test set can resolve before you trust a difference it reports. Check which billing allowance a model belongs to before you evaluate its quality; mine eliminated an entire tier of models regardless of how good they were.
+A newer model enforcing a rule your old model ignored looks exactly like a regression until you read what it said. That is the part that turns a rename into a weekend, and it is the one I would check first.
 
 If you have run a migration like this, I would be interested to hear whether your effort ladders behaved the same way. Mine were the part I was most confident about and most wrong about.
