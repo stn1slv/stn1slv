@@ -87,7 +87,7 @@ There is a cost side too, though not the one I assumed. Deliberation is spent on
 
 ## What I did not measure
 
-The configuration I shipped was never measured end to end. I stopped that run early, so the complete numbers describe the gpt-5.4-mini candidate rather than luna. It has since run in production without errors, which is not the same as without quality loss.
+The configuration I shipped was never measured against the human labels. I stopped that run early, so the numbers in the appendix describe the gpt-5.4-mini candidate rather than luna. It has since run in production without a single model or API failure, which is not the same as without quality loss. What production does tell me is in the appendix.
 
 One measurement suggests luna is worse than gpt-5.4-mini at the content-type filter, 9 good articles lost against 5, at an effort setting I failed to record. If the output thins out, that is the first place to look.
 
@@ -112,6 +112,18 @@ Against those human labels:
 | retired: gpt-5-mini and gpt-5-nano | 48 of 72 | 27 of 49 |
 | candidate: gpt-5.4-mini on the judgement steps | 33 of 72 | 18 of 49 |
 | shipped: luna on nine of ten calls | not measured | not measured |
+
+That last row stays empty until the month's human review happens, because the labels come from the prune commit and September has not been pruned yet. Production does say something in the meantime. Luna went live on 30 August, and over its first eight days the pipeline included 26 of 646 articles, against 32 of 658 in the eight days immediately before the swap:
+
+| period | articles | included | rate |
+|---|---|---|---|
+| old configuration, 1 to 29 August | 2,658 | 121 | 4.55 percent |
+| old configuration, last 8 days before the swap | 658 | 32 | 4.86 percent |
+| luna, 30 August to 6 September | 646 | 26 | 4.02 percent |
+
+Comparing the two matched windows gives a two-proportion z of 0.73, so that gap is not distinguishable from noise. For scale, the old configuration's own first eight days of August ran at 3.98 percent, further from its last eight days than luna is. Eight days is not a month and an include rate is not a quality measure, but the thing I was most afraid of, luna quietly starving the pipeline, has not happened.
+
+The luna period is also the first one with a per-step breakdown at all. Of its 611 exclusions, 41 percent came from the relevance gate, 37 percent from the content-type filter, 16 percent from the topic filter and 3 percent from the novelty check. Under the old configuration, every one of its 2,527 exclusions recorded no reason whatsoever, which is why the August comparison had to be reconstructed by replaying articles rather than read off the production rows.
 
 Two limits on that ground truth. It only contains articles the old pipeline passed, so a new configuration can never be credited for recovering something the old one dropped, and roughly 79 of the 200 rows carry no human label at all.
 
