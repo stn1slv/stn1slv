@@ -11,7 +11,7 @@ language: en
 
 I expected to move an LLM pipeline off the gpt-5 family in minutes. Change the model names in the configuration, run the tests, done. It took most of a weekend, and almost all of that went into discovering that my measurements were worse than either model.
 
-OpenAI is retiring gpt-5, gpt-5-mini, gpt-5-nano and gpt-5-pro on 10 December 2026. My pipeline ran on the two small ones, so the migration was not optional. I evaluated the gpt-5.4 family and gpt-5.6-luna as replacements.
+OpenAI is retiring gpt-5, gpt-5-mini, gpt-5-nano and gpt-5-pro on 11 December 2026. My pipeline ran on the two small ones, so the migration was not optional. I evaluated the gpt-5.4 family and gpt-5.6-luna as replacements.
 
 The short verdict: gpt-5.6-luna is a very good model for this class of work, and the allowance it bills against makes it close to free at my volume. It also behaves differently enough from gpt-5-mini that a rename would have quietly changed the output.
 
@@ -35,13 +35,13 @@ I scored each candidate configuration by how closely it reproduced the previous 
 
 The flaw is easy to see afterwards. My first stage produces candidates, and 40 to 60 percent of them get deleted later by a human. Scoring a new configuration against the old one's output measures agreement with a filter I already knew was mediocre. It rewards reproducing its mistakes.
 
-Better ground truth was sitting in version control the whole time. The final human review deletes items from the candidate list, and that deletion is a commit. For the test month it took 122 candidates down to 72. Comparing that commit with its parent gives two labelled sets: the articles a human kept, and the articles a human threw away. Re-scored against those, 43 percent of the 31 turned out to be articles the human had deleted anyway.
+Better ground truth was sitting in version control the whole time. The final human review deletes items from the candidate list, and that deletion is a commit. For the test month the first pass of it took 122 candidates down to 72, and later passes cut further. Comparing that commit with its parent gives two labelled sets: the articles a human kept, and the articles a human threw away. Re-scored against those, 43 percent of the 31 turned out to be articles the human had deleted anyway.
 
-The real loss was 15 good articles, half the size of the regression I had been chasing. More usefully, the same labels say which step lost each one.
+The two counts measure different things, so they do not subtract. The 31 is a disagreement with the old model. Against the human labels the loss is 15 good articles, half the size of the regression I had been chasing. More usefully, the same labels say which step lost each one.
 
 ![Good articles lost at each step, retired models against the candidate. The topic filter goes from 2 to 16 while the other steps stay where they were.](../img/article/reasoning-effort-sep-2026/losses-by-step.svg)
 
-One step moved and nothing else shifted by more than a single article. That is a much better thing to own than a 31-article mystery.
+Those are the numbers after the prompt fixes in the next section; before them the topic filter was worse still. One step moved and nothing else shifted by more than a single article. That is a much better thing to own than a 31-article mystery.
 
 The same comparison also found a problem that had nothing to do with the migration. The novelty check lost 12 good articles under the old models and 12 under the new ones, and it invents topic names that do not appear in the list it is given, a different invented name for each of its 24 rejections. That is roughly a sixth of the good articles, it has nothing to do with which model runs it, and it is still open. A model swap is a good moment to find this kind of thing, because it is the only time anyone measures the steps separately.
 
@@ -55,7 +55,7 @@ So instead of editing, I asked the model to explain itself. I captured gpt-5.4-m
 
 The reasons were coherent. They cited rules by name and quoted the prompt accurately. One reproduced almost word for word a rule excluding AI cost optimisation "even when implemented at an API gateway", while rejecting an article a human had kept.
 
-gpt-5-mini had simply been ignoring that rule. Two of the rules it ignored were genuinely stale: one had no exception for messaging patterns implemented inside an application, and one predated AI gateways existing as infrastructure worth including. I fixed those two, left the rest alone, and committed the fix separately from the model change so the two could be measured apart.
+gpt-5-mini had simply been ignoring that rule. Two of the rules it ignored were genuinely stale: one had no exception for messaging patterns implemented inside an application, and one predated AI gateways existing as infrastructure worth including. I fixed those two, left the rest alone, and put the fix in its own commit, apart from the model change, so the two could be measured separately.
 
 Of everything in this migration, that is the part I would most want another team to check first. A newer model rejecting more at a judgement step is often better instruction-following running into a prompt that has been drifting for a year. The test is cheap: if the model's stated reasons cite your real rules accurately, your prompt is stale and fixing it helps everywhere. If it misapplies rules that plainly do not fit, the prompt is fine and the model is the problem. Those are opposite conclusions, and a rejection count cannot tell them apart.
 
@@ -91,7 +91,7 @@ The configuration I shipped was never measured against the human labels. I stopp
 
 One measurement suggests luna is worse than gpt-5.4-mini at the content-type filter, 9 good articles lost against 5, at an effort setting I failed to record. If the output thins out, that is the first place to look.
 
-The topic filter numbers come from a test run that feeds every article straight into that step, so they are higher than the same step sees in the real pipeline. I ran the equivalent check at the relevance gate and it held up, but did not repeat it here, so the shape of that line is trustworthy and its absolute values are not.
+The topic filter numbers come from a test run that feeds every article straight into that step, so they are higher than the same step sees in the real pipeline, where earlier steps have already removed most of the input. The relevance gate does not have that problem, because it sees every article in production too. I never ran the control that would have calibrated the topic filter, so the shape of that line is trustworthy and its absolute values are not.
 
 One month, one corpus, one domain. The specific numbers will not transfer.
 
