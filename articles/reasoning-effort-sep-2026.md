@@ -33,36 +33,62 @@ Effort is set explicitly on every call: medium for the content-type filter, the 
 
 One caveat that belongs here rather than in a footnote. The end-to-end numbers in section 2 below describe an earlier candidate configuration that ran gpt-5.4-mini on the judgement steps, not the configuration I shipped. The luna evidence is narrower: the two effort ladders in section 1, the decomposition in section 3, and the reasons luna gave for its rejections. The shipped layout has run in production without errors, which is not the same as without quality loss.
 
-On price, the per-token rate card turned out to be the wrong thing to read first. In the month I pulled the usage export, 99.6 percent of my requests billed under OpenAI's data-sharing programme, which grants two separate daily token allowances, and every model belongs to exactly one. The large allowance is 2.5M tokens a day and covers the nano and mini tier along with gpt-5.6-luna; the small one is 250k a day and covers the mid-size and larger models. On the old configuration I ran about 1.95M tokens on a weekday, so the busy end of the week sat close to the large allowance and one day in thirty went past it at 2.70M.
+On price, the rate card was the wrong thing to read first. About 99.6 percent of my requests bill under OpenAI's data-sharing programme, which grants two separate daily token allowances, and every model belongs to exactly one. Luna shares the 2.5M-a-day allowance with the nano and mini tier, while the stronger 5.6 models sit in a 250k allowance I would exhaust in a few hours. That decided the model list before quality did.
 
-That decided the model list before quality did. Luna sits in the large allowance, so putting a 5.6-generation model on nine calls costs nothing on most days, while the stronger 5.6 models sit in an allowance I would exhaust in a few hours. If your provider has anything like this, it will constrain model choice more than the rate card does.
+The day-to-day numbers are small. A weekday runs about 1.95M tokens on the old configuration and 1.15M on the new one, and a month of production traffic priced at flex rates, ignoring the allowance entirely, comes to about $4. What I actually pay is a few cents, because it fits inside the allowance. Per thousand requests the models land far apart: $0.32 for gpt-5-nano, $0.52 for gpt-5.4-nano, $0.65 for luna, $1.49 for gpt-5-mini, and $3.29 for gpt-5.4-mini on a small sample.
 
-Priced at flex rates and ignoring the allowance, the whole month came to about $17. Only $12.33 of that was actually billed, and $12.29 of the $12.33 was a single day. Everything else ran inside the free allowance.
+One line in the card deserves a close read. Luna is the only model in my lineup that bills cache writes, at 25 percent above its own uncached input rate, and 57 percent of its input billed as writes against 41 percent as reads, because my traffic is spread thinly across the day rather than bunched into cache-friendly bursts. Caching still pays, by 19 percent against not caching, rather than the 90 percent the read discount suggests.
 
-That single day was the migration itself. The Sunday I ran the harnesses burned 73.1M tokens across 10,901 requests, 1.68 times the other thirty days of the month combined, and it landed on the paid flex tier rather than the free allowance, because a burst that size does not wait politely in the daily budget. Measuring the migration cost roughly three times what running the pipeline cost for the rest of the month, and it was the only real money I spent.
+## How the models actually performed
 
-One rate-card line does deserve reading closely, and I missed it at first. Luna is the only model in my lineup that bills cache writes, at $0.125 per million tokens, which is 25 percent more than its own uncached input rate of $0.10. Over the month, 53.7 percent of luna's input tokens billed as cache writes and 44.5 percent as cache reads, so the pipeline is writing the cache almost as often as it reads it. Caching still pays, but only by 22 percent against not caching at all, not the 90 percent the read discount suggests. If your prompt prefix is stable and your traffic is spread thinly across the day, check the write column before you budget the saving.
+Every figure below is measured. Blank cells are measurements I did not run, and I have marked them rather than filled them in.
+
+Rejections when one step is fed all 198 cached articles in isolation, by reasoning effort:
+
+| step | model | none | low | medium | high |
+|---|---|---|---|---|---|
+| relevance gate | gpt-5-nano (default effort) | | | 20 | |
+| relevance gate | gpt-5.4-nano | 30 | | 55 | |
+| relevance gate | gpt-5.6-luna | 66 | 61 | 68 | |
+| topic filter | gpt-5.6-luna | 168 | 141 | 129 | 119 |
+
+Two shapes in one table. gpt-5.4-nano nearly doubles across the effort range at the relevance gate and luna is flat there, while the same luna slides 49 articles at the topic filter and is still descending at high.
+
+End to end against the human labels, over a 200-row sample containing 72 human-kept and 49 human-pruned articles:
+
+| configuration | human-kept recalled | human-pruned passed through |
+|---|---|---|
+| retired: gpt-5-mini and gpt-5-nano | 48 of 72 | 27 of 49 |
+| candidate: gpt-5.4-mini on the judgement steps | 33 of 72 | 18 of 49 |
+| shipped: luna on nine of ten calls | not measured | not measured |
+
+Which step killed each human-kept article, retired against candidate:
+
+| step | retired | candidate |
+|---|---|---|
+| topic filter | 2 | 16 |
+| novelty check | 12 | 12 |
+| content-type filter | 5 | 5 |
+| relevance gate | 4 | 4 |
+| elsewhere | 1 | 2 |
+
+Every step flat except one, which is what ended the investigation and pointed at the prompt rules in section 3.
+
+The newer generations are also far less talkative for the same work, measured as output share of total tokens across the month:
+
+| model | output share |
+|---|---|
+| gpt-5-nano | 15.9 percent |
+| gpt-5-mini | 11.1 percent |
+| gpt-5.4-mini | 3.9 percent |
+| gpt-5.6-luna | 3.0 percent |
+| gpt-5.4-nano | 2.4 percent |
 
 ## 1. Effort is a property of a model and a task, not of a model alone
 
 Reasoning models expose a `reasoning_effort` control. I assumed it was a quality dial with a consistent direction, and that each model had its own response to it.
 
-At the relevance gate, rejections out of the 198 cached articles:
-
-- gpt-5-nano, the model I was replacing: 20
-- gpt-5.4-nano at effort none: 30, and at medium: 55
-- gpt-5.6-luna at none, low, medium: 66, 61, 68
-
-One model nearly doubles across the effort range. The other is flat, because 66 / 61 / 68 is noise rather than a trend.
-
-Now the same luna model on a different task in the same pipeline, the topic filter:
-
-- effort none: 168
-- low: 141
-- medium: 129
-- high: 119
-
-A 49-article slope, still descending at the top of the range.
+The first table above holds the whole argument. At the relevance gate gpt-5.4-nano moves from 30 rejections to 55 across the effort range while luna sits at 66, 61 and 68, which is noise rather than a trend. On the topic filter the same luna slides 49 articles across the same control.
 
 So "luna needs high effort" was not something I could learn once and reuse. It was true for luna on one task and meaningless for luna on another. Effort response belongs to a model and task pair, and each pair needs its own ladder.
 
@@ -78,12 +104,7 @@ I scored each candidate configuration by how closely it reproduced the previous 
 
 Better ground truth was sitting in version control the whole time. That final human review deletes items from the candidate list, and the deletion lands as a commit. For the test month it took 122 candidates down to 72. Diffing that commit against its parent gives two labelled sets: what a human kept, and what a human threw away. Re-scored against those, 43 percent of the 31 turned out to be articles the human had deleted anyway.
 
-Over the 200-row sample, which contains 72 human-kept and 49 human-pruned articles:
-
-- Old configuration: recalled 48 of 72 kept, and passed through 27 of 49 that were pruned
-- Candidate configuration with gpt-5.4-mini on the judgement steps: 33 of 72, and 18 of 49
-
-A real regression of 15 human-kept articles, half the size of the one I had been chasing, and now localisable. Broken down by which step killed each human-kept article, old against candidate: topic filter 2 to 16, novelty check 12 to 12, content-type filter 5 to 5, relevance gate 4 to 4. Those four account for 23 of the 24 losses in the old configuration and 37 of the 39 in the candidate, so a small remainder died elsewhere. Every step flat except one, which is what ended the investigation and pointed at section 3.
+Re-scored that way, the loss is the 15 human-kept articles in the second table above, half the size of the regression I had been chasing, and localisable to a single step by the third.
 
 Two limits on this ground truth, both of which I should have written down earlier. The labelled set only contains articles the old pipeline passed, so a new configuration can never be credited for recovering something the old one dropped; roughly 79 of the 200 rows carry no human label at all. And replaying the old configuration against its own production output recovered only 75 of the 121 labelled articles, about 62 percent agreement with itself. That bounds how much the 48 against 33 gap can carry, and it is the same variance problem as section 4.
 
@@ -151,9 +172,7 @@ One month, one corpus, one domain. The specific numbers will not transfer.
 
 ## The short version
 
-gpt-5.6-luna is worth migrating to, as long as you are honest about what it is cheaper than. Per thousand requests on my traffic it costs $0.63, against $2.45 for gpt-5.4-mini and $1.51 for gpt-5-mini, but also against $0.32 for gpt-5-nano and $0.45 for gpt-5.4-nano. It is not a cheap model; it is a mini-tier model at roughly a quarter of the mini-tier price, and it shares the nano tier's complimentary allowance, which is what makes it close to free at volume.
-
-It is also markedly less talkative. Reasoning output fell from 13 percent of my tokens to 2.6, and tokens per request from 6,874 to 5,953. My weekday spend fell from $0.18 to $0.11, but most of that is lower article volume; per thousand requests the saving is only 8 percent, and that is the honest figure.
+gpt-5.6-luna is worth migrating to, as long as you are honest about what it is cheaper than. It is not a cheap model. It is a mini-tier model at roughly a quarter of the mini-tier price per request, sharing the nano tier's complimentary allowance, and that combination is what makes it close to free at volume. It is also markedly less talkative: reasoning output fell from 13 percent of my tokens to 2.6, and tokens per request from 6,874 to 5,953.
 
 "More closely" is the part that turns a rename into a weekend. A newer model enforcing a rule your old model ignored looks exactly like a regression until you read what it said.
 
