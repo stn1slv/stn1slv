@@ -107,19 +107,15 @@ Two sample sets appear above. The effort measurements feed all 198 cached articl
 
 Against those human labels:
 
-| configuration | good articles kept | deleted articles let through |
-|---|---|---|
-| retired: gpt-5-mini and gpt-5-nano | 48 of 72 | 27 of 49 |
-| candidate: gpt-5.4-mini on the judgement steps, after the prompt fixes | 33 of 72 | 18 of 49 |
-| shipped: luna on nine of ten calls | not measured | not measured |
+- Retired, gpt-5-mini and gpt-5-nano: kept 48 of the 72 good articles, and let through 27 of the 49 a human deleted.
+- Candidate, gpt-5.4-mini on the judgement steps, measured after the prompt fixes: kept 33 of 72, and let through 18 of 49.
+- Shipped, luna on nine of the ten calls: not measured against either set.
 
-That last row stays empty until the month's human review happens, because the labels come from the prune commit and September has not been pruned yet. Production does say something in the meantime. Luna went live during 30 August, and over its first eight days the pipeline included 26 of 638 articles, against 32 of 658 in the eight days immediately before the swap:
+That last line stays empty until the month's human review happens, because the labels come from the prune commit and September has not been pruned yet. Production does say something in the meantime. Luna went live during 30 August, and over its first eight days the pipeline included 26 of 638 articles, against 32 of 658 in the eight days immediately before the swap:
 
-| period | articles | included | rate |
-|---|---|---|---|
-| old configuration, 1 to 29 August | 2,658 | 121 | 4.55 percent |
-| old configuration, last 8 days before the swap | 658 | 32 | 4.86 percent |
-| luna, 30 August to 6 September | 638 | 26 | 4.08 percent |
+- Old configuration, 1 to 29 August: 121 of 2,658 articles included, 4.55 percent.
+- Old configuration, the last 8 days before the swap: 32 of 658, 4.86 percent.
+- Luna, 30 August to 6 September: 26 of 638, 4.08 percent.
 
 Comparing the two matched windows gives a two-proportion z of 0.69, so that gap is not distinguishable from noise. For scale, the old configuration's own first eight days of August ran at 3.98 percent, further from its last eight days than luna is. Eight days is not a month and an include rate is not a quality measure, but the thing I was most afraid of, luna quietly starving the pipeline, has not happened.
 
