@@ -1,51 +1,47 @@
 ---
-title: "Migrating off gpt-5: what luna changed, and what it cost to find out"
-description: "A weekend spent moving a classification pipeline from gpt-5-mini and gpt-5-nano to gpt-5.6-luna, and the four things I would tell anyone approving a similar migration: the baseline you measure against is probably wrong, a stricter model may be following your rules better, aggregate scores hide the cause, and reasoning effort does not transfer between models."
+title: "Migrating off gpt-5: the models were fine, my measurements were not"
+description: "A weekend spent moving a pipeline off gpt-5 taught me more about how I measure model changes than about the models themselves."
 published-at: TBD
 author: Stanislav Deviatov
 date: Sep-2026
 language: en
 ---
 
-# Migrating off gpt-5: what luna changed, and what it cost to find out
+# Migrating off gpt-5: the models were fine, my measurements were not
 
 I expected to move an LLM pipeline off the gpt-5 family in minutes. Change the model names in the configuration, run the tests, done. It took most of a weekend, and almost all of that went into discovering that my measurements were worse than either model.
 
 OpenAI is retiring gpt-5, gpt-5-mini, gpt-5-nano and gpt-5-pro on 11 December 2026. My pipeline ran on the two small ones, so the migration was not optional. I evaluated the gpt-5.4 family and gpt-5.6-luna as replacements.
 
-The short verdict: gpt-5.6-luna is a very good model for this class of work, and the allowance it bills against makes it close to free at my volume. It also behaves differently enough from gpt-5-mini that a rename would have quietly changed the output.
-
 ## The setup
 
-The pipeline takes in around 2,600 articles a month and cuts them to roughly 120 candidates that a person then reviews by hand. That cut is not one model call. It runs on a private agent of mine built on LangGraph, about a dozen steps in the graph, ten of them separate model calls, most with a prompt of their own: a relevance gate at the front, then a content-type filter, a topic filter, a novelty check, scoring and summarisation.
+The pipeline takes in around 2,600 articles a month and cuts them to roughly 120 candidates that a person then reviews by hand. That cut is not one model call. It runs on a private agent of mine built on LangGraph, about a dozen steps in the graph, ten of them separate model calls. Three of those steps matter for this article: a relevance gate at the front, a content-type filter and a topic filter, with a novelty check, scoring and summarisation behind them.
 
-One structural detail drives everything below. The first stage is a noise filter, not a quality judge, and its two kinds of mistake cost completely different amounts. Something wrongly kept gets caught later, by a stronger model or by the person doing the final review. Something wrongly dropped is gone for good, because the article is recorded as seen and never comes back.
+One structural detail drives everything below. The first step is a noise filter, not a quality judge, and its two kinds of mistake cost completely different amounts. Something wrongly kept gets caught later, by a stronger model or by the person doing the final review. Something wrongly dropped is gone for good, because the article is recorded as seen and never comes back.
 
 ## Where I landed
 
-Nine of the ten model calls now run gpt-5.6-luna. The relevance gate at the very front stays on gpt-5.4-nano, for reasons that took most of the weekend to establish. Every call also has its reasoning effort set explicitly rather than left to the model's default, which turned out to matter more than the model names did.
+Nine of the ten model calls now run gpt-5.6-luna, which has held up well. The relevance gate at the very front stays on gpt-5.4-nano, for reasons that took most of the weekend to establish. Every call also has its reasoning effort set explicitly rather than left to the model's default, which turned out to matter more than the model names did.
 
-On cost, the rate card was the wrong thing to read first. Almost all of my requests bill under OpenAI's data-sharing programme, which grants two separate daily token allowances, and every model belongs to exactly one of them. Luna shares the larger allowance with gpt-5.4-nano and gpt-5.4-mini, while the strongest model in its own generation sits in an allowance I would exhaust in about five hours. That decided which models were candidates before quality entered the conversation. What I actually pay is a few cents a month, because the traffic fits inside the allowance. Details are in the appendix.
+Cost decided the shortlist before quality entered the conversation, but not through the rate card. Almost all of my traffic bills under OpenAI's data-sharing programme, and luna shares its larger daily allowance with the cheapest models I had, so the bill is a few cents a month either way. The stronger models in the same generation sit in an allowance I would exhaust before lunch, which took them off the list.
 
 Four things surprised me. They are in the order I learned them, which is also the order I would check them.
 
 ## 1. My baseline was the thing I was trying to replace
 
-I scored each candidate configuration by how closely it reproduced the previous model's output. That produced an alarming 31-article regression and sent me hunting a model defect that did not exist.
+I scored each replacement configuration by how closely it reproduced the previous model's output. That produced an alarming 31-article regression and sent me hunting a model defect that did not exist.
 
-The flaw is easy to see afterwards. My first stage produces candidates, and 40 to 60 percent of them get deleted later by a human. Scoring a new configuration against the old one's output measures agreement with a filter I already knew was mediocre. It rewards reproducing its mistakes.
+The flaw is easy to see afterwards. The pipeline's first pass produces candidates, and 40 to 60 percent of them get deleted later by a human. Scoring a new configuration against the old one's output measures agreement with a filter I already knew was mediocre. It rewards reproducing its mistakes.
 
-Better ground truth was sitting in version control the whole time. The final human review deletes items from the candidate list, and that deletion is a commit. For the test month the first pass of it took 122 candidates down to 72, and later passes cut further. Comparing that commit with its parent gives two labelled sets: the articles a human kept, and the articles a human threw away. Re-scored against those, 43 percent of the 31 turned out to be articles the human had deleted anyway.
+Better ground truth was sitting in version control the whole time. The final human review deletes items from the candidate list, and that deletion is a commit. For the test month the first pass of it took 122 candidates down to 72, and later passes cut further. Comparing that commit with its parent gives two labelled sets: the articles a human kept, and the articles a human threw away.
 
-The two counts measure different things, so they do not subtract. The 31 is a disagreement with the old model. Against the human labels the loss is 15 good articles, half the size of the regression I had been chasing. More usefully, the same labels say which step lost each one.
+Re-scored against those, 43 percent of the 31 turned out to be articles the human had deleted anyway. Against the human labels the real loss was 15 good articles, half the size of the regression I had been chasing. More usefully, the same labels say which step lost each one. The chart below measures the gpt-5.4-mini configuration rather than the luna one I shipped, because I stopped the luna run early, and it counts articles a human later kept:
 
-![Good articles lost at each step, retired models against the candidate. The topic filter goes from 2 to 16 while the other steps stay where they were.](../img/article/reasoning-effort-sep-2026/losses-by-step.svg)
+![Good articles lost at each step, retired models against the gpt-5.4-mini configuration. The topic filter goes from 2 to 16 while the other steps stay where they were.](../img/article/reasoning-effort-sep-2026/losses-by-step.svg)
 
-Those are the numbers after the prompt fixes in the next section; before them the topic filter was worse still. One step moved and nothing else shifted by more than a single article. That is a much better thing to own than a 31-article mystery.
+One step moved and nothing else shifted by more than a single article. That is a much better thing to own than a 31-article mystery.
 
-The same comparison also found a problem that had nothing to do with the migration. The novelty check lost 12 good articles under the old models and 12 under the new ones, and it invents topic names that do not appear in the list it is given, a different invented name for each of its 24 rejections. That is roughly a sixth of the good articles, it has nothing to do with which model runs it, and it is still open. A model swap is a good moment to find this kind of thing, because it is the only time anyone measures the steps separately.
-
-If any part of your system ends in a human decision, that decision is your ground truth, and it is usually already recorded somewhere: approval queues, moderation overrides, ticket reclassifications, edits to generated drafts.
+If any part of your system ends in a human decision, that decision is your ground truth, and it is usually already recorded somewhere: approval queues, moderation overrides, ticket reclassifications, edits to generated drafts. Measuring the steps separately also finds bugs that have nothing to do with the migration. It is how I learned that my novelty check invents topic names that appear nowhere in the list it is given, a different one for each of its 24 rejections, under old and new models alike.
 
 ## 2. The new model was enforcing rules the old one ignored
 
@@ -77,27 +73,27 @@ Having decided to keep gpt-5.4-nano at that gate, the remaining question was how
 
 ![Rejections by reasoning effort, out of 198 articles. gpt-5.4-nano climbs from 30 to 55 at the relevance gate, gpt-5.6-luna stays flat at 66, 61 and 68 on the same step, and gpt-5.6-luna at the topic filter falls from 168 to 119.](../img/article/reasoning-effort-sep-2026/effort-ladders.svg)
 
-There are two shapes in that picture. At the relevance gate, more thinking makes gpt-5.4-nano reject nearly twice as much, while luna does not respond to the setting at all. On the topic filter, the same luna slides 49 articles and is still falling at the top of the range.
+There are two shapes in that picture. At the relevance gate, more thinking makes gpt-5.4-nano reject nearly twice as much, while luna does not respond to the setting at all. On the topic filter, the same luna slides 49 articles and is still falling at the top of the range. The grey point is gpt-5-nano, the model I was replacing, which was the most permissive thing on the chart.
 
 So "luna needs high effort" was not something I could learn once and reuse. It was true for luna on one task and meaningless for luna on another. The setting belongs to a model and a task together, and each pairing needs measuring on its own.
 
 Reaching for a stronger model is no substitute for that. On a separate 80-article probe at the relevance gate, all at medium effort, gpt-5.4-mini and luna rejected 31 and 34 articles against 30 for gpt-5.4-nano. Moving up a tier changed nothing. Dropping gpt-5.4-nano to no reasoning at all did.
 
-There is a cost side too, though not the one I assumed. Deliberation is spent on output tokens, but output is not what fills the allowance: it was 13 percent of my usage on the old configuration and under 3 percent on the new one, because the prompts are long and input dominates. What effort does control is the part that grows without a ceiling. Moving the topic filter one step up bought 10 fewer rejections for roughly three times the tokens. I did not take that trade.
+Effort also has a price, and it is the one part of the bill that grows without a ceiling. Moving the topic filter one step up bought 10 fewer rejections for roughly three times the tokens. I did not take that trade.
 
 ## What I did not measure
 
-The configuration I shipped was never measured against the human labels. I stopped that run early, so the numbers in the appendix describe the gpt-5.4-mini candidate rather than luna. It has since run in production without a single model call failing, which is not the same as without quality loss. What production does tell me is in the appendix.
+The configuration I shipped was never measured against the human labels. I stopped that run early, so the labelled numbers describe the gpt-5.4-mini configuration rather than luna. It has since run in production without a single model call failing, which is not the same as without quality loss.
 
 One measurement suggests luna is worse than gpt-5.4-mini at the content-type filter, 9 good articles lost against 5, at an effort setting I failed to record. If the output thins out, that is the first place to look.
 
 The topic filter numbers come from a test run that feeds every article straight into that step, so they are higher than the same step sees in the real pipeline, where earlier steps have already removed most of the input. The relevance gate does not have that problem, because it sees every article in production too. I never ran the control that would have calibrated the topic filter, so the shape of that line is trustworthy and its absolute values are not.
 
-One month, one corpus, one domain. The specific numbers will not transfer.
+I have also been wrong in the other direction. I once called a model "genuinely better" on a 10-point difference and had to retract it when a third run of the same configuration landed on the other side. That is why I now measure how far two identical runs drift before I trust any gap between two different ones. The 15-article loss is the one number here that clears that bar, and it sits in a single step, which is why the rest of this article is built on it.
 
-## The short version
+## What I would take away
 
-A newer model enforcing a rule your old model ignored looks exactly like a regression until you read what it said. That is the part that turns a rename into a weekend, and it is the one I would check first.
+A newer model enforcing a rule your old model ignored looks exactly like a regression until you read what it said. That is the part that turns a rename into a weekend, and it is the one thing I would ask for before approving a migration like this: not the rejection counts, but a handful of the model's own stated reasons for the items it dropped. If they quote your rules accurately, the prompt is stale and the model is doing you a favour.
 
 If you have run a migration like this, I would be interested to hear whether your effort ladders behaved the same way. Mine were the part I was most confident about and most wrong about.
 
@@ -107,9 +103,9 @@ Two sample sets appear above. The effort measurements feed all 198 cached articl
 
 Against those human labels:
 
-- Retired, gpt-5-mini and gpt-5-nano: kept 48 of the 72 good articles, and let through 27 of the 49 a human deleted.
-- Candidate, gpt-5.4-mini on the judgement steps, measured after the prompt fixes: kept 33 of 72, and let through 18 of 49.
-- Shipped, luna on nine of the ten calls: not measured against either set.
+- The retired configuration, gpt-5-mini and gpt-5-nano: kept 48 of the 72 good articles, and let through 27 of the 49 a human deleted.
+- gpt-5.4-mini on the judgement steps, measured after the prompt fixes: kept 33 of 72, and let through 18 of 49.
+- The shipped configuration, luna on nine of the ten calls: not measured against either set.
 
 That last line stays empty until the month's human review happens, because the labels come from the prune commit and September has not been pruned yet. Production does say something in the meantime. Luna went live during 30 August, and over its first eight days the pipeline included 26 of 638 articles, against 32 of 658 in the eight days immediately before the swap:
 
@@ -123,11 +119,13 @@ The luna period is also the first one with a per-step breakdown at all. Of its 6
 
 Two limits on that ground truth. It only contains articles the old pipeline passed, so a new configuration can never be credited for recovering something the old one dropped, and roughly 79 of the 200 rows carry no human label at all.
 
-How much can a single run actually resolve? The same configuration, run three times on the same 200 rows, rejected 37, 48 and 55 percent at one step, which is far too wide to be sampling noise. Two full runs of one configuration differed by four items gained and four lost. Even the old configuration, replayed against its own production output, reproduced only 75 of the 121 labelled articles, about 62 percent agreement with itself. So one run resolves roughly 20 points at a single step and about 8 items end to end. I once called a model "genuinely better" on a 10-point difference and had to retract it when the third run landed on the other side. The 15-article loss survives that floor and sits in one step, which is why I trusted it.
+How much can a single run actually resolve? The same configuration, run three times on the same 200 rows, rejected 37, 48 and 55 percent at one step, which is far too wide to be sampling noise. Two full runs of one configuration differed by four items gained and four lost. Even the old configuration, replayed against its own production output, reproduced only 75 of the 121 labelled articles, about 62 percent agreement with itself. So one run resolves roughly 20 points at a single step and about 8 items end to end. The 15-article loss survives that floor and sits in one step, which is why I trusted it.
 
 What worked instead: test a specific change against the exact articles it targets, plus a small fixed set it must not affect, and use the wide run only to catch large unintended damage elsewhere. One prompt fix taught me the other half of that lesson. It moved four target articles past the step it repaired and changed the final output by almost nothing, because three of them died at later steps for unrelated reasons.
 
 ## Appendix B: cost
+
+Output is where reasoning spends, but output is not what fills the allowance: it was 13 percent of my token usage on the old configuration and under 3 percent on the new one, because the prompts are long and input dominates.
 
 The data-sharing programme grants 2.5M tokens a day in the larger allowance, which covers gpt-5.4-nano, gpt-5.4-mini and gpt-5.6-luna, and 250k a day in the smaller one, which covers the mid-size and larger models. A weekday runs about 1.95M tokens on the old configuration and 1.15M on the new one. The month I exported, which is mostly the old configuration and eight days of the new one, comes to about $4 at flex rates if the allowance did not exist.
 
