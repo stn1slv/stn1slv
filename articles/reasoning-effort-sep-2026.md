@@ -9,7 +9,7 @@ language: en
 
 # Migrating off gpt-5: what luna changed, and what it cost to find out
 
-I expected to move an LLM pipeline off the gpt-5 family in minutes. Change three model names in the configuration, run the tests, done. It took most of a weekend, and almost all of that went into discovering that my measurements were worse than either model.
+I expected to move an LLM pipeline off the gpt-5 family in minutes. Change the model names in the configuration, run the tests, done. It took most of a weekend, and almost all of that went into discovering that my measurements were worse than either model.
 
 OpenAI is retiring gpt-5, gpt-5-mini, gpt-5-nano and gpt-5-pro on 10 December 2026. My pipeline ran on the two small ones, so the migration was not optional. I evaluated the gpt-5.4 family and gpt-5.6-luna as replacements.
 
@@ -25,7 +25,7 @@ One structural detail drives everything below. The first stage is a noise filter
 
 Nine of the ten model calls now run gpt-5.6-luna. The relevance gate at the very front stays on gpt-5.4-nano, for reasons that took most of the weekend to establish. Every call also has its reasoning effort set explicitly rather than left to the model's default, which turned out to matter more than the model names did.
 
-On cost, the rate card was the wrong thing to read first. Almost all of my requests bill under OpenAI's data-sharing programme, which grants two separate daily token allowances, and every model belongs to exactly one of them. Luna shares the larger allowance with the cheap nano and mini models, while the stronger models in its own generation sit in an allowance I would exhaust in a few hours. That decided which models were candidates before quality entered the conversation. What I actually pay is a few cents a month, because the traffic fits inside the allowance. Details are in the appendix.
+On cost, the rate card was the wrong thing to read first. Almost all of my requests bill under OpenAI's data-sharing programme, which grants two separate daily token allowances, and every model belongs to exactly one of them. Luna shares the larger allowance with gpt-5.4-nano and gpt-5.4-mini, while the stronger models in its own generation sit in an allowance I would exhaust in a few hours. That decided which models were candidates before quality entered the conversation. What I actually pay is a few cents a month, because the traffic fits inside the allowance. Details are in the appendix.
 
 Four things surprised me. They are in the order I learned them, which is also the order I would check them.
 
@@ -81,7 +81,7 @@ There are two shapes in that picture. At the relevance gate, more thinking makes
 
 So "luna needs high effort" was not something I could learn once and reuse. It was true for luna on one task and meaningless for luna on another. The setting belongs to a model and a task together, and each pairing needs measuring on its own.
 
-Reaching for a stronger model is no substitute for that. On a separate probe at the relevance gate, gpt-5.4-mini and luna rejected 31 and 34 articles against 30 for gpt-5.4-nano. Moving up a tier changed nothing. Dropping gpt-5.4-nano to no reasoning at all did.
+Reaching for a stronger model is no substitute for that. On a separate 80-article probe at the relevance gate, all at medium effort, gpt-5.4-mini and luna rejected 31 and 34 articles against 30 for gpt-5.4-nano. Moving up a tier changed nothing. Dropping gpt-5.4-nano to no reasoning at all did.
 
 There is a cost side too, though not the one I assumed. Deliberation is spent on output tokens, but output is not what fills the allowance: it was 13 percent of my usage on the old configuration and under 3 percent on the new one, because the prompts are long and input dominates. What effort does control is the part that grows without a ceiling. Moving the topic filter one step up bought 10 fewer rejections for roughly three times its reasoning tokens. I did not take that trade.
 
@@ -115,15 +115,15 @@ Against those human labels:
 
 Two limits on that ground truth. It only contains articles the old pipeline passed, so a new configuration can never be credited for recovering something the old one dropped, and roughly 79 of the 200 rows carry no human label at all.
 
-How much can a single run actually resolve? The same configuration, run three times on the same 200 rows, rejected 37, 48 and 55 percent at the topic filter, which is far too wide to be sampling noise. Two full runs of one configuration differed by four items gained and four lost. Even the old configuration, replayed against its own production output, reproduced only 75 of the 121 labelled articles, about 62 percent agreement with itself. So one run resolves roughly 20 points at a single step and about 8 items end to end. I once called a model "genuinely better" on a 10-point difference and had to retract it when the third run landed on the other side. The 15-article loss survives that floor and sits in one step, which is why I trusted it.
+How much can a single run actually resolve? The same configuration, run three times on the same 200 rows, rejected 37, 48 and 55 percent at one step, which is far too wide to be sampling noise. Two full runs of one configuration differed by four items gained and four lost. Even the old configuration, replayed against its own production output, reproduced only 75 of the 121 labelled articles, about 62 percent agreement with itself. So one run resolves roughly 20 points at a single step and about 8 items end to end. I once called a model "genuinely better" on a 10-point difference and had to retract it when the third run landed on the other side. The 15-article loss survives that floor and sits in one step, which is why I trusted it.
 
 What worked instead: test a specific change against the exact articles it targets, plus a small fixed set it must not affect, and use the wide run only to catch large unintended damage elsewhere. One prompt fix taught me the other half of that lesson. It moved four target articles past the step it repaired and changed the final output by almost nothing, because three of them died at later steps for unrelated reasons.
 
 ## Appendix B: cost
 
-The data-sharing programme grants 2.5M tokens a day in the larger allowance, which covers the nano and mini tier along with gpt-5.6-luna, and 250k a day in the smaller one, which covers the mid-size and larger models. A weekday runs about 1.95M tokens on the old configuration and 1.15M on the new one, so roughly $4 a month at flex rates if the allowance did not exist.
+The data-sharing programme grants 2.5M tokens a day in the larger allowance, which covers gpt-5.4-nano, gpt-5.4-mini and gpt-5.6-luna, and 250k a day in the smaller one, which covers the mid-size and larger models. A weekday runs about 1.95M tokens on the old configuration and 1.15M on the new one. A month of production traffic priced at flex rates, as if the allowance did not exist, comes to about $4.
 
-Per thousand requests the models land far apart: $0.32 for gpt-5-nano, $0.52 for gpt-5.4-nano, $0.65 for luna, $1.49 for gpt-5-mini, and $3.29 for gpt-5.4-mini on a small sample. Luna is not the cheapest option on that list and does not need to be. It sits well below both mini models while sharing the nano tier's allowance.
+Per thousand requests the models land far apart: $0.32 for gpt-5-nano, $0.52 for gpt-5.4-nano, $0.65 for luna, $1.49 for gpt-5-mini, and $3.29 for gpt-5.4-mini on a small sample. Luna is not the cheapest option on that list and does not need to be. It sits well below both mini models while sharing the same allowance as the nano ones.
 
 One line in the rate card deserves a close read. Luna is the only model in my lineup that charges for writing to the prompt cache, at 25 percent above its own uncached input rate. Because my traffic is spread thinly across the day rather than bunched into bursts, 57 percent of its input billed as cache writes against 41 percent as cache reads. Caching still pays, by 19 percent against not caching at all, rather than the 90 percent the read discount suggests.
 
