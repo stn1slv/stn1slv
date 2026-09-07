@@ -33,11 +33,15 @@ Effort is set explicitly on every call: medium for the content-type filter, the 
 
 One caveat that belongs here rather than in a footnote. The end-to-end numbers in section 2 below describe an earlier candidate configuration that ran gpt-5.4-mini on the judgement steps, not the configuration I shipped. The luna evidence is narrower: the two effort ladders in section 1, the decomposition in section 3, and the reasons luna gave for its rejections. The shipped layout has run in production without errors, which is not the same as without quality loss.
 
-On price, the per-token rate card turned out to be the wrong thing to read. In the month I pulled the usage export, 99.6 percent of my requests billed under OpenAI's data-sharing programme, which grants two separate daily token allowances, and every model belongs to exactly one. The large allowance is 2.5M tokens a day and covers the nano and mini tier along with gpt-5.6-luna; the small one is 250k a day and covers the mid-size and larger models. On the old configuration I ran about 1.95M tokens on a weekday, so the busy end of the week sat close to the large allowance and one day in thirty went past it at 2.70M.
+On price, the per-token rate card turned out to be the wrong thing to read first. In the month I pulled the usage export, 99.6 percent of my requests billed under OpenAI's data-sharing programme, which grants two separate daily token allowances, and every model belongs to exactly one. The large allowance is 2.5M tokens a day and covers the nano and mini tier along with gpt-5.6-luna; the small one is 250k a day and covers the mid-size and larger models. On the old configuration I ran about 1.95M tokens on a weekday, so the busy end of the week sat close to the large allowance and one day in thirty went past it at 2.70M.
 
 That decided the model list before quality did. Luna sits in the large allowance, so putting a 5.6-generation model on nine calls costs nothing on most days, while the stronger 5.6 models sit in an allowance I would exhaust in a few hours. If your provider has anything like this, it will constrain model choice more than the rate card does.
 
-The irony is that measuring the migration cost far more than running the pipeline does. The Sunday I ran the harnesses burned 73.1M tokens across 10,901 requests, 1.68 times the other thirty days of the month combined, and almost all of it on the paid flex tier rather than the free allowance, because a burst that size does not wait politely in the daily budget. A week of production traffic is cheaper than one afternoon of evaluating it.
+Priced at flex rates and ignoring the allowance, the whole month came to about $17. Only $12.33 of that was actually billed, and $12.29 of the $12.33 was a single day. Everything else ran inside the free allowance.
+
+That single day was the migration itself. The Sunday I ran the harnesses burned 73.1M tokens across 10,901 requests, 1.68 times the other thirty days of the month combined, and it landed on the paid flex tier rather than the free allowance, because a burst that size does not wait politely in the daily budget. Measuring the migration cost roughly three times what running the pipeline cost for the rest of the month, and it was the only real money I spent.
+
+One rate-card line does deserve reading closely, and I missed it at first. Luna is the only model in my lineup that bills cache writes, at $0.125 per million tokens, which is 25 percent more than its own uncached input rate of $0.10. Over the month, 53.7 percent of luna's input tokens billed as cache writes and 44.5 percent as cache reads, so the pipeline is writing the cache almost as often as it reads it. Caching still pays, but only by 22 percent against not caching at all, not the 90 percent the read discount suggests. If your prompt prefix is stable and your traffic is spread thinly across the day, check the write column before you budget the saving.
 
 ## 1. Effort is a property of a model and a task, not of a model alone
 
@@ -147,7 +151,9 @@ One month, one corpus, one domain. The specific numbers will not transfer.
 
 ## The short version
 
-gpt-5.6-luna is worth migrating to. It follows instructions more closely than gpt-5-mini did, and it bills against the same complimentary allowance as the nano and mini models, so on a high-volume pipeline it is effectively free where it matters. It is also markedly less talkative: reasoning output fell from 13 percent of my tokens to 2.6, and tokens per request from 6,874 to 5,953, about 13 percent. Some of that is the new per-call effort settings rather than the model itself, and my daily article volume fell over the same period, so treat the per-request figure as the honest one.
+gpt-5.6-luna is worth migrating to, as long as you are honest about what it is cheaper than. Per thousand requests on my traffic it costs $0.63, against $2.45 for gpt-5.4-mini and $1.51 for gpt-5-mini, but also against $0.32 for gpt-5-nano and $0.45 for gpt-5.4-nano. It is not a cheap model; it is a mini-tier model at roughly a quarter of the mini-tier price, and it shares the nano tier's complimentary allowance, which is what makes it close to free at volume.
+
+It is also markedly less talkative. Reasoning output fell from 13 percent of my tokens to 2.6, and tokens per request from 6,874 to 5,953. My weekday spend fell from $0.18 to $0.11, but most of that is lower article volume; per thousand requests the saving is only 8 percent, and that is the honest figure.
 
 "More closely" is the part that turns a rename into a weekend. A newer model enforcing a rule your old model ignored looks exactly like a regression until you read what it said.
 
