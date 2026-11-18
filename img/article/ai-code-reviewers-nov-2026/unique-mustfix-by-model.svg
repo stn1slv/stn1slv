@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 370" role="img" aria-labelledby="t d">
+  <title id="t">Sol and Hydrogen caught the most must-fix defects that no other model found</title>
+  <desc id="d">Findings per round and fixed must-fix defects reported by only one model, per 100 review rounds. GPT-6.1 Sol: 3.8 findings per round, 12.9 unique must-fix per 100 rounds (11 in 85); Gemini 4 Hydrogen: 5.6 findings per round, 11.8 unique must-fix per 100 rounds (4 in 34); Claude Fable 5.2: 14.7 findings per round, 6.8 unique must-fix per 100 rounds (6 in 88); Claude Opus 5.5: 12.0 findings per round, 5.7 unique must-fix per 100 rounds (5 in 88); Gemini 4 Argon: 4.3 findings per round, 2.3 unique must-fix per 100 rounds (1 in 44).</desc>
+  <style>
+    .surface { fill: #fcfcfb; }
+    .ink     { fill: #0b0b0b; }
+    .sub     { fill: #52514e; }
+    .axis    { stroke: #c3c2b7; }
+    .grey    { fill: #c3c2b7; }
+    .s1      { fill: #2a78d6; }
+    text     { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    @media (prefers-color-scheme: dark) {
+      .surface { fill: #1a1a19; }
+      .ink     { fill: #ffffff; }
+      .sub     { fill: #c3c2b7; }
+      .axis    { stroke: #383835; }
+      .grey    { fill: #4a4a46; }
+      .s1      { fill: #3987e5; }
+    }
+  </style>
+  <rect class="surface" x="0" y="0" width="760" height="370"/>
+  <text class="ink" x="24" y="32" font-size="18" font-weight="600">Sol and Hydrogen caught the most must-fix defects that no other model found</text>
+  <text class="sub" x="24" y="54" font-size="13">One project, 88 review rounds, 12 to 16 November 2026. Small counts: 1 to 11 defects per model.</text>
+  <text class="sub" x="190" y="104" font-size="13">Findings per round (all severities)</text>
+  <text class="sub" x="470" y="104" font-size="13">Unique fixed must-fix per 100 rounds</text>
+  <line class="axis" stroke-width="1" x1="190" y1="120" x2="190" y2="350"/>
+  <line class="axis" stroke-width="1" x1="470" y1="120" x2="470" y2="350"/>
+  <text class="ink" x="24" y="144" font-size="14">GPT-6.1 Sol</text>
+  <rect class="grey" x="190" y="128" width="47.5" height="22" rx="3"/>
+  <text class="sub" x="245.5" y="144" font-size="14">3.8</text>
+  <rect class="s1" x="470" y="128" width="157.1" height="22" rx="3"/>
+  <text class="ink" x="635.1" y="144" font-size="14">12.9 <tspan class="sub">(11 in 85)</tspan></text>
+  <text class="ink" x="24" y="192" font-size="14">Gemini 4 Hydrogen</text>
+  <rect class="grey" x="190" y="176" width="70.0" height="22" rx="3"/>
+  <text class="sub" x="268.0" y="192" font-size="14">5.6</text>
+  <rect class="s1" x="470" y="176" width="142.9" height="22" rx="3"/>
+  <text class="ink" x="620.9" y="192" font-size="14">11.8 <tspan class="sub">(4 in 34)</tspan></text>
+  <text class="ink" x="24" y="240" font-size="14">Claude Fable 5.2</text>
+  <rect class="grey" x="190" y="224" width="183.8" height="22" rx="3"/>
+  <text class="sub" x="381.8" y="240" font-size="14">14.7</text>
+  <rect class="grey" x="470" y="224" width="82.8" height="22" rx="3"/>
+  <text class="ink" x="560.8" y="240" font-size="14">6.8 <tspan class="sub">(6 in 88)</tspan></text>
+  <text class="ink" x="24" y="288" font-size="14">Claude Opus 5.5</text>
+  <rect class="grey" x="190" y="272" width="150.0" height="22" rx="3"/>
+  <text class="sub" x="348.0" y="288" font-size="14">12.0</text>
+  <rect class="grey" x="470" y="272" width="69.0" height="22" rx="3"/>
+  <text class="ink" x="547.0" y="288" font-size="14">5.7 <tspan class="sub">(5 in 88)</tspan></text>
+  <text class="ink" x="24" y="336" font-size="14">Gemini 4 Argon</text>
+  <rect class="grey" x="190" y="320" width="53.8" height="22" rx="3"/>
+  <text class="sub" x="251.8" y="336" font-size="14">4.3</text>
+  <rect class="grey" x="470" y="320" width="27.6" height="22" rx="3"/>
+  <text class="ink" x="505.6" y="336" font-size="14">2.3 <tspan class="sub">(1 in 44)</tspan></text>
+</svg>
